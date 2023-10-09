@@ -12,10 +12,21 @@ import com.mj.vo.UserVO;
 @RestController
 public class AuthorizerController {
 	
-	@GetMapping("/authorize")
+	@GetMapping("/md5")
 	public ResponseEntity<String> getEncryption(@RequestBody UserVO userVO) {
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(Authorizer.getMd5(userVO.getPassword()));
 	}
 
+	@GetMapping("/encrypt")
+	public ResponseEntity<String> getEncryption(@RequestBody String value){
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(Authorizer.getEncryptedData(value));
+	}
+	
+	@GetMapping("/decrypt")
+	public ResponseEntity<String> getDecryption(@RequestBody String value){
+		
+		return ResponseEntity.status(HttpStatus.CREATED).body(Authorizer.getDecrypteddata(value));
+	}
 }
