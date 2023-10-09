@@ -7,6 +7,7 @@ import java.security.NoSuchAlgorithmException;
 public class Authorizer {
 	
 	public static String getMd5(String input){
+		
         try {
              MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 

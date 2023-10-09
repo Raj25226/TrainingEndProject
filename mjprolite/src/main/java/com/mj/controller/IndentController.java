@@ -73,7 +73,7 @@ public class IndentController {
 		return ResponseEntity.ok("Data Updated Successfully");
 	}
 	
-	@DeleteMapping("/indent")
+	@DeleteMapping("/indent/{id}")
 	public ResponseEntity<String> deleteIndent(@PathVariable Integer id) {
 		
 		IndentVO indentVO=indentService.getIndentById(id);

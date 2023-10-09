@@ -73,7 +73,7 @@ public class IndentHeaderController {
 		return ResponseEntity.ok("Data Updated Successfully");
 	}
 	
-	@DeleteMapping("/indentheader")
+	@DeleteMapping("/indentheader/{id}")
 	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
 		
 		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
