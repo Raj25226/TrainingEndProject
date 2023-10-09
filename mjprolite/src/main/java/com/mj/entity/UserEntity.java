@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="user")
+@Table(name="user_all")
 public class UserEntity {
 	
 	@Id
