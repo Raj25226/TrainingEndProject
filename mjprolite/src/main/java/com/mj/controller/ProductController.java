@@ -74,7 +74,7 @@ public class ProductController {
 		return ResponseEntity.ok("Data Updated Successfully");
 	}
 	
-	@DeleteMapping("/product")	
+	@DeleteMapping("/product/{id}")	
 	public ResponseEntity<String> deleteProduct(@PathVariable Integer id) {
 		
 		ProductVO productVO=productService.getProductById(id);
