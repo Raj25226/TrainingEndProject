@@ -94,7 +94,7 @@ public class IndentServiceImpl implements IndentService {
 	}
 
 	@Override
-	public void saveIndentHeader(IndentVO indentVO) {
+	public void saveIndent(IndentVO indentVO) {
 		
 		IndentHeaderEntity indentHeaderEntity=new IndentHeaderEntity(
 				indentVO.getIndentHeaderVO().getIndentHeaderId(),
