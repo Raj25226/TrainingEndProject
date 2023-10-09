@@ -24,7 +24,12 @@ public class RoleController {
 	@GetMapping("/role")
 	ResponseEntity<List<RoleVO>> findAllRole()
 	{
-		return ResponseEntity.ok(roleService.getAllRoles());
+		if(roleService.getAllRoles().size()!=0) {
+			return ResponseEntity.ok(roleService.getAllRoles());
+		}
+		else {
+			return ResponseEntity.notFound().build();
+		}
 	}
 	
 	@GetMapping("/role/{id}")
@@ -49,25 +54,28 @@ public class RoleController {
 	    }
 	}
 	
-	@PutMapping("/role/{id}")
-    ResponseEntity<String> updateRoleById(@PathVariable int id, @RequestBody RoleVO roleVo) {
-        boolean updated = roleService.updateRole(roleVo);
-
-        if (updated) {
-            return ResponseEntity.ok("Data Updated Successfully");
-        } else {
+	@PutMapping("/role")
+    ResponseEntity<String> updateRole(@RequestBody RoleVO roleVo) {
+		
+		RoleVO roleVo1=roleService.getRoleById(roleVo.getRoleId());
+		if(roleVo1==null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Role Does not exist");
+		}
+        else {
+        	roleService.updateRole(roleVo1);
             return ResponseEntity.notFound().build(); 
         }
     }
 	
 	@DeleteMapping("/role/{id}")
 	ResponseEntity<String> deleteRoleById(@PathVariable int id) {
-	    boolean deleted = roleService.deleteRole(id);
-
-	    if (deleted) {
-	        return ResponseEntity.ok("Data Deleted Successfully");
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
+		RoleVO roleVo1=roleService.getRoleById(id);
+		if(roleVo1==null) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Role Does not exist");
+		}
+		else {
+			roleService.deleteRole(id);
+			return ResponseEntity.notFound().build(); 	
+		}
 	}
 }
