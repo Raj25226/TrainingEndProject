@@ -79,7 +79,7 @@ public class IndentController {
 		IndentVO indentVO=indentService.getIndentById(id);
 		
 		if(indentVO==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Book Doesnot exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Doesnot exist");
 		
 		indentService.deleteIndentById(id);
 		
