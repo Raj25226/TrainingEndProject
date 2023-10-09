@@ -8,6 +8,6 @@ public interface CategoryService {
 	List<CategoryVO> getAllCategory();	
 	CategoryVO getCategoryById(int id);	
 	void saveCategory(CategoryVO deptVo);
-	void updateCategory (CategoryVO deptVo);	
-	void deleteCategoryById(int id);
+	Boolean updateCategory (CategoryVO deptVo);	
+	Boolean deleteCategoryById(int id);
 }

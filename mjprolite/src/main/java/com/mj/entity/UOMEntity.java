@@ -40,8 +40,8 @@ public class UOMEntity {
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="category_id")
-	private CategoryEntity category;
+//	@ManyToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name="category_id")
+//	private CategoryEntity category;
 	
 }
