@@ -6,7 +6,7 @@ import com.mj.vo.ProductVO;
 
 public interface ProductService {
 
-List<ProductVO> getAllProduct();
+    List<ProductVO> getAllProduct();
 	
     ProductVO getProductById(Integer id);
 	
