@@ -14,20 +14,20 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mj.service.IndentService;
-import com.mj.vo.IndentVO;
+import com.mj.service.IndentHeaderService;
+import com.mj.vo.IndentHeaderVO;
 
 @RestController
-public class IndentController {
+public class IndentHeaderController {
 	
 	@Autowired
-	IndentService indentService;
+	IndentHeaderService indentHeaderService;
 	
-	@GetMapping("/indent")
-	public ResponseEntity<List<IndentVO>> getIndentList(){
+	@GetMapping("/indentheader")
+	public ResponseEntity<List<IndentHeaderVO>> getIndentHeaderList(){
 		
-		if(indentService.getAllIndent().size()!=0)
-			return ResponseEntity.ok(indentService.getAllIndent());
+		if(indentHeaderService.getAllIndentHeader().size()!=0)
+			return ResponseEntity.ok(indentHeaderService.getAllIndentHeader());
 		else {
 			HttpHeaders header=new HttpHeaders();
 			header.add("Data", "No Data Found");
@@ -38,11 +38,11 @@ public class IndentController {
 		}
 	}
 	
-	@GetMapping("/indent/{id}")
-	public ResponseEntity<IndentVO> getIndentById(@PathVariable Integer id) {
+	@GetMapping("/indentheader/{id}")
+	public ResponseEntity<IndentHeaderVO> getIndentHeaderById(@PathVariable Integer id) {
 		
-		if(indentService.getIndentById(id)!=null) {
-			return ResponseEntity.ok(indentService.getIndentById(id));
+		if(indentHeaderService.getIndentHeaderById(id)!=null) {
+			return ResponseEntity.ok(indentHeaderService.getIndentHeaderById(id));
 		}else {
 			HttpHeaders header = new HttpHeaders();
 			header.add("Data", "No Data Found");
@@ -53,37 +53,36 @@ public class IndentController {
 		}
 	}
 	
-	@PostMapping("/indent")
-	public ResponseEntity<String> saveIndent(@RequestBody IndentVO indentVO) {
+	@PostMapping("/indentheader")
+	public ResponseEntity<String> saveIndentHeader(@RequestBody IndentHeaderVO indentHeaderVO) {
 		
-		indentService.saveIndent(indentVO);
+		indentHeaderService.saveIndentHeader(indentHeaderVO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Data Saved Successfully");
 	}
 	
-	@PutMapping("/indent")
-	public ResponseEntity<String> updateIndent(@RequestBody IndentVO indentVO) {
+	@PutMapping("/indentheader")
+	public ResponseEntity<String> updateIndentHeader(@RequestBody IndentHeaderVO indentHeaderVO) {
 		
-		IndentVO indentVO1=indentService.getIndentById(indentVO.getIndentId());
+		IndentHeaderVO indentHeaderVO1=indentHeaderService.getIndentHeaderById(indentHeaderVO.getIndentHeaderId());
 		
-		if(indentVO1==null)
+		if(indentHeaderVO1==null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Doesnot exist");
-		indentService.updateIndent(indentVO);
+		indentHeaderService.updateIndentHeader(indentHeaderVO);
 		
 		return ResponseEntity.ok("Data Updated Successfully");
 	}
 	
-	@DeleteMapping("/indent")
-	public ResponseEntity<String> deleteIndent(@PathVariable Integer id) {
+	@DeleteMapping("/indentheader")
+	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
 		
-		IndentVO indentVO=indentService.getIndentById(id);
+		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
 		
-		if(indentVO==null)
+		if(indentHeaderVO==null)
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Book Doesnot exist");
 		
-		indentService.deleteIndentById(id);
+		indentHeaderService.deleteIndentHeaderById(id);
 		
 		return ResponseEntity.ok("Data deleted Successfully");
 	}
-	
 }
