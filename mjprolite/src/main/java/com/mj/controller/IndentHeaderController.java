@@ -67,7 +67,7 @@ public class IndentHeaderController {
 		IndentHeaderVO indentHeaderVO1=indentHeaderService.getIndentHeaderById(indentHeaderVO.getIndentHeaderId());
 		
 		if(indentHeaderVO1==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Doesnot exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
 		indentHeaderService.updateIndentHeader(indentHeaderVO);
 		
 		return ResponseEntity.ok("Data Updated Successfully");
@@ -79,7 +79,7 @@ public class IndentHeaderController {
 		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
 		
 		if(indentHeaderVO==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Book Doesnot exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
 		
 		indentHeaderService.deleteIndentHeaderById(id);
 		

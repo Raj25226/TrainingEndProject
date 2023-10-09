@@ -67,7 +67,7 @@ public class IndentController {
 		IndentVO indentVO1=indentService.getIndentById(indentVO.getIndentId());
 		
 		if(indentVO1==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Doesnot exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Does not exist");
 		indentService.updateIndent(indentVO);
 		
 		return ResponseEntity.ok("Data Updated Successfully");
@@ -79,7 +79,7 @@ public class IndentController {
 		IndentVO indentVO=indentService.getIndentById(id);
 		
 		if(indentVO==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Doesnot exist");
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Does not exist");
 		
 		indentService.deleteIndentById(id);
 		
