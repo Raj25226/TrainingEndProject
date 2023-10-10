@@ -6,6 +6,7 @@ import About from './pages/About'
 import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import "../styles.css";
+import AddIndent from './pages/AddIndent';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <Route path='/register' element={<Register/>}/>
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/about' element={<About/>}/>
+          <Route path='/add' element={<AddIndent/>}/>
         </Routes>
       </div>
       <Footer/>

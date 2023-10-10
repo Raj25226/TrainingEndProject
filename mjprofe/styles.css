@@ -5,6 +5,11 @@
 body {
     margin: 0;
     background-image: url('./src//assets//bgrfp.jpg');
+    background-size: 100%;
+}
+
+h2{
+    color: #032b3b;
 }
 
 .sizeTitle {
@@ -71,8 +76,6 @@ body {
     background-color: #EEEEEE;
     color: black;
     border: 2px solid #176B87;
-    padding-left: 3%;
-    padding-right: 3%;
 }
 
 .footer {
