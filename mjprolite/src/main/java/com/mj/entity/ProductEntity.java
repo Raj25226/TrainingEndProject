@@ -1,12 +1,18 @@
 package com.mj.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -40,13 +46,15 @@ public class ProductEntity {
 	private String modifiedBy;
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
-//	@Column(name="category_id")
-//	private CategoryEntity category;
 	
-//	@ManyToMany(cascade = CascadeType.ALL)
-//	@JoinTable(
-//			  name = "product_manufacturer",
-//			  joinColumns = @JoinColumn(name = "product_id"),
-//			  inverseJoinColumns = @JoinColumn(name = "manufacturer_id"))
-//			private List<ManufacturerEntity> manufacturer;
+	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="category_id")
+	private CategoryEntity category;
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+			  name = "product_manufacturer",
+			  joinColumns = @JoinColumn(name = "product_id"),
+			  inverseJoinColumns = @JoinColumn(name = "manufacturer_id"))
+	private List<ManufacturerEntity> manufacturer;
+	
 }
