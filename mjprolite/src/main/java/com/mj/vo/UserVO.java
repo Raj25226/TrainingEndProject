@@ -18,8 +18,6 @@ public class UserVO {
 	private LocalDate createdAt;
 	private String modifiedBy;
 	private LocalDate modifiedAt;
-	
-
 	private RoleVO role;
 
 }

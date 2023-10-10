@@ -8,9 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.mj.entity.IndentHeaderEntity;
+import com.mj.entity.RoleEntity;
+import com.mj.entity.UserEntity;
 import com.mj.repository.IndentHeaderRepo;
 import com.mj.service.IndentHeaderService;
 import com.mj.vo.IndentHeaderVO;
+import com.mj.vo.RoleVO;
+import com.mj.vo.UserVO;
 
 @Service
 public class IndentHeaderServiceImpl implements IndentHeaderService {
@@ -27,6 +31,27 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 		
 		for(IndentHeaderEntity indentHeaderEntity:indentHeaderEntityList) {
 			
+			RoleVO roleVO=new RoleVO(
+					indentHeaderEntity.getUser().getRole().getRoleId(),
+					indentHeaderEntity.getUser().getRole().getRoleName(),
+					indentHeaderEntity.getUser().getRole().getIsActive(),
+					indentHeaderEntity.getUser().getRole().getCreatedBy(),
+					indentHeaderEntity.getUser().getRole().getCreatedAt(),
+					indentHeaderEntity.getUser().getRole().getModifiedBy(),
+					indentHeaderEntity.getUser().getRole().getModifiedAt());
+			
+			UserVO userVO=new UserVO(
+					indentHeaderEntity.getUser().getUserId(),
+					indentHeaderEntity.getUser().getUserName(),
+					indentHeaderEntity.getUser().getPassword(),
+					indentHeaderEntity.getUser().getIsActive(),
+					indentHeaderEntity.getUser().getCreatedBy(),
+					indentHeaderEntity.getUser().getCreatedAt(),
+					indentHeaderEntity.getUser().getModifiedBy(),
+					indentHeaderEntity.getUser().getModifiedAt(),
+					roleVO
+					);
+			
 			IndentHeaderVO indentHeaderVO=new IndentHeaderVO(
 					indentHeaderEntity.getIndentHeaderId(),
 					indentHeaderEntity.getDescription(),
@@ -35,7 +60,8 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 					indentHeaderEntity.getCreatedBy(),
 					indentHeaderEntity.getCreatedAt(),
 					indentHeaderEntity.getModifiedBy(),
-					indentHeaderEntity.getModifiedAt());
+					indentHeaderEntity.getModifiedAt(),
+					userVO);
 			
 			indentHeaderVOList.add(indentHeaderVO);
 		}
@@ -52,6 +78,27 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 			return null;
 		}
 		
+		RoleVO roleVO=new RoleVO(
+				indentHeaderEntity.get().getUser().getRole().getRoleId(),
+				indentHeaderEntity.get().getUser().getRole().getRoleName(),
+				indentHeaderEntity.get().getUser().getRole().getIsActive(),
+				indentHeaderEntity.get().getUser().getRole().getCreatedBy(),
+				indentHeaderEntity.get().getUser().getRole().getCreatedAt(),
+				indentHeaderEntity.get().getUser().getRole().getModifiedBy(),
+				indentHeaderEntity.get().getUser().getRole().getModifiedAt());
+		
+		UserVO userVO=new UserVO(
+				indentHeaderEntity.get().getUser().getUserId(),
+				indentHeaderEntity.get().getUser().getUserName(),
+				indentHeaderEntity.get().getUser().getPassword(),
+				indentHeaderEntity.get().getUser().getIsActive(),
+				indentHeaderEntity.get().getUser().getCreatedBy(),
+				indentHeaderEntity.get().getUser().getCreatedAt(),
+				indentHeaderEntity.get().getUser().getModifiedBy(),
+				indentHeaderEntity.get().getUser().getModifiedAt(),
+				roleVO
+				);
+		
 		IndentHeaderVO indentHeaderVO=new IndentHeaderVO(
 				indentHeaderEntity.get().getIndentHeaderId(),
 				indentHeaderEntity.get().getDescription(),
@@ -60,7 +107,8 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 				indentHeaderEntity.get().getCreatedBy(),
 				indentHeaderEntity.get().getCreatedAt(),
 				indentHeaderEntity.get().getModifiedBy(),
-				indentHeaderEntity.get().getModifiedAt());
+				indentHeaderEntity.get().getModifiedAt(),
+				userVO);
 
 		
 		return indentHeaderVO;
@@ -68,6 +116,27 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 
 	@Override
 	public void saveIndentHeader(IndentHeaderVO indentHeaderVO) {
+		
+		RoleEntity roleEntity=new RoleEntity(
+				indentHeaderVO.getUser().getRole().getRoleId(),
+				indentHeaderVO.getUser().getRole().getRoleName(),
+				indentHeaderVO.getUser().getRole().getIsActive(),
+				indentHeaderVO.getUser().getRole().getCreatedBy(),
+				indentHeaderVO.getUser().getRole().getCreatedAt(),
+				indentHeaderVO.getUser().getRole().getModifiedBy(),
+				indentHeaderVO.getUser().getRole().getModifiedAt());
+		
+		UserEntity userEntity=new UserEntity(
+				indentHeaderVO.getUser().getUserId(),
+				indentHeaderVO.getUser().getUserName(),
+				indentHeaderVO.getUser().getPassword(),
+				indentHeaderVO.getUser().getIsActive(),
+				indentHeaderVO.getUser().getCreatedBy(),
+				indentHeaderVO.getUser().getCreatedAt(),
+				indentHeaderVO.getUser().getModifiedBy(),
+				indentHeaderVO.getUser().getModifiedAt(),
+				roleEntity
+				);
 		
 		IndentHeaderEntity indentHeaderEntity=new IndentHeaderEntity(
 				indentHeaderVO.getIndentHeaderId(),
@@ -77,7 +146,8 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 				indentHeaderVO.getCreatedBy(),
 				indentHeaderVO.getCreatedAt(),
 				indentHeaderVO.getModifiedBy(),
-				indentHeaderVO.getModifiedAt());
+				indentHeaderVO.getModifiedAt(),
+				userEntity);
 		
 		indentHeaderRepo.save(indentHeaderEntity);
 		
@@ -90,6 +160,27 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 			return false;
 		}
 		
+		RoleEntity roleEntity=new RoleEntity(
+				indentHeaderVO.getUser().getRole().getRoleId(),
+				indentHeaderVO.getUser().getRole().getRoleName(),
+				indentHeaderVO.getUser().getRole().getIsActive(),
+				indentHeaderVO.getUser().getRole().getCreatedBy(),
+				indentHeaderVO.getUser().getRole().getCreatedAt(),
+				indentHeaderVO.getUser().getRole().getModifiedBy(),
+				indentHeaderVO.getUser().getRole().getModifiedAt());
+		
+		UserEntity userEntity=new UserEntity(
+				indentHeaderVO.getUser().getUserId(),
+				indentHeaderVO.getUser().getUserName(),
+				indentHeaderVO.getUser().getPassword(),
+				indentHeaderVO.getUser().getIsActive(),
+				indentHeaderVO.getUser().getCreatedBy(),
+				indentHeaderVO.getUser().getCreatedAt(),
+				indentHeaderVO.getUser().getModifiedBy(),
+				indentHeaderVO.getUser().getModifiedAt(),
+				roleEntity
+				);
+		
 		IndentHeaderEntity indentHeaderEntity=new IndentHeaderEntity(
 				indentHeaderVO.getIndentHeaderId(),
 				indentHeaderVO.getDescription(),
@@ -98,7 +189,8 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 				indentHeaderVO.getCreatedBy(),
 				indentHeaderVO.getCreatedAt(),
 				indentHeaderVO.getModifiedBy(),
-				indentHeaderVO.getModifiedAt());
+				indentHeaderVO.getModifiedAt(),
+				userEntity);
 		
 		indentHeaderRepo.save(indentHeaderEntity);
 		
