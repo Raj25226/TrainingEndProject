@@ -7,9 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mj.entity.RoleEntity;
 import com.mj.entity.UserEntity;
 import com.mj.repository.UserRepo;
 import com.mj.service.UserService;
+import com.mj.vo.RoleVO;
 import com.mj.vo.UserVO;
 
 @Service
@@ -35,6 +37,19 @@ public class UserServiceImpl implements UserService {
              userVO.setCreatedAt(userEntity.getCreatedAt());
              userVO.setModifiedBy(userEntity.getModifiedBy());
              userVO.setModifiedAt(userEntity.getModifiedAt());
+             
+             RoleEntity roleEntity = userEntity.getRole();
+             
+             RoleVO roleVO = new RoleVO();
+             roleVO.setRoleId(roleEntity.getRoleId());
+             roleVO.setRoleName(roleEntity.getRoleName());
+             roleVO.setIsActive(roleEntity.getIsActive());
+             roleVO.setCreatedBy(roleEntity.getCreatedBy());
+             roleVO.setCreatedAt(roleEntity.getCreatedAt());
+             roleVO.setModifiedBy(roleEntity.getModifiedBy());
+             roleVO.setModifiedAt(roleEntity.getModifiedAt());
+             
+             userVO.setRole(roleVO);
             
              userVOList.add(userVO);
         }
@@ -60,6 +75,19 @@ public class UserServiceImpl implements UserService {
             userVO.setModifiedBy(userEntity.getModifiedBy());
             userVO.setModifiedAt(userEntity.getModifiedAt());
             
+            RoleEntity roleEntity = userEntity.getRole();
+            
+            RoleVO roleVO = new RoleVO();
+            roleVO.setRoleId(roleEntity.getRoleId());
+            roleVO.setRoleName(roleEntity.getRoleName());
+            roleVO.setIsActive(roleEntity.getIsActive());
+            roleVO.setCreatedBy(roleEntity.getCreatedBy());
+            roleVO.setCreatedAt(roleEntity.getCreatedAt());
+            roleVO.setModifiedBy(roleEntity.getModifiedBy());
+            roleVO.setModifiedAt(roleEntity.getModifiedAt());
+            
+            userVO.setRole(roleVO);
+            
             return userVO;
         } else {
         	return null;
@@ -76,6 +104,22 @@ public class UserServiceImpl implements UserService {
         userEntity.setCreatedAt(userVO.getCreatedAt());
         userEntity.setModifiedBy(userVO.getModifiedBy());
         userEntity.setModifiedAt(userVO.getModifiedAt());
+        
+        //As userEntity needs roleEntity so we convert from roleVO to roleEntity.
+        
+        RoleVO roleVo = userVO.getRole();
+        
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setRoleName(roleVo.getRoleName());
+        roleEntity.setIsActive(roleVo.getIsActive());
+        roleEntity.setCreatedBy(roleVo.getCreatedBy());
+        roleEntity.setCreatedAt(roleVo.getCreatedAt());
+        roleEntity.setModifiedBy(roleVo.getModifiedBy());
+        roleEntity.setModifiedAt(roleVo.getModifiedAt());
+        
+        userEntity.setRole(roleEntity);
+        
+        
 
         UserEntity savedEntity = userRepo.save(userEntity);
 
@@ -100,6 +144,18 @@ public class UserServiceImpl implements UserService {
                 userEntity.setIsActive(userVO.getIsActive());
                 userEntity.setModifiedBy(userVO.getModifiedBy());
                 userEntity.setModifiedAt(userVO.getModifiedAt());
+                
+                RoleVO roleVo = userVO.getRole();
+                
+                RoleEntity roleEntity = new RoleEntity();
+                roleEntity.setRoleName(roleVo.getRoleName());
+                roleEntity.setIsActive(roleVo.getIsActive());
+                roleEntity.setCreatedBy(roleVo.getCreatedBy());
+                roleEntity.setCreatedAt(roleVo.getCreatedAt());
+                roleEntity.setModifiedBy(roleVo.getModifiedBy());
+                roleEntity.setModifiedAt(roleVo.getModifiedAt());
+                
+                userEntity.setRole(roleEntity);
                 
                 userRepo.save(userEntity);
                 

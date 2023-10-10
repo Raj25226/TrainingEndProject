@@ -1,8 +1,12 @@
 package com.mj.service.impl;
 
+import com.mj.entity.RoleEntity;
+import com.mj.entity.UserEntity;
 import com.mj.entity.VendorEntity;
 import com.mj.repository.VendorRepo;
 import com.mj.service.VendorService;
+import com.mj.vo.RoleVO;
+import com.mj.vo.UserVO;
 import com.mj.vo.VendorVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +27,7 @@ public class VendorServiceImpl implements VendorService {
         List<VendorEntity> vendorEntityList = vendorRepo.findAll();
 
         for (VendorEntity vendorEntity : vendorEntityList) {
+        	
             VendorVO vendorVO = new VendorVO();
             vendorVO.setVendorId(vendorEntity.getVendorId());
             vendorVO.setVendorName(vendorEntity.getVendorName());
@@ -36,6 +41,34 @@ public class VendorServiceImpl implements VendorService {
             vendorVO.setCreatedAt(vendorEntity.getCreatedAt());
             vendorVO.setModifiedBy(vendorEntity.getModifiedBy());
             vendorVO.setModifiedAt(vendorEntity.getModifiedAt());
+            
+            UserEntity userEntity = vendorEntity.getUser();
+            
+            UserVO userVO = new UserVO();
+       	 
+            userVO.setUserId(userEntity.getUserId());
+            userVO.setUserName(userEntity.getUserName());
+            userVO.setPassword(userEntity.getPassword());
+            userVO.setIsActive(userEntity.getIsActive());
+            userVO.setCreatedBy(userEntity.getCreatedBy());
+            userVO.setCreatedAt(userEntity.getCreatedAt());
+            userVO.setModifiedBy(userEntity.getModifiedBy());
+            userVO.setModifiedAt(userEntity.getModifiedAt());
+            
+            RoleEntity roleEntity = userEntity.getRole();
+            
+            RoleVO roleVO = new RoleVO();
+            roleVO.setRoleId(roleEntity.getRoleId());
+            roleVO.setRoleName(roleEntity.getRoleName());
+            roleVO.setIsActive(roleEntity.getIsActive());
+            roleVO.setCreatedBy(roleEntity.getCreatedBy());
+            roleVO.setCreatedAt(roleEntity.getCreatedAt());
+            roleVO.setModifiedBy(roleEntity.getModifiedBy());
+            roleVO.setModifiedAt(roleEntity.getModifiedAt());
+            
+            userVO.setRole(roleVO);
+            
+            vendorVO.setUser(userVO);
  
             vendorVOList.add(vendorVO);
         }
@@ -64,6 +97,34 @@ public class VendorServiceImpl implements VendorService {
             vendorVO.setCreatedAt(vendorEntity.getCreatedAt());
             vendorVO.setModifiedBy(vendorEntity.getModifiedBy());
             vendorVO.setModifiedAt(vendorEntity.getModifiedAt());
+            
+            UserEntity userEntity = vendorEntity.getUser();
+            
+            UserVO userVO = new UserVO();
+       	 
+            userVO.setUserId(userEntity.getUserId());
+            userVO.setUserName(userEntity.getUserName());
+            userVO.setPassword(userEntity.getPassword());
+            userVO.setIsActive(userEntity.getIsActive());
+            userVO.setCreatedBy(userEntity.getCreatedBy());
+            userVO.setCreatedAt(userEntity.getCreatedAt());
+            userVO.setModifiedBy(userEntity.getModifiedBy());
+            userVO.setModifiedAt(userEntity.getModifiedAt());
+            
+            RoleEntity roleEntity = userEntity.getRole();
+            
+            RoleVO roleVO = new RoleVO();
+            roleVO.setRoleId(roleEntity.getRoleId());
+            roleVO.setRoleName(roleEntity.getRoleName());
+            roleVO.setIsActive(roleEntity.getIsActive());
+            roleVO.setCreatedBy(roleEntity.getCreatedBy());
+            roleVO.setCreatedAt(roleEntity.getCreatedAt());
+            roleVO.setModifiedBy(roleEntity.getModifiedBy());
+            roleVO.setModifiedAt(roleEntity.getModifiedAt());
+            
+            userVO.setRole(roleVO);
+            
+            vendorVO.setUser(userVO);
            
             return vendorVO;
         } else {
@@ -85,6 +146,34 @@ public class VendorServiceImpl implements VendorService {
         vendorEntity.setCreatedAt(vendorVO.getCreatedAt());
         vendorEntity.setModifiedBy(vendorVO.getModifiedBy());
         vendorEntity.setModifiedAt(vendorVO.getModifiedAt());
+        
+        UserVO userVO=vendorVO.getUser();
+        
+        UserEntity userEntity = new UserEntity();
+        userEntity.setUserName(userVO.getUserName());
+        userEntity.setPassword(userVO.getPassword());
+        userEntity.setIsActive(userVO.getIsActive());
+        userEntity.setCreatedBy(userVO.getCreatedBy());
+        userEntity.setCreatedAt(userVO.getCreatedAt());
+        userEntity.setModifiedBy(userVO.getModifiedBy());
+        userEntity.setModifiedAt(userVO.getModifiedAt());
+        
+        //As userEntity needs roleEntity so we convert from roleVO to roleEntity.
+        
+        RoleVO roleVo = userVO.getRole();
+        
+        RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setRoleName(roleVo.getRoleName());
+        roleEntity.setIsActive(roleVo.getIsActive());
+        roleEntity.setCreatedBy(roleVo.getCreatedBy());
+        roleEntity.setCreatedAt(roleVo.getCreatedAt());
+        roleEntity.setModifiedBy(roleVo.getModifiedBy());
+        roleEntity.setModifiedAt(roleVo.getModifiedAt());
+        
+        
+        vendorEntity.setUser(userEntity);
+        
+        
 
         VendorEntity savedEntity = vendorRepo.save(vendorEntity);
         
@@ -102,20 +191,45 @@ public class VendorServiceImpl implements VendorService {
             Optional<VendorEntity> vendorEntityOptional = vendorRepo.findById(vendorVO.getVendorId());
 
             if (vendorEntityOptional.isPresent()) {
-                VendorEntity existingVendorEntity = vendorEntityOptional.get();
-                existingVendorEntity.setVendorName(vendorVO.getVendorName());
-                existingVendorEntity.setPhoneNumber(vendorVO.getPhoneNumber());
-                existingVendorEntity.setGst(vendorVO.getGst());
-                existingVendorEntity.setEmail(vendorVO.getEmail());
-                existingVendorEntity.setPan(vendorVO.getPan());
-                existingVendorEntity.setTurnover(vendorVO.getTurnover());
-                existingVendorEntity.setIsActive(vendorVO.getIsActive());
-                existingVendorEntity.setCreatedBy(vendorVO.getCreatedBy());
-                existingVendorEntity.setCreatedAt(vendorVO.getCreatedAt());
-                existingVendorEntity.setModifiedBy(vendorVO.getModifiedBy());
-                existingVendorEntity.setModifiedAt(vendorVO.getModifiedAt());
+                VendorEntity vendorEntity = vendorEntityOptional.get();
+                vendorEntity.setVendorName(vendorVO.getVendorName());
+                vendorEntity.setPhoneNumber(vendorVO.getPhoneNumber());
+                vendorEntity.setGst(vendorVO.getGst());
+                vendorEntity.setEmail(vendorVO.getEmail());
+                vendorEntity.setPan(vendorVO.getPan());
+                vendorEntity.setTurnover(vendorVO.getTurnover());
+                vendorEntity.setIsActive(vendorVO.getIsActive());
+                vendorEntity.setCreatedBy(vendorVO.getCreatedBy());
+                vendorEntity.setCreatedAt(vendorVO.getCreatedAt());
+                vendorEntity.setModifiedBy(vendorVO.getModifiedBy());
+                vendorEntity.setModifiedAt(vendorVO.getModifiedAt());
+                
+                UserVO userVO=vendorVO.getUser();
+                
+                UserEntity userEntity = new UserEntity();
+                userEntity.setUserName(userVO.getUserName());
+                userEntity.setPassword(userVO.getPassword());
+                userEntity.setIsActive(userVO.getIsActive());
+                userEntity.setCreatedBy(userVO.getCreatedBy());
+                userEntity.setCreatedAt(userVO.getCreatedAt());
+                userEntity.setModifiedBy(userVO.getModifiedBy());
+                userEntity.setModifiedAt(userVO.getModifiedAt());
+                
+                
+                RoleVO roleVo = userVO.getRole();
+                
+                RoleEntity roleEntity = new RoleEntity();
+                roleEntity.setRoleName(roleVo.getRoleName());
+                roleEntity.setIsActive(roleVo.getIsActive());
+                roleEntity.setCreatedBy(roleVo.getCreatedBy());
+                roleEntity.setCreatedAt(roleVo.getCreatedAt());
+                roleEntity.setModifiedBy(roleVo.getModifiedBy());
+                roleEntity.setModifiedAt(roleVo.getModifiedAt());
+                
+                
+                vendorEntity.setUser(userEntity);
                
-                vendorRepo.save(existingVendorEntity);
+                vendorRepo.save(vendorEntity);
                 return true; 
             } else {
                 return false;

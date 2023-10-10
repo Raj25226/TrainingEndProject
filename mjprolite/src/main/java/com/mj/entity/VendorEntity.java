@@ -49,6 +49,6 @@ public class VendorEntity {
 	
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="user_id")
-	private UserEntity userId;
+	private UserEntity user;
 
 }

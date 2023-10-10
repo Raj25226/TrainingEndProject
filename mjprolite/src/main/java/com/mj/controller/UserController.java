@@ -3,7 +3,6 @@ package com.mj.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +31,7 @@ public class UserController {
 			return ResponseEntity.ok(userService.getAllUsers());
 		}
 		else {
-			return ResponseEntity.notFound().build();
+			return ResponseEntity.noContent().build();
 		}
 	}
 	
@@ -43,7 +42,7 @@ public class UserController {
 	    if (userVO != null) {
 	        return ResponseEntity.ok(userVO);
 	    } else {
-	        return ResponseEntity.notFound().build();
+	    	return ResponseEntity.noContent().build();
 	    }
 	}
 	
@@ -53,9 +52,9 @@ public class UserController {
 	    boolean saved = userService.saveUser(userVO);
 
 	    if (saved) {
-	        return ResponseEntity.ok("Data Saved Successfully");
+	        return ResponseEntity.ok("User Saved Successfully");
 	    } else {
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to save data");
+	    	return ResponseEntity.noContent().build();
 	    }
 	}
 	
@@ -64,11 +63,11 @@ public class UserController {
 		
 		UserVO userVO1=userService.getUserById(userVO.getUserId());
 		if(userVO1==null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given User Does not exist");
+			return ResponseEntity.noContent().build();
 		}
         else {
         	userService.updateUser(userVO1);
-            return ResponseEntity.notFound().build(); 
+        	return ResponseEntity.ok("User Updated Successfully");
         }
     }
 	
@@ -77,11 +76,11 @@ public class UserController {
 	ResponseEntity<String> deleteUserById(@PathVariable int id) {
 		UserVO userVO1=userService.getUserById(id);
 		if(userVO1==null) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given User Does not exist");
+			return ResponseEntity.noContent().build();
 		}
 		else {
 			userService.deleteUser(id);
-			return ResponseEntity.notFound().build(); 	
+			return ResponseEntity.ok("User Deleted Successfully");
 		}
 	}
 
