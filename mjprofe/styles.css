@@ -30,6 +30,7 @@ h2{
 }
 
 .nav .logo{
+    margin-top: 5px;
     border-radius: 50%;
     height: 75px;
 }

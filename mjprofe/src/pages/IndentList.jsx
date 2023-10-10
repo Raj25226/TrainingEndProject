@@ -1,4 +1,8 @@
-export default function IndentList() {
-    
-    return <h1>IndentList</h1>
-}
+import React, { useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+
+const IndentList = () => {
+
+};
+
+export default IndentList;
