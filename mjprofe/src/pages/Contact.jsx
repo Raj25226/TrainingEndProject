@@ -1,4 +1,3 @@
-import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from 'react';
 
 function Contact() {
@@ -20,10 +19,12 @@ function Contact() {
   };
 
   return (
-    <div className="container d-flex justify-content-center">
-      <div className="card" style={{ width: '40%' }}>
-        <div className="card-body p-3">
-          <h4 className="card-title text-center">Contact Us</h4>
+    <div className="container d-flex justify-content-center align-items-center mb-5">
+      <div className="card p-2" style={{ width: '35%' }}>
+        <div className="card-body p-2">
+          <h2 className="card-title text-center">Contact Us</h2>
+          <p className="text-center mb-1 small">Phone: +1 (123) 456-7890</p>
+          <p className="text-center mb-1 small">Email: example@example.com</p>
           <form onSubmit={handleSubmit}>
             <div className="mb-2">
               <label htmlFor="name" className="form-label">Name</label>
