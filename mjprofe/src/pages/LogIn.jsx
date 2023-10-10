@@ -23,7 +23,7 @@ const LogIn = () => {
                 <div className="col-md-6">
                     <div className="card">
                         <div className="card-body">
-                            <h2 className="card-title mb-4">Log In</h2>
+                            <h2 className="card-title mb-4" style={{textAlign:"center"}}>Log In</h2>
                             <form>
                                 <div className="mb-3">
                                     <label
