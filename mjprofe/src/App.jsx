@@ -7,7 +7,7 @@ import NavBar from './components/NavBar'
 import Footer from './components/Footer'
 import "../styles.css";
 import AddIndent from './pages/AddIndent';
-
+import ForgotPassword from './pages/ForgotPassword'
 
 function App() {
   return (
@@ -20,6 +20,7 @@ function App() {
           <Route path='/contact' element={<Contact/>}/>
           <Route path='/about' element={<About/>}/>
           <Route path='/add' element={<AddIndent/>}/>
+          <Route path='/forgotpassword' element={<ForgotPassword />}/>
         </Routes>
       </div>
       <Footer/>

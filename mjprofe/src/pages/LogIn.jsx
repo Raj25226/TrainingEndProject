@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+import { Link } from "react-router-dom";
 
 const LogIn = () => {
     const [username, setUsername] = useState("");
@@ -67,7 +68,7 @@ const LogIn = () => {
                                     Login
                                 </button>
                                 <div className="mt-3">
-                                    <a href="/forgot-password">
+                                <a href="/forgotpassword">
                                         Forgot Password?
                                     </a>
                                 </div>
