@@ -7,10 +7,11 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mj.entity.CategoryEntity;
 import com.mj.entity.UOMEntity;
 import com.mj.repository.UOMRepo;
 import com.mj.service.UOMService;
-
+import com.mj.vo.CategoryVO;
 import com.mj.vo.UOMVO;
 
 @Service
@@ -26,6 +27,16 @@ public class UOMServiceImpl implements UOMService{
 		List<UOMVO> uomVOList=new ArrayList<>();
 		
 		for(UOMEntity uomEntity: uomEntityList) {
+			CategoryVO categoryVO =new CategoryVO(
+					uomEntity.getCategory().getCategoryId(),				
+					uomEntity.getCategory().getCategoryName(),
+					uomEntity.getCategory().getCategoryCode(),
+					uomEntity.getCategory().getIsActive(),
+					uomEntity.getCategory().getCreatedBy(),
+					uomEntity.getCategory().getCreatedAt(),
+					uomEntity.getCategory().getModifiedBy(),
+					uomEntity.getCategory().getModifiedAt()			
+					);
 			UOMVO uomvo=new UOMVO(
 					uomEntity.getUomId(),
 					uomEntity.getUnit(),
@@ -33,9 +44,8 @@ public class UOMServiceImpl implements UOMService{
 					uomEntity.getCreatedBy(),
 					uomEntity.getCreatedAt(),
 					uomEntity.getModifiedBy(),
-					uomEntity.getModifiedAt()
-					
-					
+					uomEntity.getModifiedAt(),
+					categoryVO										
 			);
 			uomVOList.add(uomvo);
 		}
@@ -50,6 +60,17 @@ public class UOMServiceImpl implements UOMService{
 		if(uomEntity.isEmpty()) {
 			return null;
 		}
+		CategoryVO categoryVO =new CategoryVO(
+				uomEntity.get().getCategory().getCategoryId(),				
+				uomEntity.get().getCategory().getCategoryName(),
+				uomEntity.get().getCategory().getCategoryCode(),
+				uomEntity.get().getCategory().getIsActive(),
+				uomEntity.get().getCategory().getCreatedBy(),
+				uomEntity.get().getCategory().getCreatedAt(),
+				uomEntity.get().getCategory().getModifiedBy(),
+				uomEntity.get().getCategory().getModifiedAt()						
+		);
+								
 		UOMVO uomVo=new UOMVO(
 			uomEntity.get().getUomId(),
 			uomEntity.get().getUnit(),
@@ -57,16 +78,25 @@ public class UOMServiceImpl implements UOMService{
 			uomEntity.get().getCreatedBy(),
 			uomEntity.get().getCreatedAt(),
 			uomEntity.get().getModifiedBy(),
-			uomEntity.get().getModifiedAt()				
-		);
-		
-		
+			uomEntity.get().getModifiedAt()	,
+			categoryVO
+		);		
 		return uomVo;
 	}
-
 	@Override
 	public void saveUOM(UOMVO uomVO) {
 		
+		
+		CategoryEntity categoryEntity = new CategoryEntity(
+			uomVO.getCategory().getCategoryId(),
+			uomVO.getCategory().getCategoryName(),
+			uomVO.getCategory().getCategoryCode(),
+			uomVO.getCategory().getIsActive(),
+			uomVO.getCategory().getCreatedBy(),
+			uomVO.getCategory().getCreatedAt(),			
+			uomVO.getCategory().getModifiedBy(),
+			uomVO.getCategory().getModifiedAt()
+		);
 		UOMEntity uomEntity=new UOMEntity(
 				uomVO.getUomId(),
 				uomVO.getUnit(),
@@ -74,7 +104,8 @@ public class UOMServiceImpl implements UOMService{
 				uomVO.getCreatedBy(),
 				uomVO.getCreatedAt(),
 				uomVO.getModifiedBy(),
-				uomVO.getModifiedAt()				
+				uomVO.getModifiedAt(),
+				categoryEntity
 			);
 			
 		uomrepo.save(uomEntity);
@@ -85,6 +116,16 @@ public class UOMServiceImpl implements UOMService{
 		if(getUOMById(uomVO.getUomId())==null) {
 			return false;
 		}
+		CategoryEntity categoryEntity = new CategoryEntity(
+				uomVO.getCategory().getCategoryId(),
+				uomVO.getCategory().getCategoryName(),
+				uomVO.getCategory().getCategoryCode(),
+				uomVO.getCategory().getIsActive(),
+				uomVO.getCategory().getCreatedBy(),
+				uomVO.getCategory().getCreatedAt(),			
+				uomVO.getCategory().getModifiedBy(),
+				uomVO.getCategory().getModifiedAt()
+			);
 		UOMEntity uomEntity=new UOMEntity(
 				uomVO.getUomId(),
 				uomVO.getUnit(),
@@ -92,7 +133,8 @@ public class UOMServiceImpl implements UOMService{
 				uomVO.getCreatedBy(),
 				uomVO.getCreatedAt(),
 				uomVO.getModifiedBy(),
-				uomVO.getModifiedAt()				
+				uomVO.getModifiedAt()	,
+				categoryEntity
 			);
 			
 		uomrepo.save(uomEntity);
