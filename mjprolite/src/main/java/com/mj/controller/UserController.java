@@ -66,7 +66,7 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 		}
         else {
-        	userService.updateUser(userVO1);
+        	userService.updateUser(userVO);
         	return ResponseEntity.ok("User Updated Successfully");
         }
     }
@@ -74,8 +74,8 @@ public class UserController {
 	
 	@DeleteMapping("/user/{id}")
 	ResponseEntity<String> deleteUserById(@PathVariable int id) {
-		UserVO userVO1=userService.getUserById(id);
-		if(userVO1==null) {
+		UserVO userVO=userService.getUserById(id);
+		if(userVO==null) {
 			return ResponseEntity.noContent().build();
 		}
 		else {

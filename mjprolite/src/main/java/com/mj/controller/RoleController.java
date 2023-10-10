@@ -63,15 +63,15 @@ public class RoleController {
 			return ResponseEntity.noContent().build();
 		}
         else {
-        	roleService.updateRole(roleVo1);
+        	roleService.updateRole(roleVo);
         	return ResponseEntity.ok("Role Updated Successfully");
         }
     }
 	
 	@DeleteMapping("/role/{id}")
 	ResponseEntity<String> deleteRoleById(@PathVariable int id) {
-		RoleVO roleVo1=roleService.getRoleById(id);
-		if(roleVo1==null) {
+		RoleVO roleVo=roleService.getRoleById(id);
+		if(roleVo==null) {
 			return ResponseEntity.noContent().build();
 		}
 		else {

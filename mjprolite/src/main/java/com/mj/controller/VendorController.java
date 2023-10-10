@@ -65,15 +65,15 @@ public class VendorController {
 			return ResponseEntity.noContent().build();
 		}
         else {
-        	vendorService.updateVendor(vendorVO1);
+        	vendorService.updateVendor(vendorVO);
         	return ResponseEntity.ok("Vendor Updated Successfully"); 
         }
     }
 	
 	@DeleteMapping("/vendor/{id}")
 	ResponseEntity<String> deleteVendorById(@PathVariable int id) {
-		VendorVO vendorVO1=vendorService.getVendorById(id);
-		if(vendorVO1==null) {
+		VendorVO vendorVO=vendorService.getVendorById(id);
+		if(vendorVO==null) {
 			return ResponseEntity.noContent().build();
 		}
 		else {

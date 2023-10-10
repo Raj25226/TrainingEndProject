@@ -10,6 +10,6 @@ import com.mj.entity.IndentHeaderEntity;
 @Repository
 public interface IndentHeaderRepo extends JpaRepository<IndentHeaderEntity, Integer> {
 	
-	public List<IndentHeaderEntity> findAllByUserId(Integer id);
+//	public List<IndentHeaderEntity> findAllByUserId(Integer id);
 	
 }
