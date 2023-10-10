@@ -101,7 +101,7 @@ function Register() {
 
   return (
     <div className="container" style={{ maxWidth: '43%' }}>
-      <div className="card p-4">
+      <div className="card p-4 mb-5" style={{ marginTop: '25%' }}>
         <h2 className="card-title text-center">Registration</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
