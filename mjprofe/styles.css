@@ -87,12 +87,8 @@ body {
     padding: 6px;
 }
 
-.container{
-    /* position: absolute; */
+.mycontainer{
     position: relative;
-    /* background-color: #f9f9f9; */
-    /* width: 100%;
-    height: 100%; */
-    margin-top: 120px;
+    margin-top: 83px;
     background-image: url('./assets/bgrfp.jpg');
 }

@@ -12,7 +12,7 @@ function App() {
   return (
     <>
       <NavBar />
-      <div className='container'>
+      <div className='mycontainer'>
         <Routes>
           <Route path='/' element={<LogIn/>}/>
           <Route path='/register' element={<Register/>}/>
