@@ -31,7 +31,7 @@ function ForgotPassword() {
 
   return (
     <div className="container" style={{ maxWidth: '400px' }}>
-      <div className="card p-4">
+      <div className="card p-4" style={{ marginTop: '38%' }}>
         <h2 className="card-title text-center">Forgot Password</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
