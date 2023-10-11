@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 import AddIndent from './AddIndent';
@@ -13,26 +13,22 @@ const IndentList = () => {
     field4: '',
   });
 
-  const jsonArray = [
-    {
-      field1: 'Value 1A',
-      field2: 'Value 1B',
-      field3: 'Value 1C',
-      field4: 'Value 1D',
-    },
-    {
-      field1: 'Value 2A',
-      field2: 'Value 2B',
-      field3: 'Value 2C',
-      field4: 'Value 2D',
-    },
-    {
-      field1: 'Value 3A',
-      field2: 'Value 3B',
-      field3: 'Value 3C',
-      field4: 'Value 3D',
-    },
-  ];
+  const fetchApiData = async () => {
+    try {
+      const response = await fetch('http://localhost:8080/mj/indentheader');
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const data = await response.json();
+      setItems(data);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchApiData();
+  }, []);
 
   const handleDeleteItem = (index) => {
     const updatedItems = items.filter((item, i) => i !== index);
@@ -40,19 +36,12 @@ const IndentList = () => {
   };
 
   const handleAddItem = () => {
-    setItems([...items, newItem]);
-    setNewItem({
-      field1: '',
-      field2: '',
-      field3: '',
-      field4: '',
-    });
-    setShowAddModal(false);
+    // Implement add item logic here and update the API accordingly
   };
 
   return (
     <div className="container mt-4">
-      <div className="card">
+      <div className="card" style={{ marginTop: '15%' }}>
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
           <button
@@ -63,39 +52,38 @@ const IndentList = () => {
           </button>
         </div>
         <div className="card-body">
-         
           <table className="table">
             <thead>
               <tr>
-                <th>Field 1</th>
-                <th>Field 2</th>
-                <th>Field 3</th>
-                <th>Field 4</th>
-                <th>Actions</th>
+                <th>IndentHeaderId </th>
+                <th>Description </th>
+                <th>Netprice </th>
+                {/* <th>Field 4</th> */}
+                {/* <th>Actions</th> */}
               </tr>
             </thead>
             <tbody>
-              {jsonArray.map((item, index) => (
+              {items.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.field1}</td>
-                  <td>{item.field2}</td>
-                  <td>{item.field3}</td>
-                  <td>{item.field4}</td>
+                  <td>{item.indentHeaderId}</td>
+                  <td>{item.description}</td>
+                  <td>{item.netprice}</td>
+                  {/* <td>{item.field4}</td> */}
                   <td>
-                  <button
-                    style={{marginLeft:'5px'}}
+                    <button
+                      style={{ marginLeft: '5px' }}
                       onClick={() => handleDeleteItem(index)}
                     >
-                      <i class="bi bi-eye"></i>
+                      <i className="bi bi-eye"></i>
                     </button>
                     <button
-                    style={{marginLeft:'5px'}}
+                      style={{ marginLeft: '5px' }}
                       onClick={() => handleEditItem(index)}
                     >
                       <i className="bi bi-pencil-square"></i>
                     </button>
                     <button
-                    style={{marginLeft:'5px'}}
+                      style={{ marginLeft: '5px' }}
                       onClick={() => handleDeleteItem(index)}
                     >
                       <i className="bi bi-trash"></i>
@@ -109,9 +97,9 @@ const IndentList = () => {
       </div>
       {showAddModal && (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-          <div className="modal-dialog" role="document" >
-            <div className="modal-content" >
-              <div className="modal-header" >
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
                 <h5 className="modal-title">Add Item</h5>
                 <button
                   type="button"
@@ -123,10 +111,9 @@ const IndentList = () => {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div className="modal-body  " >
-                <div className="form-group" >
-                 
-                 <AddIndent ></AddIndent>
+              <div className="modal-body">
+                <div className="form-group">
+                  <AddIndent></AddIndent>
                 </div>
               </div>
             </div>
