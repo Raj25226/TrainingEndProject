@@ -12,6 +12,7 @@ const AddIndent = () => {
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
+    const [uom,setUom] = useState([]);
     const [description, setDescription] = useState("");
 
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
@@ -126,6 +127,24 @@ const AddIndent = () => {
         console.log(indentHeaderId);
     };
 
+    const changeProductList = (id) =>{
+
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(
+                    `http://localhost:8080/mj/products/${id}`
+                );
+                const result = await response.data;
+                console.log(result);
+                setProduct(result);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            } finally {
+            }
+        };
+        fetchProducts();
+    }
+
     return (
         <div className="container">
             <div className="row justify-content-center">
@@ -146,9 +165,11 @@ const AddIndent = () => {
                                     <select
                                         className="form-select"
                                         value={selectedCategory}
-                                        onChange={(e) =>
-                                            setSelectedCategory(e.target.value)
+                                        onChange={(e) => {
+                                            setSelectedCategory(e.target.value);
+                                            changeProductList(e.target.value);
                                         }
+                                    }
                                     >
                                         <option value="">
                                             Select a category
