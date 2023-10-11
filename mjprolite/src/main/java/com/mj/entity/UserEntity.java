@@ -2,7 +2,6 @@ package com.mj.entity;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -42,7 +41,7 @@ public class UserEntity {
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="role_id")
 	private RoleEntity role;
 

@@ -87,13 +87,16 @@ public class RoleServiceImpl implements RoleService {
         Optional<RoleEntity> roleEntityOptional = roleRepo.findById(roleVo.getRoleId());
 
         if (roleEntityOptional.isPresent()) {
-            RoleEntity roleEntity = roleEntityOptional.get();
-            roleEntity.setRoleName(roleVo.getRoleName());
-            roleEntity.setIsActive(roleVo.getIsActive());
-            roleEntity.setModifiedBy(roleVo.getModifiedBy());
-            roleEntity.setModifiedAt(roleVo.getModifiedAt());
+        	 RoleEntity roleEntity = roleEntityOptional.get();
+             roleEntity.setRoleId(roleVo.getRoleId());
+             roleEntity.setRoleName(roleVo.getRoleName());
+             roleEntity.setIsActive(roleVo.getIsActive());
+             roleEntity.setCreatedBy(roleVo.getCreatedBy());
+             roleEntity.setCreatedAt(roleVo.getCreatedAt());
+             roleEntity.setModifiedBy(roleVo.getModifiedBy());
+             roleEntity.setModifiedAt(roleVo.getModifiedAt());
 
-            roleRepo.save(roleEntity);
+             roleRepo.save(roleEntity);
 
             return true;
         } else {

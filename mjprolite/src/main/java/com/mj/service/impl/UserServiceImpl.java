@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
              RoleEntity roleEntity = userEntity.getRole();
              
              RoleVO roleVO = new RoleVO();
+             
              roleVO.setRoleId(roleEntity.getRoleId());
              roleVO.setRoleName(roleEntity.getRoleName());
              roleVO.setIsActive(roleEntity.getIsActive());
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
        	 
             userVO.setUserId(userEntity.getUserId());
             userVO.setUserName(userEntity.getUserName());
-            userVO.setPassword(userEntity.getPassword());
+            userVO.setPassword(userEntity.getPassword()); 
             userVO.setIsActive(userEntity.getIsActive());
             userVO.setCreatedBy(userEntity.getCreatedBy());
             userVO.setCreatedAt(userEntity.getCreatedAt());
@@ -98,7 +99,7 @@ public class UserServiceImpl implements UserService {
     public boolean saveUser(UserVO userVO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName(userVO.getUserName());
-        userEntity.setPassword(userVO.getPassword());
+        userEntity.setPassword(userVO.getPassword()); 
         userEntity.setIsActive(userVO.getIsActive());
         userEntity.setCreatedBy(userVO.getCreatedBy());
         userEntity.setCreatedAt(userVO.getCreatedAt());
@@ -107,15 +108,16 @@ public class UserServiceImpl implements UserService {
         
         //As userEntity needs roleEntity so we convert from roleVO to roleEntity.
         
-        RoleVO roleVo = userVO.getRole();
+        RoleVO roleVO = userVO.getRole();
         
         RoleEntity roleEntity = new RoleEntity();
-        roleEntity.setRoleName(roleVo.getRoleName());
-        roleEntity.setIsActive(roleVo.getIsActive());
-        roleEntity.setCreatedBy(roleVo.getCreatedBy());
-        roleEntity.setCreatedAt(roleVo.getCreatedAt());
-        roleEntity.setModifiedBy(roleVo.getModifiedBy());
-        roleEntity.setModifiedAt(roleVo.getModifiedAt());
+        roleEntity.setRoleId(roleVO.getRoleId());
+        roleEntity.setRoleName(roleVO.getRoleName());
+        roleEntity.setIsActive(roleVO.getIsActive());
+        roleEntity.setCreatedBy(roleVO.getCreatedBy());
+        roleEntity.setCreatedAt(roleVO.getCreatedAt());
+        roleEntity.setModifiedBy(roleVO.getModifiedBy());
+        roleEntity.setModifiedAt(roleVO.getModifiedAt());
         
         userEntity.setRole(roleEntity);
         
@@ -140,20 +142,23 @@ public class UserServiceImpl implements UserService {
                 UserEntity userEntity = userEntityOptional.get();
                 
                 userEntity.setUserName(userVO.getUserName());
-                userEntity.setPassword(userVO.getPassword());
+                userEntity.setPassword(userVO.getPassword()); 
                 userEntity.setIsActive(userVO.getIsActive());
+                userEntity.setCreatedBy(userVO.getCreatedBy());
+                userEntity.setCreatedAt(userVO.getCreatedAt());
                 userEntity.setModifiedBy(userVO.getModifiedBy());
                 userEntity.setModifiedAt(userVO.getModifiedAt());
                 
-                RoleVO roleVo = userVO.getRole();
+                RoleVO roleVO = userVO.getRole();
                 
                 RoleEntity roleEntity = new RoleEntity();
-                roleEntity.setRoleName(roleVo.getRoleName());
-                roleEntity.setIsActive(roleVo.getIsActive());
-                roleEntity.setCreatedBy(roleVo.getCreatedBy());
-                roleEntity.setCreatedAt(roleVo.getCreatedAt());
-                roleEntity.setModifiedBy(roleVo.getModifiedBy());
-                roleEntity.setModifiedAt(roleVo.getModifiedAt());
+                roleEntity.setRoleId(roleVO.getRoleId());
+                roleEntity.setRoleName(roleVO.getRoleName());
+                roleEntity.setIsActive(roleVO.getIsActive());
+                roleEntity.setCreatedBy(roleVO.getCreatedBy());
+                roleEntity.setCreatedAt(roleVO.getCreatedAt());
+                roleEntity.setModifiedBy(roleVO.getModifiedBy());
+                roleEntity.setModifiedAt(roleVO.getModifiedAt());
                 
                 userEntity.setRole(roleEntity);
                 
@@ -173,4 +178,15 @@ public class UserServiceImpl implements UserService {
     	userRepo.deleteById(id);
 		return true;
     }
+
+	@Override
+	public UserEntity findByUserNameAndPassword(String userName, String password) {
+		// TODO Auto-generated method stub
+		Optional<UserEntity> userEntityOptional = userRepo.findByUserNameAndPassword(userName, password);
+		if (userEntityOptional.isPresent()) {
+			UserEntity userEntity = userEntityOptional.get();
+			return userEntity;
+		}
+		return null;
+	}
 }

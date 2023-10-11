@@ -23,6 +23,7 @@ public class VendorServiceImpl implements VendorService {
 
     @Override
     public List<VendorVO> getAllVendor() {
+    	
         List<VendorVO> vendorVOList = new ArrayList<>();
         List<VendorEntity> vendorEntityList = vendorRepo.findAll();
 
@@ -135,6 +136,7 @@ public class VendorServiceImpl implements VendorService {
     @Override
     public boolean saveVendor(VendorVO vendorVO) {
         VendorEntity vendorEntity = new VendorEntity();
+        
         vendorEntity.setVendorName(vendorVO.getVendorName());
         vendorEntity.setPhoneNumber(vendorVO.getPhoneNumber());
         vendorEntity.setGst(vendorVO.getGst());
@@ -150,6 +152,7 @@ public class VendorServiceImpl implements VendorService {
         UserVO userVO=vendorVO.getUser();
         
         UserEntity userEntity = new UserEntity();
+        userEntity.setUserId(userVO.getUserId());
         userEntity.setUserName(userVO.getUserName());
         userEntity.setPassword(userVO.getPassword());
         userEntity.setIsActive(userVO.getIsActive());
@@ -163,6 +166,7 @@ public class VendorServiceImpl implements VendorService {
         RoleVO roleVo = userVO.getRole();
         
         RoleEntity roleEntity = new RoleEntity();
+        roleEntity.setRoleId(roleVo.getRoleId());
         roleEntity.setRoleName(roleVo.getRoleName());
         roleEntity.setIsActive(roleVo.getIsActive());
         roleEntity.setCreatedBy(roleVo.getCreatedBy());
@@ -207,6 +211,7 @@ public class VendorServiceImpl implements VendorService {
                 UserVO userVO=vendorVO.getUser();
                 
                 UserEntity userEntity = new UserEntity();
+                userEntity.setUserId(userVO.getUserId());
                 userEntity.setUserName(userVO.getUserName());
                 userEntity.setPassword(userVO.getPassword());
                 userEntity.setIsActive(userVO.getIsActive());
@@ -219,6 +224,7 @@ public class VendorServiceImpl implements VendorService {
                 RoleVO roleVo = userVO.getRole();
                 
                 RoleEntity roleEntity = new RoleEntity();
+                roleEntity.setRoleId(roleVo.getRoleId());
                 roleEntity.setRoleName(roleVo.getRoleName());
                 roleEntity.setIsActive(roleVo.getIsActive());
                 roleEntity.setCreatedBy(roleVo.getCreatedBy());

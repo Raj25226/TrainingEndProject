@@ -7,9 +7,13 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.mj.entity.CategoryEntity;
+import com.mj.entity.ManufacturerEntity;
 import com.mj.entity.ProductEntity;
 import com.mj.repository.ProductRepo;
 import com.mj.service.ProductService;
+import com.mj.vo.CategoryVO;
+import com.mj.vo.ManufacturerVO;
 import com.mj.vo.ProductVO;
 
 @Service
@@ -27,6 +31,33 @@ public class ProductServiceImpl implements ProductService {
 		
 		for(ProductEntity productEntity:productEntityList) {
 			
+			CategoryVO categoryVO=new CategoryVO(
+					productEntity.getCategory().getCategoryId(),
+					productEntity.getCategory().getCategoryName(),
+					productEntity.getCategory().getCategoryCode(),
+					productEntity.getCategory().getIsActive(),
+					productEntity.getCategory().getCreatedBy(),
+					productEntity.getCategory().getCreatedAt(),
+					productEntity.getCategory().getModifiedBy(),
+					productEntity.getCategory().getModifiedAt());
+			
+			List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+			
+			for(ManufacturerEntity manufacturerEntity:productEntity.getManufacturer()) {
+				
+				ManufacturerVO manufacturerVO=new ManufacturerVO(
+						manufacturerEntity.getManufacturerId(),
+						manufacturerEntity.getManufacturerName(),
+						manufacturerEntity.getIsActive(),
+						manufacturerEntity.getCreatedBy(),
+						manufacturerEntity.getCreatedAt(),
+						manufacturerEntity.getModifiedBy(),
+						manufacturerEntity.getModifiedAt());
+				
+				manufacturerVOList.add(manufacturerVO);
+			}
+					
+			
 			ProductVO productVO=new ProductVO(
 					productEntity.getProductId(),
 					productEntity.getProductName(),
@@ -37,7 +68,9 @@ public class ProductServiceImpl implements ProductService {
 					productEntity.getCreatedBy(),
 					productEntity.getCreatedAt(),
 					productEntity.getModifiedBy(),
-					productEntity.getModifiedAt());	
+					productEntity.getModifiedAt(),
+					categoryVO,
+					manufacturerVOList);	
 			
 			productVOList.add(productVO);
 		}
@@ -53,7 +86,33 @@ public class ProductServiceImpl implements ProductService {
 		if(productEntity.isEmpty()) {
 			return null;
 		}
-				
+		
+		CategoryVO categoryVO=new CategoryVO(
+				productEntity.get().getCategory().getCategoryId(),
+				productEntity.get().getCategory().getCategoryCode(),
+				productEntity.get().getCategory().getCategoryName(),
+				productEntity.get().getCategory().getIsActive(),
+				productEntity.get().getCategory().getCreatedBy(),
+				productEntity.get().getCategory().getCreatedAt(),
+				productEntity.get().getCategory().getModifiedBy(),
+				productEntity.get().getCategory().getModifiedAt());
+		
+		List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+		
+		for(ManufacturerEntity manufacturerEntity:productEntity.get().getManufacturer()) {
+		
+		ManufacturerVO manufacturerVO=new ManufacturerVO(
+				manufacturerEntity.getManufacturerId(),
+				manufacturerEntity.getManufacturerName(),
+				manufacturerEntity.getIsActive(),
+				manufacturerEntity.getCreatedBy(),
+				manufacturerEntity.getCreatedAt(),
+				manufacturerEntity.getModifiedBy(),
+				manufacturerEntity.getModifiedAt());
+		
+		manufacturerVOList.add(manufacturerVO);
+	}
+
 		ProductVO productVO=new ProductVO(
 				productEntity.get().getProductId(),
 				productEntity.get().getProductName(),
@@ -64,13 +123,43 @@ public class ProductServiceImpl implements ProductService {
 				productEntity.get().getCreatedBy(),
 				productEntity.get().getCreatedAt(),
 				productEntity.get().getModifiedBy(),
-				productEntity.get().getModifiedAt());
+				productEntity.get().getModifiedAt(),
+				categoryVO,
+				manufacturerVOList);
 		
 		return productVO;
 	}
 
 	@Override
 	public void saveProduct(ProductVO productVO) {
+		
+
+		CategoryEntity categoryEntity=new CategoryEntity(
+				productVO.getCategory().getCategoryId(),
+				productVO.getCategory().getCategoryName(),
+				productVO.getCategory().getCategoryCode(),
+				productVO.getCategory().getIsActive(),
+				productVO.getCategory().getCreatedBy(),
+				productVO.getCategory().getCreatedAt(),
+				productVO.getCategory().getModifiedBy(),
+				productVO.getCategory().getModifiedAt());
+		
+		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
+		
+		for(ManufacturerVO manufacturerVO:productVO.getManufacturer()) {
+			
+			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
+					manufacturerVO.getManufacturerId(),
+					manufacturerVO.getManufacturerName(),
+					manufacturerVO.getIsActive(),
+					manufacturerVO.getCreatedBy(),
+					manufacturerVO.getCreatedAt(),
+					manufacturerVO.getModifiedBy(),
+					manufacturerVO.getModifiedAt());
+			
+			manufacturerEntityList.add(manufacturerEntity);
+		}
+		
 		
 		ProductEntity productEntity= new ProductEntity(
 				productVO.getProductId(),
@@ -82,7 +171,9 @@ public class ProductServiceImpl implements ProductService {
 				productVO.getCreatedBy(),
 				productVO.getCreatedAt(),
 				productVO.getModifiedBy(),
-				productVO.getModifiedAt());
+				productVO.getModifiedAt(),
+				categoryEntity,
+				manufacturerEntityList);
 		
 		productRepo.save(productEntity);
 				
@@ -95,6 +186,33 @@ public class ProductServiceImpl implements ProductService {
 			return false;
 		}
 			
+		CategoryEntity categoryEntity=new CategoryEntity(
+				productVO.getCategory().getCategoryId(),
+				productVO.getCategory().getCategoryName(),
+				productVO.getCategory().getCategoryCode(),
+				productVO.getCategory().getIsActive(),
+				productVO.getCategory().getCreatedBy(),
+				productVO.getCategory().getCreatedAt(),
+				productVO.getCategory().getModifiedBy(),
+				productVO.getCategory().getModifiedAt());
+		
+		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
+		
+		for(ManufacturerVO manufacturerVO:productVO.getManufacturer()) {
+			
+			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
+					manufacturerVO.getManufacturerId(),
+					manufacturerVO.getManufacturerName(),
+					manufacturerVO.getIsActive(),
+					manufacturerVO.getCreatedBy(),
+					manufacturerVO.getCreatedAt(),
+					manufacturerVO.getModifiedBy(),
+					manufacturerVO.getModifiedAt());
+			
+			manufacturerEntityList.add(manufacturerEntity);
+		}
+		
+		
 		ProductEntity productEntity= new ProductEntity(
 				productVO.getProductId(),
 				productVO.getProductName(),
@@ -105,7 +223,9 @@ public class ProductServiceImpl implements ProductService {
 				productVO.getCreatedBy(),
 				productVO.getCreatedAt(),
 				productVO.getModifiedBy(),
-				productVO.getModifiedAt());
+				productVO.getModifiedAt(),
+				categoryEntity,
+				manufacturerEntityList);
 		
 		productRepo.save(productEntity);
 		

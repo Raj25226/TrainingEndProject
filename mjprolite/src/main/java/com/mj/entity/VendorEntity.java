@@ -48,6 +48,7 @@ public class VendorEntity {
 	private LocalDate modifiedAt;
 	
 	@OneToOne(cascade=CascadeType.ALL)
+
 	@JoinColumn(name="user_id")
 	private UserEntity user;
 

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -44,10 +45,9 @@ public class IndentEntity {
 	private String modifiedBy;
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
-	
-//	@OneToOne
-//	@JoinColumn(name="product_id")
-//	private ProductEntity product;
+	@OneToOne
+	@JoinColumn(name="product_id")
+	private ProductEntity product;
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="indent_header_id")
 	private IndentHeaderEntity indentHeaderEntity;

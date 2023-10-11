@@ -3,6 +3,7 @@ package com.mj.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mj.entity.UserEntity;
 import com.mj.service.UserService;
 import com.mj.utility.Authorizer;
 import com.mj.vo.UserVO;
@@ -66,7 +68,7 @@ public class UserController {
 			return ResponseEntity.noContent().build();
 		}
         else {
-        	userService.updateUser(userVO1);
+        	userService.updateUser(userVO);
         	return ResponseEntity.ok("User Updated Successfully");
         }
     }
@@ -74,8 +76,8 @@ public class UserController {
 	
 	@DeleteMapping("/user/{id}")
 	ResponseEntity<String> deleteUserById(@PathVariable int id) {
-		UserVO userVO1=userService.getUserById(id);
-		if(userVO1==null) {
+		UserVO userVO=userService.getUserById(id);
+		if(userVO==null) {
 			return ResponseEntity.noContent().build();
 		}
 		else {
@@ -83,5 +85,41 @@ public class UserController {
 			return ResponseEntity.ok("User Deleted Successfully");
 		}
 	}
+	
+//	@PostMapping("/user/login")
+//	public ResponseEntity<String> login(@RequestBody UserVO userVO) {
+//	    String userName = userVO.getUserName();
+//	    String password = userVO.getPassword();
+//
+//	    UserEntity user = userService.findByUserNameAndPassword(userName, password);
+//
+//	    if (user != null) {
+//	        // Authentication successful, return a success message or a token
+//	        return ResponseEntity.ok("Authentication successful");
+//	    } else {
+//	        // Authentication failed, return an appropriate error message
+//	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+//	    }
+//	}
+	
+	@PostMapping("/user/login")
+	public ResponseEntity<String> login(@RequestBody UserVO userVO) {
+	    String userName = userVO.getUserName();
+	    String password = userVO.getPassword();
+
+	    UserEntity user = userService.findByUserNameAndPassword(userName, password);
+	    System.out.println(user);
+
+	    if (user != null) {
+	        // Authentication successful, return an appropriate success response
+	        return ResponseEntity.ok("Authentication successful");
+	    } else {
+	        // Authentication failed, return an appropriate error response
+	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
+	    }
+	}
+
+
+
 
 }
