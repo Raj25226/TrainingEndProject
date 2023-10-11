@@ -7,10 +7,28 @@ const LogIn = () => {
     const [password, setPassword] = useState("");
 
     const handleLogin = async () => {
-        // Add your authentication logic here
-        // You may make an API request to your server to validate the credentials
-
-        // For simplicity, let's just log the credentials for now
+        try {
+            const response = await fetch('https://api.example.com/login', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username, password }),
+            });
+      
+            if (response.ok) {
+              const result = await response.json();
+              console.log('Login successful:', result);
+              if(result.role.roleId===1){
+                <Redirect to="/indentlist" />
+              }
+            } else {
+              console.error('Login failed');
+              <Redirect to="/" />
+            }
+          } catch (error) {
+            console.error('Error during login:', error);
+          }
         console.log("Username:", username);
         console.log("Password:", password);
 
