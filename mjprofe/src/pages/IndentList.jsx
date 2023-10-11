@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 import AddIndent from './AddIndent';
-
+import ViewIndents from './ViewIndent';
+import EditIndent from './EditIndent';
 const IndentList = () => {
   const [items, setItems] = useState([]);
   const [showAddModal, setShowAddModal] = useState(false);
+  const [showviewModal, setviewAddModal] = useState(false); 
+  const [showeditModal, seteditAddModal] = useState(false); 
   const [newItem, setNewItem] = useState({
     field1: '',
     field2: '',
@@ -15,7 +18,7 @@ const IndentList = () => {
 
   const fetchApiData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mj/indentheader');
+      const response = await fetch('http://localhost:8080/mj/user');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -100,7 +103,7 @@ const IndentList = () => {
               <tbody>
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.indentHeaderId}</td>
+                    <td>{item.userId}</td>
                     <td>{item.description}</td>
                     <td>{item.netprice}</td>
                     <td>
@@ -112,13 +115,13 @@ const IndentList = () => {
                       </button>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => handleViewItem(index)}
+                        onClick={() => setviewAddModal(true)}
                       >
                         <i className="bi bi-eye"></i>
                       </button>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => handleEditItem(index)}
+                        onClick={() => seteditAddModal(true)}
                       >
                         <i className="bi bi-pen"></i>
                       </button>
@@ -130,6 +133,7 @@ const IndentList = () => {
           )}
         </div>
       </div>
+      
       {showAddModal && (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
           <div className="modal-dialog" role="document">
@@ -148,15 +152,70 @@ const IndentList = () => {
               </div>
               <div className="modal-body">
                 <div className="form-group">
-                  <AddIndent></AddIndent>
+                <AddIndent></AddIndent>
                 </div>
               </div>
             </div>
           </div>
         </div>
       )}
+      {showviewModal && (
+        <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Item</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => setviewAddModal(false)}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                 
+                  <ViewIndents></ViewIndents>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {showeditModal && (
+        <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
+          <div className="modal-dialog" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Item</h5>
+                <button
+                  type="button"
+                  className="close"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                  onClick={() => seteditAddModal(false)}
+                >
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group">
+                 
+                  <EditIndent></EditIndent>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      
     </div>
   );
 };
+
+
 
 export default IndentList;
