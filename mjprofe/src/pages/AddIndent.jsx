@@ -8,17 +8,14 @@ const AddIndent = () => {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [unitMeasurement, setUnitMeasurement] = useState(null);
-    const [selectedManufacturer, setSelectedManufacturer] = useState(null);
     const [loadingCategories, setLoadingCategories ] = useState(true);
     const [loadingProducts, setLoadingProducts ] = useState(true);
-
-
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
+    const [indentId, setIndentId] = useState([]);
+    const [description,setDescription] =useState(null);
 
-    const products = ["Product1", "Product2", "Product3"]; // Replace with your actual product data
-    const categories = ["Category1", "Category2", "Category3"]; // Replace with your actual category data
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
 
     useEffect(() => {
@@ -29,9 +26,6 @@ const AddIndent = () => {
                 );
                 setCategory(response.data);
                 console.log(response.data);
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
                 const result = response.data;
                 setCategory(result);
             } catch (error) {
@@ -46,8 +40,6 @@ const AddIndent = () => {
                 const response = await axios.get(
                     "http://localhost:8080/mj/product"
                 );
-
-
                 const result = await response.data;
                 console.log(result);
                 setProduct(result);
@@ -62,6 +54,18 @@ const AddIndent = () => {
         fetchProducts();
     }, []);
 
+    const getIndentheaderId= async()=>{
+      const response1 = await fetch("http://localhost:8080/mj/indentheader/desc", {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain",
+            },
+            body: description
+        });
+        console.log(response1);
+        // setIndentId(response1);
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -71,7 +75,7 @@ const AddIndent = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                description: "Description",
+              description: "Description",
                 netprice: price * quantity,
                 isActive: 1,
                 createdBy: "Raj",
@@ -86,6 +90,8 @@ const AddIndent = () => {
                 },
             }),
         });
+
+        getIndentheaderId();
 
         try {
             const response = await fetch("http://localhost:8080/mj/indent", {
@@ -103,9 +109,9 @@ const AddIndent = () => {
                     modifiedBy: "Raj",
                     modifiedAt: Date(),
                     product: {
-                        productId: 1,
+                        productId: selectedProduct,
                         category: {
-                            categoryId: 1,
+                            categoryId: selectedCategory,
                         },
                     },
                     indentHeaderVO: {
@@ -202,6 +208,19 @@ const AddIndent = () => {
                                         ))}
                                     </select>
                                 </div>
+                                <div className="col">
+                                        <label className="form-label">
+                                            Description:
+                                        </label>
+                                        <input
+                                            type="text"
+                                            className="form-control"
+                                            value={description}
+                                            onChange={(e) =>
+                                                setDescription(e.target.value)
+                                            }
+                                        />
+                                    </div>
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label className="form-label">
