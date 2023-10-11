@@ -27,16 +27,23 @@ public class UOMServiceImpl implements UOMService{
 		List<UOMVO> uomVOList=new ArrayList<>();
 		
 		for(UOMEntity uomEntity: uomEntityList) {
-			CategoryVO categoryVO =new CategoryVO(
-					uomEntity.getCategory().getCategoryId(),				
-					uomEntity.getCategory().getCategoryName(),
-					uomEntity.getCategory().getCategoryCode(),
-					uomEntity.getCategory().getIsActive(),
-					uomEntity.getCategory().getCreatedBy(),
-					uomEntity.getCategory().getCreatedAt(),
-					uomEntity.getCategory().getModifiedBy(),
-					uomEntity.getCategory().getModifiedAt()			
-					);
+			
+				List<CategoryVO> categoryVOList =new ArrayList<>();
+				List<CategoryEntity> categoryEntityList =uomEntity.getCategory();
+				for(CategoryEntity categoryEntity: categoryEntityList) {
+				CategoryVO categoryVO =new CategoryVO(
+						categoryEntity.getCategoryId(),				
+						categoryEntity.getCategoryName(),
+						categoryEntity.getCategoryCode(),
+						categoryEntity.getIsActive(),
+						categoryEntity.getCreatedBy(),
+						categoryEntity.getCreatedAt(),
+						categoryEntity.getModifiedBy(),
+						categoryEntity.getModifiedAt()			
+						);
+				 categoryVOList.add(categoryVO);
+				}
+
 			UOMVO uomvo=new UOMVO(
 					uomEntity.getUomId(),
 					uomEntity.getUnit(),
@@ -45,7 +52,7 @@ public class UOMServiceImpl implements UOMService{
 					uomEntity.getCreatedAt(),
 					uomEntity.getModifiedBy(),
 					uomEntity.getModifiedAt(),
-					categoryVO										
+					categoryVOList									
 			);
 			uomVOList.add(uomvo);
 		}
@@ -53,23 +60,27 @@ public class UOMServiceImpl implements UOMService{
 	}
 
 	@Override
-	public UOMVO getUOMById(int id) {
-		
+	public UOMVO getUOMById(int id) {		
 		
 		Optional<UOMEntity> uomEntity=uomrepo.findById(id);
 		if(uomEntity.isEmpty()) {
 			return null;
 		}
+		List<CategoryVO> categoryVOList =new ArrayList<>();
+		List<CategoryEntity> categoryEntityList =uomEntity.get().getCategory();
+		for(CategoryEntity categoryEntity: categoryEntityList) {
 		CategoryVO categoryVO =new CategoryVO(
-				uomEntity.get().getCategory().getCategoryId(),				
-				uomEntity.get().getCategory().getCategoryName(),
-				uomEntity.get().getCategory().getCategoryCode(),
-				uomEntity.get().getCategory().getIsActive(),
-				uomEntity.get().getCategory().getCreatedBy(),
-				uomEntity.get().getCategory().getCreatedAt(),
-				uomEntity.get().getCategory().getModifiedBy(),
-				uomEntity.get().getCategory().getModifiedAt()						
-		);
+				categoryEntity.getCategoryId(),				
+				categoryEntity.getCategoryName(),
+				categoryEntity.getCategoryCode(),
+				categoryEntity.getIsActive(),
+				categoryEntity.getCreatedBy(),
+				categoryEntity.getCreatedAt(),
+				categoryEntity.getModifiedBy(),
+				categoryEntity.getModifiedAt()			
+				);
+		 categoryVOList.add(categoryVO);
+		}
 								
 		UOMVO uomVo=new UOMVO(
 			uomEntity.get().getUomId(),
@@ -78,25 +89,30 @@ public class UOMServiceImpl implements UOMService{
 			uomEntity.get().getCreatedBy(),
 			uomEntity.get().getCreatedAt(),
 			uomEntity.get().getModifiedBy(),
-			uomEntity.get().getModifiedAt()	,
-			categoryVO
+			uomEntity.get().getModifiedAt(),
+			categoryVOList
 		);		
 		return uomVo;
 	}
 	@Override
 	public void saveUOM(UOMVO uomVO) {
 		
-		
+		List<CategoryEntity> categoryEntityList =new ArrayList<>();
+		List<CategoryVO> categoryVOList =uomVO.getCategory();
+		for(CategoryVO categoryVO: categoryVOList) {
 		CategoryEntity categoryEntity = new CategoryEntity(
-			uomVO.getCategory().getCategoryId(),
-			uomVO.getCategory().getCategoryName(),
-			uomVO.getCategory().getCategoryCode(),
-			uomVO.getCategory().getIsActive(),
-			uomVO.getCategory().getCreatedBy(),
-			uomVO.getCategory().getCreatedAt(),			
-			uomVO.getCategory().getModifiedBy(),
-			uomVO.getCategory().getModifiedAt()
+		categoryVO.getCategoryId(),
+			categoryVO.getCategoryName(),
+			categoryVO.getCategoryCode(),
+			categoryVO.getIsActive(),
+			categoryVO.getCreatedBy(),
+			categoryVO.getCreatedAt(),			
+			categoryVO.getModifiedBy(),
+			categoryVO.getModifiedAt()
 		);
+		categoryEntityList.add(categoryEntity);
+		}
+		
 		UOMEntity uomEntity=new UOMEntity(
 				uomVO.getUomId(),
 				uomVO.getUnit(),
@@ -105,7 +121,7 @@ public class UOMServiceImpl implements UOMService{
 				uomVO.getCreatedAt(),
 				uomVO.getModifiedBy(),
 				uomVO.getModifiedAt(),
-				categoryEntity
+				categoryEntityList
 			);
 			
 		uomrepo.save(uomEntity);
@@ -116,16 +132,21 @@ public class UOMServiceImpl implements UOMService{
 		if(getUOMById(uomVO.getUomId())==null) {
 			return false;
 		}
+		List<CategoryEntity> categoryEntityList =new ArrayList<>();
+		List<CategoryVO> categoryVOList =uomVO.getCategory();
+		for(CategoryVO categoryVO: categoryVOList) {
 		CategoryEntity categoryEntity = new CategoryEntity(
-				uomVO.getCategory().getCategoryId(),
-				uomVO.getCategory().getCategoryName(),
-				uomVO.getCategory().getCategoryCode(),
-				uomVO.getCategory().getIsActive(),
-				uomVO.getCategory().getCreatedBy(),
-				uomVO.getCategory().getCreatedAt(),			
-				uomVO.getCategory().getModifiedBy(),
-				uomVO.getCategory().getModifiedAt()
-			);
+		categoryVO.getCategoryId(),
+			categoryVO.getCategoryName(),
+			categoryVO.getCategoryCode(),
+			categoryVO.getIsActive(),
+			categoryVO.getCreatedBy(),
+			categoryVO.getCreatedAt(),			
+			categoryVO.getModifiedBy(),
+			categoryVO.getModifiedAt()
+		);
+		categoryEntityList.add(categoryEntity);
+		}
 		UOMEntity uomEntity=new UOMEntity(
 				uomVO.getUomId(),
 				uomVO.getUnit(),
@@ -134,7 +155,7 @@ public class UOMServiceImpl implements UOMService{
 				uomVO.getCreatedAt(),
 				uomVO.getModifiedBy(),
 				uomVO.getModifiedAt()	,
-				categoryEntity
+				categoryEntityList
 			);
 			
 		uomrepo.save(uomEntity);
@@ -149,6 +170,44 @@ public class UOMServiceImpl implements UOMService{
 		
 		uomrepo.deleteById(id);
 		return true;
+	}
+
+	@Override
+	public List<UOMVO> uomList(int id) {
+
+		List<UOMEntity> uomEntityList=uomrepo.showAllUOM(id);
+		List<UOMVO> uomVOList=new ArrayList<>();
+		
+		for(UOMEntity uomEntity: uomEntityList) {
+			List<CategoryVO> categoryVOList =new ArrayList<>();
+			List<CategoryEntity> categoryEntityList =uomEntity.getCategory();
+			for(CategoryEntity categoryEntity: categoryEntityList) {
+			CategoryVO categoryVO =new CategoryVO(
+					categoryEntity.getCategoryId(),				
+					categoryEntity.getCategoryName(),
+					categoryEntity.getCategoryCode(),
+					categoryEntity.getIsActive(),
+					categoryEntity.getCreatedBy(),
+					categoryEntity.getCreatedAt(),
+					categoryEntity.getModifiedBy(),
+					categoryEntity.getModifiedAt()			
+					);
+			 categoryVOList.add(categoryVO);
+			}
+			UOMVO uomvo=new UOMVO(
+					uomEntity.getUomId(),
+					uomEntity.getUnit(),
+					uomEntity.getIsActive(),
+					uomEntity.getCreatedBy(),
+					uomEntity.getCreatedAt(),
+					uomEntity.getModifiedBy(),
+					uomEntity.getModifiedAt(),
+					categoryVOList									
+			);
+			uomVOList.add(uomvo);
+		}
+			
+		return uomVOList;
 	}
 
 }

@@ -12,5 +12,6 @@ public interface UOMService {
 	void saveUOM(UOMVO deptVo);
 	Boolean updateUOM(UOMVO deptVo);	
 	Boolean deleteUOMById(int id);
+	List<UOMVO> uomList(int id);
 	
 }

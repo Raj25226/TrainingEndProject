@@ -1,6 +1,7 @@
 package com.mj.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -9,6 +10,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -40,8 +43,12 @@ public class UOMEntity {
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="category_id")
-	private CategoryEntity category;
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(
+			  name = "category_uom",
+			  joinColumns = @JoinColumn(name = "uom_id"),
+			  inverseJoinColumns = @JoinColumn(name = "category_id"))
+	private List<CategoryEntity> category;
 	
 }
