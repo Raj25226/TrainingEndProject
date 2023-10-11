@@ -1,38 +1,40 @@
 import React, { useState } from "react";
 import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 const LogIn = () => {
-    const [username, setUsername] = useState("");
+    const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+
+    const navigate=useNavigate();
 
     const handleLogin = async () => {
         try {
-            const response = await fetch('https://api.example.com/login', {
+            const response = await fetch('//localhost:8080/mj/user/login', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
               },
-              body: JSON.stringify({ username, password }),
+              body: JSON.stringify({ userName, password }),
             });
       
             if (response.ok) {
               const result = await response.json();
               console.log('Login successful:', result);
-              if(result.role.roleId===1){
-                <Redirect to="/indentlist" />
-              }
+            //   if(result.role.roleId===1){
+                navigate('/indentlist');
+            //   }
             } else {
               console.error('Login failed');
-              <Redirect to="/" />
+              navigate('/');
             }
           } catch (error) {
             console.error('Error during login:', error);
           }
-        console.log("Username:", username);
+        console.log("Username:", userName);
         console.log("Password:", password);
 
-        setUsername("");
+        setUserName("");
         setPassword("");
     };
 
@@ -55,9 +57,9 @@ const LogIn = () => {
                                         type="text"
                                         className="form-control"
                                         id="username"
-                                        value={username}
+                                        value={userName}
                                         onChange={(e) =>
-                                            setUsername(e.target.value)
+                                            setUserName(e.target.value)
                                         }
                                     />
                                 </div>
