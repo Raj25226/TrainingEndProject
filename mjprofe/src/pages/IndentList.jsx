@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import AddIndent from './AddIndent';
 
 const IndentList = () => {
   const [items, setItems] = useState([]);
@@ -124,7 +125,7 @@ const IndentList = () => {
       </div>
       {showAddModal && (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog" role="document" style={{ maxWidth: '80%' }}>
             <div className="modal-content">
               <div className="modal-header">
                 <h5 className="modal-title">Add Item</h5>
@@ -140,61 +141,9 @@ const IndentList = () => {
               </div>
               <div className="modal-body">
                 <div className="form-group">
-                  <label htmlFor="field1">Field 1</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="field1"
-                    value={newItem.field1}
-                    onChange={(e) => setNewItem({ ...newItem, field1: e.target.value })}
-                  />
+                 
+                 <AddIndent></AddIndent>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="field2">Field 2</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="field2"
-                    value={newItem.field2}
-                    onChange={(e) => setNewItem({ ...newItem, field2: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="field3">Field 3</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="field3"
-                    value={newItem.field3}
-                    onChange={(e) => setNewItem({ ...newItem, field3: e.target.value })}
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="field4">Field 4</label>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id="field4"
-                    value={newItem.field4}
-                    onChange={(e) => setNewItem({ ...newItem, field4: e.target.value })}
-                  />
-                </div>
-              </div>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="btn btn-primary"
-                  onClick={handleAddItem}
-                >
-                  Add
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-secondary"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  Cancel
-                </button>
               </div>
             </div>
           </div>
