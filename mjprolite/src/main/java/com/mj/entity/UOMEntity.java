@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -44,7 +43,7 @@ public class UOMEntity {
 	private LocalDate modifiedAt;
 	
 	
-	@ManyToMany(cascade = CascadeType.MERGE)
+	@ManyToMany(cascade = CascadeType.ALL)
 	@JoinTable(
 			  name = "category_uom",
 			  joinColumns = @JoinColumn(name = "uom_id"),
