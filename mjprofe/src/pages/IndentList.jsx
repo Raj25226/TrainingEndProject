@@ -52,6 +52,9 @@ const IndentList = () => {
           </button>
         </div>
         <div className="card-body">
+        {items.length === 0 ? (
+            <p><h6>No Data Found</h6></p>
+          ) : (
           <table className="table">
             <thead>
               <tr>
@@ -93,6 +96,7 @@ const IndentList = () => {
               ))}
             </tbody>
           </table>
+          )}
         </div>
       </div>
       {showAddModal && (
