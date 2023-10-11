@@ -180,13 +180,39 @@ public class UserServiceImpl implements UserService {
     }
 
 	@Override
-	public UserEntity findByUserNameAndPassword(String userName, String password) {
+	public UserVO findByUserNameAndPassword(String userName, String password) {
 		// TODO Auto-generated method stub
 		Optional<UserEntity> userEntityOptional = userRepo.findByUserNameAndPassword(userName, password);
-		if (userEntityOptional.isPresent()) {
-			UserEntity userEntity = userEntityOptional.get();
-			return userEntity;
-		}
-		return null;
+        if (userEntityOptional.isPresent()) {
+        	
+            UserEntity userEntity = userEntityOptional.get();
+            UserVO userVO = new UserVO();
+       	 
+            userVO.setUserId(userEntity.getUserId());
+            userVO.setUserName(userEntity.getUserName());
+            userVO.setPassword(userEntity.getPassword()); 
+            userVO.setIsActive(userEntity.getIsActive());
+            userVO.setCreatedBy(userEntity.getCreatedBy());
+            userVO.setCreatedAt(userEntity.getCreatedAt());
+            userVO.setModifiedBy(userEntity.getModifiedBy());
+            userVO.setModifiedAt(userEntity.getModifiedAt());
+            
+            RoleEntity roleEntity = userEntity.getRole();
+            
+            RoleVO roleVO = new RoleVO();
+            roleVO.setRoleId(roleEntity.getRoleId());
+            roleVO.setRoleName(roleEntity.getRoleName());
+            roleVO.setIsActive(roleEntity.getIsActive());
+            roleVO.setCreatedBy(roleEntity.getCreatedBy());
+            roleVO.setCreatedAt(roleEntity.getCreatedAt());
+            roleVO.setModifiedBy(roleEntity.getModifiedBy());
+            roleVO.setModifiedAt(roleEntity.getModifiedAt());
+            
+            userVO.setRole(roleVO);
+            
+            return userVO;
+        } else {
+        	return null;
+        } 
 	}
 }

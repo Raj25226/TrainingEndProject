@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.mj.entity.UserEntity;
 import com.mj.service.UserService;
 import com.mj.utility.Authorizer;
 import com.mj.vo.UserVO;
@@ -97,12 +95,12 @@ public class UserController {
 	    String userName = userVO.getUserName();
 	    String password = Authorizer.getMd5(userVO.getPassword());
 
-	    UserEntity user = userService.findByUserNameAndPassword(userName, password);
-	    System.out.println(user);
+	    UserVO user = userService.findByUserNameAndPassword(userName, password);
+	    
 
 	    if (user != null) {
 	        // Authentication successful, return an appropriate success response
-	        return ResponseEntity.ok(userVO);
+	        return ResponseEntity.ok(user);
 	    } else {
 			HttpHeaders header=new HttpHeaders();
 			header.add("Data", "No Data Found");
