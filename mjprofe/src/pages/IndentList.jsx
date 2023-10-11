@@ -35,7 +35,7 @@ const IndentList = () => {
   const handleDeleteindent = async (id) => {
     // Send a DELETE request to the backend API with the item's ID.
     console.log(id);
-    fetch(`http://localhost:8080/mj/indent/${id}`, {
+    fetch(`http://localhost:8080/mj/indent1/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
@@ -51,10 +51,10 @@ const IndentList = () => {
         console.error('Error deleting item:', error);
       });
   };
-  const handleDeleteItem = async (id,id1) => {
+  const handleDeleteItem = async (id) => {
     // Send a DELETE request to the backend API with the item's ID.
 
-    await handleDeleteindent(id1);
+    await handleDeleteindent(id);
     try {
       const response = await fetch(`http://localhost:8080/mj/indentheader/${id}`, {
         method: 'DELETE',
@@ -103,13 +103,13 @@ const IndentList = () => {
               <tbody>
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.indentheader}</td>
+                    <td>{item.indentheaderId}</td>
                     <td>{item.description}</td>
                     <td>{item.netprice}</td>
                     <td>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => handleDeleteItem(item.indentHeaderId,item.indent.indentId)}
+                        onClick={() => handleDeleteItem(item.indentHeaderId)}
                       >
                         <i className="bi bi-trash"></i>
                       </button>
