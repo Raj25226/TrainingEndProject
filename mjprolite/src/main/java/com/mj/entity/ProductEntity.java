@@ -50,11 +50,11 @@ public class ProductEntity {
 	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="category_id")
 	private CategoryEntity category;
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(
-			  name = "product_manufacturer",
-			  joinColumns = @JoinColumn(name = "product_id"),
-			  inverseJoinColumns = @JoinColumn(name = "manufacturer_id"))
-	private List<ManufacturerEntity> manufacturer;
+//	@ManyToMany(cascade = CascadeType.ALL)
+//	@JoinTable(
+//			  name = "product_manufacturer",
+//			  joinColumns = @JoinColumn(name = "product_id"),
+//			  inverseJoinColumns = @JoinColumn(name = "manufacturer_id"))
+//	private List<ManufacturerEntity> manufacturer;
 	
 }

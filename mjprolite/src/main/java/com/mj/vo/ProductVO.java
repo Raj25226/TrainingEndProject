@@ -1,7 +1,6 @@
 package com.mj.vo;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,5 +22,5 @@ public class ProductVO {
 	private String modifiedBy;
 	private LocalDate modifiedAt;
 	private CategoryVO category;
-	private List<ManufacturerVO> manufacturer;
+//	private List<ManufacturerVO> manufacturer;
 }

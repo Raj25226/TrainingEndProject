@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import com.mj.entity.CategoryEntity;
 import com.mj.entity.IndentEntity;
 import com.mj.entity.IndentHeaderEntity;
-import com.mj.entity.ManufacturerEntity;
 import com.mj.entity.ProductEntity;
 import com.mj.entity.RoleEntity;
 import com.mj.entity.UserEntity;
@@ -19,7 +18,6 @@ import com.mj.service.IndentService;
 import com.mj.vo.CategoryVO;
 import com.mj.vo.IndentHeaderVO;
 import com.mj.vo.IndentVO;
-import com.mj.vo.ManufacturerVO;
 import com.mj.vo.ProductVO;
 import com.mj.vo.RoleVO;
 import com.mj.vo.UserVO;
@@ -81,22 +79,22 @@ public class IndentServiceImpl implements IndentService {
 					indentEntity.getProduct().getCategory().getModifiedBy(),
 					indentEntity.getProduct().getCategory().getModifiedAt());
 			
-			List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+//			List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
 			
-			for(ManufacturerEntity manufacturerEntity:indentEntity.getProduct().getManufacturer()) {
-				
-				ManufacturerVO manufacturerVO= new ManufacturerVO(
-						manufacturerEntity.getManufacturerId(),
-						manufacturerEntity.getManufacturerName(),
-						manufacturerEntity.getIsActive(),
-						manufacturerEntity.getCreatedBy(),
-						manufacturerEntity.getCreatedAt(),
-						manufacturerEntity.getModifiedBy(),
-						manufacturerEntity.getModifiedAt());
-				
-				manufacturerVOList.add(manufacturerVO);
-				
-			}
+//			for(ManufacturerEntity manufacturerEntity:indentEntity.getProduct().getManufacturer()) {
+//				
+//				ManufacturerVO manufacturerVO= new ManufacturerVO(
+//						manufacturerEntity.getManufacturerId(),
+//						manufacturerEntity.getManufacturerName(),
+//						manufacturerEntity.getIsActive(),
+//						manufacturerEntity.getCreatedBy(),
+//						manufacturerEntity.getCreatedAt(),
+//						manufacturerEntity.getModifiedBy(),
+//						manufacturerEntity.getModifiedAt());
+//				
+//				manufacturerVOList.add(manufacturerVO);
+//				
+//			}
 			
 			ProductVO productVO=new ProductVO(
 					indentEntity.getProduct().getProductId(),
@@ -109,8 +107,7 @@ public class IndentServiceImpl implements IndentService {
 					indentEntity.getProduct().getCreatedAt(),
 					indentEntity.getProduct().getModifiedBy(),
 					indentEntity.getProduct().getModifiedAt(),
-					categoryVO,
-					manufacturerVOList);
+					categoryVO);
 			
 			IndentVO indentVO=new IndentVO(
 					indentEntity.getIndentId(),
@@ -183,22 +180,22 @@ public class IndentServiceImpl implements IndentService {
 				indentEntity.get().getProduct().getCategory().getModifiedBy(),
 				indentEntity.get().getProduct().getCategory().getModifiedAt());
 		
-		List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
-		
-		for(ManufacturerEntity manufacturerEntity:indentEntity.get().getProduct().getManufacturer()) {
-			
-			ManufacturerVO manufacturerVO= new ManufacturerVO(
-					manufacturerEntity.getManufacturerId(),
-					manufacturerEntity.getManufacturerName(),
-					manufacturerEntity.getIsActive(),
-					manufacturerEntity.getCreatedBy(),
-					manufacturerEntity.getCreatedAt(),
-					manufacturerEntity.getModifiedBy(),
-					manufacturerEntity.getModifiedAt());
-			
-			manufacturerVOList.add(manufacturerVO);
-			
-		}
+//		List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+//		
+//		for(ManufacturerEntity manufacturerEntity:indentEntity.get().getProduct().getManufacturer()) {
+//			
+//			ManufacturerVO manufacturerVO= new ManufacturerVO(
+//					manufacturerEntity.getManufacturerId(),
+//					manufacturerEntity.getManufacturerName(),
+//					manufacturerEntity.getIsActive(),
+//					manufacturerEntity.getCreatedBy(),
+//					manufacturerEntity.getCreatedAt(),
+//					manufacturerEntity.getModifiedBy(),
+//					manufacturerEntity.getModifiedAt());
+//			
+//			manufacturerVOList.add(manufacturerVO);
+//			
+//		}
 		
 		ProductVO productVO=new ProductVO(
 				indentEntity.get().getProduct().getProductId(),
@@ -211,8 +208,7 @@ public class IndentServiceImpl implements IndentService {
 				indentEntity.get().getProduct().getCreatedAt(),
 				indentEntity.get().getProduct().getModifiedBy(),
 				indentEntity.get().getProduct().getModifiedAt(),
-				categoryVO,
-				manufacturerVOList);
+				categoryVO);
 		
 		
 		IndentVO indentVO=new IndentVO(
@@ -276,22 +272,22 @@ public class IndentServiceImpl implements IndentService {
 				indentVO.getProduct().getCategory().getCreatedAt(),
 				indentVO.getProduct().getCategory().getModifiedBy(),
 				indentVO.getProduct().getCategory().getModifiedAt());
-		
-		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
-		
-		for(ManufacturerVO manufacturerVO:indentVO.getProduct().getManufacturer()) {
-			
-			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
-					manufacturerVO.getManufacturerId(),
-					manufacturerVO.getManufacturerName(),
-					manufacturerVO.getIsActive(),
-					manufacturerVO.getCreatedBy(),
-					manufacturerVO.getCreatedAt(),
-					manufacturerVO.getModifiedBy(),
-					manufacturerVO.getModifiedAt());
-			
-			manufacturerEntityList.add(manufacturerEntity);
-		}
+//		
+//		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
+//		
+//		for(ManufacturerVO manufacturerVO:indentVO.getProduct().getManufacturer()) {
+//			
+//			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
+//					manufacturerVO.getManufacturerId(),
+//					manufacturerVO.getManufacturerName(),
+//					manufacturerVO.getIsActive(),
+//					manufacturerVO.getCreatedBy(),
+//					manufacturerVO.getCreatedAt(),
+//					manufacturerVO.getModifiedBy(),
+//					manufacturerVO.getModifiedAt());
+//			
+//			manufacturerEntityList.add(manufacturerEntity);
+//		}
 		
 		
 		ProductEntity productEntity=new ProductEntity(
@@ -305,8 +301,7 @@ public class IndentServiceImpl implements IndentService {
 				indentVO.getProduct().getCreatedAt(),
 				indentVO.getProduct().getModifiedBy(),
 				indentVO.getProduct().getModifiedAt(),
-				categoryEntity,
-				manufacturerEntityList);
+				categoryEntity);
 		
 		IndentEntity indentEntity=new IndentEntity(
 				indentVO.getIndentId(),
@@ -374,21 +369,21 @@ public class IndentServiceImpl implements IndentService {
 				indentVO.getProduct().getCategory().getModifiedBy(),
 				indentVO.getProduct().getCategory().getModifiedAt());
 		
-		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
-		
-		for(ManufacturerVO manufacturerVO:indentVO.getProduct().getManufacturer()) {
-			
-			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
-					manufacturerVO.getManufacturerId(),
-					manufacturerVO.getManufacturerName(),
-					manufacturerVO.getIsActive(),
-					manufacturerVO.getCreatedBy(),
-					manufacturerVO.getCreatedAt(),
-					manufacturerVO.getModifiedBy(),
-					manufacturerVO.getModifiedAt());
-			
-			manufacturerEntityList.add(manufacturerEntity);
-		}
+//		List<ManufacturerEntity> manufacturerEntityList=new ArrayList<>();
+//		
+//		for(ManufacturerVO manufacturerVO:indentVO.getProduct().getManufacturer()) {
+//			
+//			ManufacturerEntity manufacturerEntity=new ManufacturerEntity(
+//					manufacturerVO.getManufacturerId(),
+//					manufacturerVO.getManufacturerName(),
+//					manufacturerVO.getIsActive(),
+//					manufacturerVO.getCreatedBy(),
+//					manufacturerVO.getCreatedAt(),
+//					manufacturerVO.getModifiedBy(),
+//					manufacturerVO.getModifiedAt());
+//			
+//			manufacturerEntityList.add(manufacturerEntity);
+//		}
 		
 		
 		ProductEntity productEntity=new ProductEntity(
@@ -402,8 +397,7 @@ public class IndentServiceImpl implements IndentService {
 				indentVO.getProduct().getCreatedAt(),
 				indentVO.getProduct().getModifiedBy(),
 				indentVO.getProduct().getModifiedAt(),
-				categoryEntity,
-				manufacturerEntityList);
+				categoryEntity);
 		
 		IndentEntity indentEntity=new IndentEntity(
 				indentVO.getIndentId(),
