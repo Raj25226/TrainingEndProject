@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Date from "../util/Date";
+import axios from 'axios';
 
 const AddIndent = () => {
     const [price, setPrice] = useState(null);
@@ -8,12 +9,59 @@ const AddIndent = () => {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [unitMeasurement, setUnitMeasurement] = useState(null);
     const [selectedManufacturer, setSelectedManufacturer] = useState(null);
+    const [loadingCategories, setLoadingCategories ] = useState(true);
+    const [loadingProducts, setLoadingProducts ] = useState(true);
+
+
+    const PQR = ["unit price", "total price"];
+    const [category, setCategory] = useState([]);
+    const [product, setProduct] = useState([]);
 
     const products = ["Product1", "Product2", "Product3"]; // Replace with your actual product data
     const categories = ["Category1", "Category2", "Category3"]; // Replace with your actual category data
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
-    const manufacturers = ["Manufacturer1", "Manufacturer2", "Manufacturer3"]; // Replace with your actual manufacturer data
-    const PQR=["unit price","total price"];
+
+    useEffect(() => {
+        const fetchCategories = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8080/mj/category"
+                );
+                setCategory(response.data);
+                console.log(response.data);
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                const result = response.data;
+                setCategory(result);
+            } catch (error) {
+                console.error("Error fetching categories:", error);
+            } finally {
+                setLoadingCategories(false);
+            }
+        };
+
+        const fetchProducts = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:8080/mj/product"
+                );
+
+
+                const result = await response.data;
+                console.log(result);
+                setProduct(result);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            } finally {
+                setLoadingProducts(false);
+            }
+        };
+
+        fetchCategories();
+        fetchProducts();
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -23,8 +71,8 @@ const AddIndent = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                description: "Third Indent",
-                netprice: 0,
+                description: "Description",
+                netprice: price * quantity,
                 isActive: 1,
                 createdBy: "Raj",
                 createdAt: Date(),
@@ -120,12 +168,12 @@ const AddIndent = () => {
                                         <option value="">
                                             Select a category
                                         </option>
-                                        {categories.map((category) => (
+                                        {category.map((cat) => (
                                             <option
-                                                key={category}
-                                                value={category}
+                                            key={cat.categoryId}
+                                            value={cat.categoryId}
                                             >
-                                                {category}
+                                                {cat.categoryName}
                                             </option>
                                         ))}
                                     </select>
@@ -144,12 +192,12 @@ const AddIndent = () => {
                                         <option value="">
                                             Select a product
                                         </option>
-                                        {products.map((product) => (
+                                        {product.map((prod) => (
                                             <option
-                                                key={product}
-                                                value={product}
+                                                key={prod.productId}
+                                                value={prod.productId}
                                             >
-                                                {product}
+                                                {prod.productName}
                                             </option>
                                         ))}
                                     </select>
@@ -218,9 +266,7 @@ const AddIndent = () => {
                                             className="form-select"
                                             value={unitMeasurement}
                                             onChange={(e) =>
-                                                setPQR(
-                                                    e.target.value
-                                                )
+                                                setPQR(e.target.value)
                                             }
                                         >
                                             <option value="">
