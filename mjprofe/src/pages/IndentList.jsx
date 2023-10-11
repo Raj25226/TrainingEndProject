@@ -52,7 +52,7 @@ const IndentList = () => {
 
   return (
     <div className="container mt-4">
-      <div className="card">
+      <div className="card" style={{ marginTop: '15%' }}>
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
           <button
@@ -86,7 +86,7 @@ const IndentList = () => {
                     style={{marginLeft:'5px'}}
                       onClick={() => handleDeleteItem(index)}
                     >
-                      <i class="bi bi-eye"></i>
+                      <i className="bi bi-eye"></i>
                     </button>
                     <button
                     style={{marginLeft:'5px'}}

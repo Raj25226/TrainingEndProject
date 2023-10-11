@@ -21,9 +21,9 @@ const LogIn = () => {
             if (response.ok) {
               const result = await response.json();
               console.log('Login successful:', result);
-            //   if(result.role.roleId===1){
+              if(result.role.roleId===1){
                 navigate('/indentlist');
-            //   }
+              }
             } else {
               console.error('Login failed');
               navigate('/');
