@@ -8,7 +8,6 @@ const AddIndent = () => {
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [unitMeasurement, setUnitMeasurement] = useState("");
-    const [indentHeader, setIndentHeader] = useState();
 
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
