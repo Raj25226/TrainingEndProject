@@ -40,6 +40,22 @@ public class ProductController {
 					status(HttpStatus.NO_CONTENT).
 					headers(header).
 					body(null);
+		}
+	}
+	
+	@GetMapping("/products/{id}")
+	public ResponseEntity<List<ProductVO>> getAllProductByCategory(@PathVariable int id){
+		
+		if(productService.getProductBycategory(id).size()!=0) {
+			return ResponseEntity.ok(productService.getProductBycategory(id));
+		}
+		else {
+			HttpHeaders header=new HttpHeaders();
+			header.add("Data", "No Data Found");
+			return ResponseEntity.
+					status(HttpStatus.NO_CONTENT).
+					headers(header).
+					body(null);
 			}
 		}
 	

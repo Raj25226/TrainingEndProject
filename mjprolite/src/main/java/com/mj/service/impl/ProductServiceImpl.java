@@ -238,4 +238,59 @@ public class ProductServiceImpl implements ProductService {
 		return true ;
 		
 	}
+
+	@Override
+	public List<ProductVO> getProductBycategory(Integer id) {
+		
+		List<ProductEntity> productEntityList=productRepo.getProductByCategory(id);
+		
+		List<ProductVO> productVOList=new ArrayList<>();
+		
+		for(ProductEntity productEntity:productEntityList) {
+			
+			CategoryVO categoryVO=new CategoryVO(
+					productEntity.getCategory().getCategoryId(),
+					productEntity.getCategory().getCategoryName(),
+					productEntity.getCategory().getCategoryCode(),
+					productEntity.getCategory().getIsActive(),
+					productEntity.getCategory().getCreatedBy(),
+					productEntity.getCategory().getCreatedAt(),
+					productEntity.getCategory().getModifiedBy(),
+					productEntity.getCategory().getModifiedAt());
+			
+//			List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+//			
+//			for(ManufacturerEntity manufacturerEntity:productEntity.getManufacturer()) {
+//				
+//				ManufacturerVO manufacturerVO=new ManufacturerVO(
+//						manufacturerEntity.getManufacturerId(),
+//						manufacturerEntity.getManufacturerName(),
+//						manufacturerEntity.getIsActive(),
+//						manufacturerEntity.getCreatedBy(),
+//						manufacturerEntity.getCreatedAt(),
+//						manufacturerEntity.getModifiedBy(),
+//						manufacturerEntity.getModifiedAt());
+//				
+//				manufacturerVOList.add(manufacturerVO);
+//			}
+					
+			
+			ProductVO productVO=new ProductVO(
+					productEntity.getProductId(),
+					productEntity.getProductName(),
+					productEntity.getProductCode(),
+					productEntity.getDescription(),
+					productEntity.getSpecification(),
+					productEntity.getIsActive(),
+					productEntity.getCreatedBy(),
+					productEntity.getCreatedAt(),
+					productEntity.getModifiedBy(),
+					productEntity.getModifiedAt(),
+					categoryVO);	
+			
+			productVOList.add(productVO);
+		}
+		
+		return productVOList;
+	}
 }
