@@ -24,93 +24,87 @@ const AddIndent = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="container mt-5">
-      <div className="row">
+    <div className="container mt-5">
+      <div className="row justify-content-center">
         <div className="col-md-6">
-          <label className="form-label">
-            Unit Price:
-            <input
-              type="number"
-              className="form-control"
-              value={unitPrice}
-              onChange={(e) => setUnitPrice(parseFloat(e.target.value))}
-            />
-          </label>
+          <div className="card mt-5">
+            <div className="card-body">
+              <h2 className="card-title mb-4" style={{ textAlign: 'center' }}>
+                Add Indent
+              </h2>
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label className="form-label">Unit Price:</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={unitPrice}
+                    onChange={(e) => setUnitPrice(parseFloat(e.target.value))}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Total Price:</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={totalPrice}
+                    onChange={(e) => setTotalPrice(parseFloat(e.target.value))}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Quantity:</label>
+                  <input
+                    type="number"
+                    className="form-control"
+                    value={quantity}
+                    onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Product:</label>
+                  <select
+                    className="form-select"
+                    value={selectedProduct}
+                    onChange={(e) => setSelectedProduct(e.target.value)}
+                  >
+                    <option value="">Select a product</option>
+                    {products.map((product) => (
+                      <option key={product} value={product}>
+                        {product}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-3">
+                  <label className="form-label">Category:</label>
+                  <select
+                    className="form-select"
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                  >
+                    <option value="">Select a category</option>
+                    {categories.map((category) => (
+                      <option key={category} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <button type="submit" className="btn btn-primary">
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
         </div>
 
-        <div className="col-md-6">
-          <label className="form-label">
-            Total Price:
-            <input
-              type="number"
-              className="form-control"
-              value={totalPrice}
-              onChange={(e) => setTotalPrice(parseFloat(e.target.value))}
-            />
-          </label>
-        </div>
+        <div className="mt-4"> 
+        <p></p>
+        <p></p>
       </div>
-
-      <div className="row mt-3">
-        <div className="col-md-6">
-          <label className="form-label">
-            Quantity:
-            <input
-              type="number"
-              className="form-control"
-              value={quantity}
-              onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
-            />
-          </label>
-        </div>
-
-        <div className="col-md-6">
-          <label className="form-label">
-            Product:
-            <select
-              className="form-select"
-              value={selectedProduct}
-              onChange={(e) => setSelectedProduct(e.target.value)}
-            >
-              <option value="">Select a product</option>
-              {products.map((product) => (
-                <option key={product} value={product}>
-                  {product}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
+      
       </div>
-
-      <div className="row mt-3">
-        <div className="col-md-6">
-          <label className="form-label">
-            Category:
-            <select
-              className="form-select"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              <option value="">Select a category</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </label>
-        </div>
-      </div>
-
-      <div className="row mt-3">
-        <div className="col-md-12">
-          <button type="submit" className="btn btn-primary">
-            Submit
-          </button>
-        </div>
-      </div>
-    </form>
+    </div>
   );
 };
 
