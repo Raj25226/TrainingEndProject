@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
-import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 import AddIndent from './AddIndent';
 
 const IndentList = () => {
@@ -30,13 +30,29 @@ const IndentList = () => {
     fetchApiData();
   }, []);
 
-  const handleDeleteItem = (index) => {
-    const updatedItems = items.filter((item, i) => i !== index);
-    setItems(updatedItems);
+  const handleDeleteItem = (id) => {
+    // Send a DELETE request to the backend API with the item's ID.
+    console.log(id);
+    fetch(`http://localhost:8080/mj/indentheader/${id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => {
+        if (response.ok) {
+          // Item deleted successfully, update the items list in the state.
+          const updatedItems = items.filter((item) => item.indentHeaderId !== id);
+          setItems(updatedItems);
+        } else {
+          console.error('Error deleting item:', response);
+        }
+      })
+      .catch((error) => {
+        console.error('Error deleting item:', error);
+      });
   };
 
-  const handleAddItem = () => {
-    // Implement add item logic here and update the API accordingly
+  // Replace handleEditItem with handleViewItem
+  const handleViewItem = (index) => {
+    // Implement view item logic here
   };
 
   return (
@@ -52,50 +68,47 @@ const IndentList = () => {
           </button>
         </div>
         <div className="card-body">
-        {items.length === 0 ? (
-            <p><h6>No Data Found</h6></p>
+          {items.length === 0 ? (
+            <h6>No Data Found</h6>
           ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>IndentHeaderId </th>
-                <th>Description </th>
-                <th>Netprice </th>
-                {/* <th>Field 4</th> */}
-                {/* <th>Actions</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.indentHeaderId}</td>
-                  <td>{item.description}</td>
-                  <td>{item.netprice}</td>
-                  {/* <td>{item.field4}</td> */}
-                  <td>
-                    <button
-                      style={{ marginLeft: '5px' }}
-                      onClick={() => handleDeleteItem(index)}
-                    >
-                      <i className="bi bi-eye"></i>
-                    </button>
-                    <button
-                      style={{ marginLeft: '5px' }}
-                      onClick={() => handleEditItem(index)}
-                    >
-                      <i className="bi bi-pencil-square"></i>
-                    </button>
-                    <button
-                      style={{ marginLeft: '5px' }}
-                      onClick={() => handleDeleteItem(index)}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
-                  </td>
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>UserId</th>
+                  <th>Description</th>
+                  <th>Netprice</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {items.map((item, index) => (
+                  <tr key={index}>
+                    <td>{item.indentHeaderId}</td>
+                    <td>{item.description}</td>
+                    <td>{item.netprice}</td>
+                    <td>
+                      <button
+                        style={{ marginLeft: '5px' }}
+                        onClick={() => handleDeleteItem(item.indentHeaderId)}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                      <button
+                        style={{ marginLeft: '5px' }}
+                        onClick={() => handleViewItem(index)}
+                      >
+                        <i className="bi bi-eye"></i>
+                      </button>
+                      <button
+                        style={{ marginLeft: '5px' }}
+                        onClick={() => handleEditItem(index)}
+                      >
+                        <i className="bi bi-pen"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           )}
         </div>
       </div>
