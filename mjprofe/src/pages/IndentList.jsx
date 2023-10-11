@@ -63,36 +63,7 @@ const IndentList = () => {
           </button>
         </div>
         <div className="card-body">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Field 1</th>
-                <th>Field 2</th>
-                <th>Field 3</th>
-                <th>Field 4</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.map((item, index) => (
-                <tr key={index}>
-                  <td>{item.field1}</td>
-                  <td>{item.field2}</td>
-                  <td>{item.field3}</td>
-                  <td>{item.field4}</td>
-                  <td>
-                    <button
-                      className="btn btn-danger"
-                      onClick={() => handleDeleteItem(index)}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <h2>Items from jsonArray:</h2>
+         
           <table className="table">
             <thead>
               <tr>
