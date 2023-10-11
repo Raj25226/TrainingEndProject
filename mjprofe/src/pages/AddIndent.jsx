@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Date from "../util/Date";
-import axios from 'axios';
+import axios from "axios";
 
 const AddIndent = () => {
     const [price, setPrice] = useState(0);
@@ -8,16 +8,12 @@ const AddIndent = () => {
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [unitMeasurement, setUnitMeasurement] = useState("");
-    const [loadingCategories, setLoadingCategories ] = useState(true);
-    const [loadingProducts, setLoadingProducts ] = useState(true);
-    const [loadingIndent, setLoadingIndent ] = useState(true);
-    const [loadingIndentHeader, setLoadingIndentHeader ] = useState(true);
+    const [indentHeader, setIndentHeader] = useState();
 
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
-    const [indentId, setIndentId] = useState([]);
-    const [description,setDescription] =useState("");
+    const [description, setDescription] = useState("");
 
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
 
@@ -34,7 +30,6 @@ const AddIndent = () => {
             } catch (error) {
                 console.error("Error fetching categories:", error);
             } finally {
-                setLoadingCategories(false);
             }
         };
 
@@ -49,7 +44,6 @@ const AddIndent = () => {
             } catch (error) {
                 console.error("Error fetching products:", error);
             } finally {
-                setLoadingProducts(false);
             }
         };
 
@@ -57,98 +51,81 @@ const AddIndent = () => {
         fetchProducts();
     }, []);
 
-    
     const handleSubmit = async (e) => {
-      e.preventDefault();
-      let response ;
-  
-      try {
-          response= await fetch("http://localhost:8080/mj/indentheader", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  description: description,
-                  netprice: price * quantity,
-                  isActive: 1,
-                  createdBy: "Raj",
-                  createdAt: Date(),
-                  modifiedBy: "Raj",
-                  modifiedAt: Date(),
-                  user: {
-                      userId: 1,
-                      role: {
-                          roleId: 1,
-                      },
-                  },
-              }),
-          }
-          );
-  
-          if (!response.ok) {
-              throw new Error("Failed to create indent header");
-          }
-        }finally {
-          const indentHeaderData = response.json();
-          const newIndentId = indentHeaderData.indentHeaderId;
-          setIndentId(indentHeaderData.indentHeaderId);
-          console.log(indentHeaderData);
-          setLoadingIndentHeader(false);
-      }
-  
-          
-  
-          // Store the new indentId in state
-  
-          // Create indent
-        try{
-          const response2 = await fetch("http://localhost:8080/mj/indent", {
-              method: "POST",
-              headers: {
-                  "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                  unitPrice: price,
-                  totalPrice: price * quantity,
-                  quantity: quantity,
-                  isActive: 1,
-                  createdBy: "Raj",
-                  createdAt: Date(),
-                  modifiedBy: "Raj",
-                  modifiedAt: Date(),
-                  product: {
-                      productId: selectedProduct,
-                      category: {
-                          categoryId: selectedCategory,
-                      },
-                  },
-                  indentHeaderVO: {
-                      indentHeaderId: indentId,
-                      user: {
-                          userId: 1,
-                          role: {
-                              roleId: 1,
-                          },
-                      },
-                  },
-              }),
-          });
-  
-          if (response2.ok) {
-              const result = await response2.json();
-              console.log("Post successful:", result);
-          } else {
-              console.error("Post failed");
-          }
-      } catch (error) {
-          console.error("Error in handleSubmit:", error);
-      }
-      finally{
-        setLoadingIndent(false);
-      }
-  };
-  
+        e.preventDefault();
+
+        const response = await fetch("http://localhost:8080/mj/indentheader", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                description: description,
+                netprice: price * quantity,
+                isActive: 1,
+                createdBy: "Raj",
+                createdAt: Date(),
+                modifiedBy: "Raj",
+                modifiedAt: Date(),
+                user: {
+                    userId: 1,
+                    role: {
+                        roleId: 1,
+                    },
+                },
+            }),
+        });
+
+        let indentHeaderId=-1;
+        const response1 = await fetch( "http://localhost:8080/mj/indentheader/desc", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain",
+                    },
+                    body:description
+                }
+            );
+
+            if (response1.ok) {
+                const result = await response1.json();
+                console.log(result);
+                indentHeaderId=result.indentHeaderId;
+              }
+        
+
+        const response2 = await fetch("http://localhost:8080/mj/indent", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                unitPrice: price,
+                totalPrice: price * quantity,
+                quantity: quantity,
+                isActive: 1,
+                createdBy: "Raj",
+                createdAt: Date(),
+                modifiedBy: "Raj",
+                modifiedAt: Date(),
+                product: {
+                    productId: selectedProduct,
+                    category: {
+                        categoryId: selectedCategory,
+                    },
+                },
+                indentHeaderVO: {
+                    indentHeaderId: indentHeaderId,
+                    user: {
+                        userId: 1,
+                        role: {
+                            roleId: 1,
+                        },
+                    },
+                },
+            }),
+        });
+        console.log(indentHeaderId);
+    };
 
     return (
         <div className="container">
@@ -179,8 +156,8 @@ const AddIndent = () => {
                                         </option>
                                         {category.map((cat) => (
                                             <option
-                                            key={cat.categoryId}
-                                            value={cat.categoryId}
+                                                key={cat.categoryId}
+                                                value={cat.categoryId}
                                             >
                                                 {cat.categoryName}
                                             </option>
@@ -212,18 +189,18 @@ const AddIndent = () => {
                                     </select>
                                 </div>
                                 <div className="col">
-                                        <label className="form-label">
-                                            Description:
-                                        </label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            value={description}
-                                            onChange={(e) =>
-                                                setDescription(e.target.value)
-                                            }
-                                        />
-                                    </div>
+                                    <label className="form-label">
+                                        Description:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={description}
+                                        onChange={(e) =>
+                                            setDescription(e.target.value)
+                                        }
+                                    />
+                                </div>
                                 <div className="row mb-3">
                                     <div className="col">
                                         <label className="form-label">
