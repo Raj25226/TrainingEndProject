@@ -60,6 +60,8 @@ public class IndentHeaderController {
 	@PostMapping("/indentheader")
 	public ResponseEntity<String> saveIndentHeader(@RequestBody IndentHeaderVO indentHeaderVO) {
 		
+		System.out.println(indentHeaderVO);
+		
 		indentHeaderService.saveIndentHeader(indentHeaderVO);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body("Data Saved Successfully");

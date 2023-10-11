@@ -44,7 +44,7 @@ public class UOMEntity {
 	private LocalDate modifiedAt;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(
 			  name = "category_uom",
 			  joinColumns = @JoinColumn(name = "uom_id"),

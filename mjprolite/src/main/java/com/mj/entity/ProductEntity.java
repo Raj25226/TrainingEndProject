@@ -47,7 +47,7 @@ public class ProductEntity {
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
 	
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne(cascade=CascadeType.MERGE)
 	@JoinColumn(name="category_id")
 	private CategoryEntity category;
 //	@ManyToMany(cascade = CascadeType.ALL)
