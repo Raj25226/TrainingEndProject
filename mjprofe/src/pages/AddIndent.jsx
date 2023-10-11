@@ -3,18 +3,21 @@ import Date from "../util/Date";
 import axios from 'axios';
 
 const AddIndent = () => {
-    const [price, setPrice] = useState(null);
-    const [quantity, setQuantity] = useState(null);
-    const [selectedProduct, setSelectedProduct] = useState(null);
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const [unitMeasurement, setUnitMeasurement] = useState(null);
+    const [price, setPrice] = useState(0);
+    const [quantity, setQuantity] = useState(0);
+    const [selectedProduct, setSelectedProduct] = useState("");
+    const [selectedCategory, setSelectedCategory] = useState("");
+    const [unitMeasurement, setUnitMeasurement] = useState("");
     const [loadingCategories, setLoadingCategories ] = useState(true);
     const [loadingProducts, setLoadingProducts ] = useState(true);
+    const [loadingIndent, setLoadingIndent ] = useState(true);
+    const [loadingIndentHeader, setLoadingIndentHeader ] = useState(true);
+
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
     const [indentId, setIndentId] = useState([]);
-    const [description,setDescription] =useState(null);
+    const [description,setDescription] =useState("");
 
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
 
@@ -54,98 +57,98 @@ const AddIndent = () => {
         fetchProducts();
     }, []);
 
-    const getIndentheaderId= async()=>{
-      const response1 = await fetch("http://localhost:8080/mj/indentheader/desc", {
-            method: "POST",
-            headers: {
-                "Content-Type": "text/plain",
-            },
-            body: description
-        });
-        console.log(response1);
-        // setIndentId(response1);
-    }
-
+    
     const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const response = await fetch("http://localhost:8080/mj/indentheader", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              description: "Description",
-                netprice: price * quantity,
-                isActive: 1,
-                createdBy: "Raj",
-                createdAt: Date(),
-                modifiedBy: "Raj",
-                modifiedAt: Date(),
-                user: {
-                    userId: 1,
-                    role: {
-                        roleId: 1,
-                    },
-                },
-            }),
-        });
-
-        getIndentheaderId();
-
-        try {
-            const response = await fetch("http://localhost:8080/mj/indent", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    unitPrice: price,
-                    totalPrice: price * quantity,
-                    quantity: quantity,
-                    isActive: 1,
-                    createdBy: "Raj",
-                    createdAt: Date(),
-                    modifiedBy: "Raj",
-                    modifiedAt: Date(),
-                    product: {
-                        productId: selectedProduct,
-                        category: {
-                            categoryId: selectedCategory,
-                        },
-                    },
-                    indentHeaderVO: {
-                        indentHeaderId: 1,
-                        user: {
-                            userId: 1,
-                            role: {
-                                roleId: 1,
-                            },
-                        },
-                    },
-                }),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log("Post successful:", result);
-            } else {
-                console.error("Post failed");
-            }
-        } catch (error) {
-            console.error("Error during POST request:", error);
-        }
-
-        console.log("Form submitted:", {
-            unitPrice,
-            totalPrice,
-            quantity,
-            unitMeasurement,
-            selectedProduct,
-            selectedCategory,
-            selectedManufacturer,
-        });
-    };
+      e.preventDefault();
+      let response ;
+  
+      try {
+          response= await fetch("http://localhost:8080/mj/indentheader", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  description: description,
+                  netprice: price * quantity,
+                  isActive: 1,
+                  createdBy: "Raj",
+                  createdAt: Date(),
+                  modifiedBy: "Raj",
+                  modifiedAt: Date(),
+                  user: {
+                      userId: 1,
+                      role: {
+                          roleId: 1,
+                      },
+                  },
+              }),
+          }
+          );
+  
+          if (!response.ok) {
+              throw new Error("Failed to create indent header");
+          }
+        }finally {
+          const indentHeaderData = response.json();
+          const newIndentId = indentHeaderData.indentHeaderId;
+          setIndentId(indentHeaderData.indentHeaderId);
+          console.log(indentHeaderData);
+          setLoadingIndentHeader(false);
+      }
+  
+          
+  
+          // Store the new indentId in state
+  
+          // Create indent
+        try{
+          const response2 = await fetch("http://localhost:8080/mj/indent", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                  unitPrice: price,
+                  totalPrice: price * quantity,
+                  quantity: quantity,
+                  isActive: 1,
+                  createdBy: "Raj",
+                  createdAt: Date(),
+                  modifiedBy: "Raj",
+                  modifiedAt: Date(),
+                  product: {
+                      productId: selectedProduct,
+                      category: {
+                          categoryId: selectedCategory,
+                      },
+                  },
+                  indentHeaderVO: {
+                      indentHeaderId: indentId,
+                      user: {
+                          userId: 1,
+                          role: {
+                              roleId: 1,
+                          },
+                      },
+                  },
+              }),
+          });
+  
+          if (response2.ok) {
+              const result = await response2.json();
+              console.log("Post successful:", result);
+          } else {
+              console.error("Post failed");
+          }
+      } catch (error) {
+          console.error("Error in handleSubmit:", error);
+      }
+      finally{
+        setLoadingIndent(false);
+      }
+  };
+  
 
     return (
         <div className="container">
