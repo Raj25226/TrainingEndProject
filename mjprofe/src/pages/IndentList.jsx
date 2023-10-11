@@ -29,17 +29,16 @@ const IndentList = () => {
   useEffect(() => {
     fetchApiData();
   }, []);
-
-  const handleDeleteItem = (id) => {
+  const handleDeleteindent = async (id) => {
     // Send a DELETE request to the backend API with the item's ID.
     console.log(id);
-    fetch(`http://localhost:8080/mj/indentheader/${id}`, {
+    fetch(`http://localhost:8080/mj/indent/${id}`, {
       method: 'DELETE',
     })
       .then((response) => {
         if (response.ok) {
           // Item deleted successfully, update the items list in the state.
-          const updatedItems = items.filter((item) => item.indentHeaderId !== id);
+          const updatedItems = items.filter((item) => item.indentId !== id);
           setItems(updatedItems);
         } else {
           console.error('Error deleting item:', response);
@@ -48,6 +47,25 @@ const IndentList = () => {
       .catch((error) => {
         console.error('Error deleting item:', error);
       });
+  };
+  const handleDeleteItem = async (id,id1) => {
+    // Send a DELETE request to the backend API with the item's ID.
+
+    await handleDeleteindent(id1);
+    try {
+      const response = await fetch(`http://localhost:8080/mj/indentheader/${id}`, {
+        method: 'DELETE',
+      });
+      if (response.ok) {
+        // Item deleted successfully, update the items list in the state.
+        const updatedItems = items.filter((item) => item.indentHeaderId !== id);
+        setItems(updatedItems);
+      } else {
+        console.error('Error deleting item:', response);
+      }
+    } catch (error) {
+      console.error('Error deleting item:', error);
+    }
   };
 
   // Replace handleEditItem with handleViewItem
@@ -88,7 +106,7 @@ const IndentList = () => {
                     <td>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => handleDeleteItem(item.indentHeaderId)}
+                        onClick={() => handleDeleteItem(item.indentHeaderId,item.indent.indentId)}
                       >
                         <i className="bi bi-trash"></i>
                       </button>
