@@ -2,6 +2,7 @@ package com.mj.entity;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -46,8 +47,8 @@ public class VendorEntity {
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
 	
-//	@OneToOne(cascade=CascadeType.ALL)
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
+
 	@JoinColumn(name="user_id")
 	private UserEntity user;
 
