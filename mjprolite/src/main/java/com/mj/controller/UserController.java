@@ -3,6 +3,7 @@ package com.mj.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,7 +51,7 @@ public class UserController {
 	
 	@PostMapping("/user")
 	ResponseEntity<String> saveUser(@RequestBody UserVO userVO) {
-		userVO.setPassword(Authorizer.getEncryptedData(userVO.getPassword()));
+		userVO.setPassword(Authorizer.getMd5(userVO.getPassword()));
 	    boolean saved = userService.saveUser(userVO);
 
 	    if (saved) {
@@ -84,39 +85,30 @@ public class UserController {
 			userService.deleteUser(id);
 			return ResponseEntity.ok("User Deleted Successfully");
 		}
+		
 	}
 	
-//	@PostMapping("/user/login")
-//	public ResponseEntity<String> login(@RequestBody UserVO userVO) {
-//	    String userName = userVO.getUserName();
-//	    String password = userVO.getPassword();
-//
-//	    UserEntity user = userService.findByUserNameAndPassword(userName, password);
-//
-//	    if (user != null) {
-//	        // Authentication successful, return a success message or a token
-//	        return ResponseEntity.ok("Authentication successful");
-//	    } else {
-//	        // Authentication failed, return an appropriate error message
-//	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-//	    }
-//	}
 	
 	@PostMapping("/user/login")
-	public ResponseEntity<String> login(@RequestBody UserVO userVO) {
+	public ResponseEntity<UserVO> login(@RequestBody UserVO userVO) {
+		
 	    String userName = userVO.getUserName();
-	    String password = userVO.getPassword();
+	    String password = Authorizer.getMd5(userVO.getPassword());
 
 	    UserEntity user = userService.findByUserNameAndPassword(userName, password);
 	    System.out.println(user);
 
 	    if (user != null) {
 	        // Authentication successful, return an appropriate success response
-	        return ResponseEntity.ok("Authentication successful");
+	        return ResponseEntity.ok(userVO);
 	    } else {
-	        // Authentication failed, return an appropriate error response
-	        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Authentication failed");
-	    }
+			HttpHeaders header=new HttpHeaders();
+			header.add("Data", "No Data Found");
+			return ResponseEntity.
+					status(HttpStatus.UNAUTHORIZED).
+					headers(header).
+					body(null);
+		}
 	}
 
 
