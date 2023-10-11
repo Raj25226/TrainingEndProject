@@ -18,7 +18,7 @@ const IndentList = () => {
 
   const fetchApiData = async () => {
     try {
-      const response = await fetch('http://localhost:8080/mj/user');
+      const response = await fetch('http://localhost:8080/mj/indentheader');
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
@@ -95,7 +95,7 @@ const IndentList = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>UserId</th>
+                  <th>indentheader</th>
                   <th>Description</th>
                   <th>Netprice</th>
                 </tr>
@@ -103,7 +103,7 @@ const IndentList = () => {
               <tbody>
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.userId}</td>
+                    <td>{item.indentheader}</td>
                     <td>{item.description}</td>
                     <td>{item.netprice}</td>
                     <td>
