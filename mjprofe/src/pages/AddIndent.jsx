@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Date from '../util/Date';
 
 const AddIndent = () => {
   const [unitPrice, setUnitPrice] = useState(null);
@@ -9,15 +10,71 @@ const AddIndent = () => {
   const [unitMeasurement, setUnitMeasurement] = useState(null);
   const [selectedManufacturer, setSelectedManufacturer] = useState(null);
 
-  // Fetch products and categories from your data source
   const products = ["Product1", "Product2", "Product3"]; // Replace with your actual product data
   const categories = ["Category1", "Category2", "Category3"]; // Replace with your actual category data
   const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
   const manufacturers = ["Manufacturer1", "Manufacturer2", "Manufacturer3"]; // Replace with your actual manufacturer data
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async  (e) => {
     e.preventDefault();
-    // Add your form submission logic here
+
+    const response = await fetch('http://localhost:8080/mj/indentheader', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(
+        {
+          "description": "First Indent",
+          "netprice": null,
+          "isActive": 1,
+          "createdBy": "Raj",
+          "createdAt": Date(),
+          "modifiedBy": "Raj",
+          "modifiedAt": Date(),
+          "user": {
+            "userId":1
+          }
+        }
+      ),
+    });
+
+    try {
+      const response = await fetch('http://localhost:8080/mj/indent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(
+          {
+            "unitPrice": unitPrice,
+            "totalPrice": totalPrice,
+            "quantity": quantity,
+            "isActive": 1,
+            "createdBy": "Raj",
+            "createdAt": Date(),
+            "modifiedBy": "Raj",
+            "modifiedAt": Date(),
+            "product": {
+              "productId":1
+            },
+            "indentHeaderVO": {
+              "indentHeaderId":1
+            }
+          }
+        ),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log('Post successful:', result);
+      } else {
+        console.error('Post failed');
+      }
+    } catch (error) {
+      console.error('Error during POST request:', error);
+    }
+
     console.log("Form submitted:", {
       unitPrice,
       totalPrice,
@@ -91,7 +148,9 @@ const AddIndent = () => {
                       type="number"
                       className="form-control"
                       value={quantity}
-                      onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                      onChange={(e) =>
+                        setQuantity(parseInt(e.target.value, 10))
+                      }
                     />
                   </div>
                   <div className="col">
