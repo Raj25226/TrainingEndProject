@@ -103,7 +103,7 @@ const IndentList = () => {
               <tbody>
                 {items.map((item, index) => (
                   <tr key={index}>
-                    <td>{item.indentheaderId}</td>
+                    <td>{item.indentHeaderId}</td>
                     <td>{item.description}</td>
                     <td>{item.netprice}</td>
                     <td>
