@@ -11,5 +11,5 @@ public interface IndentHeaderService {
 	void saveIndentHeader(IndentHeaderVO indentHeaderVO);
 	Boolean updateIndentHeader(IndentHeaderVO indentHeaderVO);
 	Boolean deleteIndentHeaderById(Integer id);
-	
+	IndentHeaderVO getIndentHeaderByDescription(String description);
 }

@@ -113,7 +113,53 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 		
 		return indentHeaderVO;
 	}
+	
+	@Override
+	public IndentHeaderVO getIndentHeaderByDescription(String description) {
+		
+		Optional<IndentHeaderEntity> indentHeaderEntity=indentHeaderRepo.findByDescription(description);
+		
+		if(indentHeaderEntity.isEmpty()) {
+			return null;
+		}
+		
+		RoleVO roleVO=new RoleVO(
+				indentHeaderEntity.get().getUser().getRole().getRoleId(),
+				indentHeaderEntity.get().getUser().getRole().getRoleName(),
+				indentHeaderEntity.get().getUser().getRole().getIsActive(),
+				indentHeaderEntity.get().getUser().getRole().getCreatedBy(),
+				indentHeaderEntity.get().getUser().getRole().getCreatedAt(),
+				indentHeaderEntity.get().getUser().getRole().getModifiedBy(),
+				indentHeaderEntity.get().getUser().getRole().getModifiedAt());
+		
+		UserVO userVO=new UserVO(
+				indentHeaderEntity.get().getUser().getUserId(),
+				indentHeaderEntity.get().getUser().getUserName(),
+				indentHeaderEntity.get().getUser().getPassword(),
+				indentHeaderEntity.get().getUser().getIsActive(),
+				indentHeaderEntity.get().getUser().getCreatedBy(),
+				indentHeaderEntity.get().getUser().getCreatedAt(),
+				indentHeaderEntity.get().getUser().getModifiedBy(),
+				indentHeaderEntity.get().getUser().getModifiedAt(),
+				roleVO
+				);
+		
+		IndentHeaderVO indentHeaderVO=new IndentHeaderVO(
+				indentHeaderEntity.get().getIndentHeaderId(),
+				indentHeaderEntity.get().getDescription(),
+				indentHeaderEntity.get().getNetprice(),
+				indentHeaderEntity.get().getIsActive(),
+				indentHeaderEntity.get().getCreatedBy(),
+				indentHeaderEntity.get().getCreatedAt(),
+				indentHeaderEntity.get().getModifiedBy(),
+				indentHeaderEntity.get().getModifiedAt(),
+				userVO);
 
+		
+		return indentHeaderVO;
+		
+	}
+	
 	@Override
 	public void saveIndentHeader(IndentHeaderVO indentHeaderVO) {
 		
@@ -208,6 +254,6 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 		
 		return true;
 	}
-	
+
 	
 }

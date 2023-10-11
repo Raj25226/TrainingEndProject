@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mj.service.IndentHeaderService;
@@ -34,6 +35,23 @@ public class IndentHeaderController {
 			return ResponseEntity.ok(indentHeaderService.getAllIndentHeader());
 		else {
 			HttpHeaders header=new HttpHeaders();
+			header.add("Data", "No Data Found");
+			return ResponseEntity.
+					status(HttpStatus.NO_CONTENT).
+					headers(header).
+					body(null);
+		}
+	}
+	
+	@PostMapping("/indentheader/desc")
+	ResponseEntity<IndentHeaderVO> getIndentHeaderById(@RequestBody String description) {
+		
+		System.out.println("Hello "+description);
+		
+		if(indentHeaderService.getIndentHeaderByDescription(description)!=null) {
+			return ResponseEntity.ok(indentHeaderService.getIndentHeaderByDescription(description));
+		}else {
+			HttpHeaders header = new HttpHeaders();
 			header.add("Data", "No Data Found");
 			return ResponseEntity.
 					status(HttpStatus.NO_CONTENT).
