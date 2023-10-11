@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
+import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css'
 import AddIndent from './AddIndent';
 
 const IndentList = () => {
@@ -110,8 +111,20 @@ const IndentList = () => {
                   <td>{item.field3}</td>
                   <td>{item.field4}</td>
                   <td>
+                  <button
+                    style={{marginLeft:'5px'}}
+                      onClick={() => handleDeleteItem(index)}
+                    >
+                      <i class="bi bi-eye"></i>
+                    </button>
                     <button
-                      className="btn btn-danger"
+                    style={{marginLeft:'5px'}}
+                      onClick={() => handleEditItem(index)}
+                    >
+                      <i className="bi bi-pencil-square"></i>
+                    </button>
+                    <button
+                    style={{marginLeft:'5px'}}
                       onClick={() => handleDeleteItem(index)}
                     >
                       <i className="bi bi-trash"></i>
@@ -125,9 +138,9 @@ const IndentList = () => {
       </div>
       {showAddModal && (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-          <div className="modal-dialog" role="document" style={{ maxWidth: '80%' }}>
-            <div className="modal-content">
-              <div className="modal-header">
+          <div className="modal-dialog" role="document" >
+            <div className="modal-content" >
+              <div className="modal-header" >
                 <h5 className="modal-title">Add Item</h5>
                 <button
                   type="button"
@@ -139,10 +152,10 @@ const IndentList = () => {
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-              <div className="modal-body">
-                <div className="form-group">
+              <div className="modal-body  " >
+                <div className="form-group" >
                  
-                 <AddIndent></AddIndent>
+                 <AddIndent ></AddIndent>
                 </div>
               </div>
             </div>
