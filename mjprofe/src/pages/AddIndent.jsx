@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import Date from '../util/Date';
 
 const AddIndent = () => {
-  const [unitPrice, setUnitPrice] = useState(null);
-  const [totalPrice, setTotalPrice] = useState(null);
+  const [price, setPrice] = useState(null);
   const [quantity, setQuantity] = useState(null);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedCategory, setSelectedCategory] = useState(null);
@@ -25,15 +24,18 @@ const AddIndent = () => {
       },
       body: JSON.stringify(
         {
-          "description": "First Indent",
-          "netprice": null,
+          "description": "Third Indent",
+          "netprice": 0,
           "isActive": 1,
           "createdBy": "Raj",
           "createdAt": Date(),
           "modifiedBy": "Raj",
           "modifiedAt": Date(),
           "user": {
-            "userId":1
+            "userId":1,
+            "role":{
+              "roleId":1
+            }
           }
         }
       ),
@@ -47,8 +49,8 @@ const AddIndent = () => {
         },
         body: JSON.stringify(
           {
-            "unitPrice": unitPrice,
-            "totalPrice": totalPrice,
+            "unitPrice": price,
+            "totalPrice": price*quantity,
             "quantity": quantity,
             "isActive": 1,
             "createdBy": "Raj",
@@ -56,10 +58,19 @@ const AddIndent = () => {
             "modifiedBy": "Raj",
             "modifiedAt": Date(),
             "product": {
-              "productId":1
+              "productId":1,
+              "category":{
+                "categoryId":1
+              }
             },
             "indentHeaderVO": {
-              "indentHeaderId":1
+              "indentHeaderId":1,
+              "user":{
+                "userId":1,
+                "role":{
+                  "roleId":1
+                }
+              }
             }
           }
         ),
@@ -174,8 +185,8 @@ const AddIndent = () => {
                   <input
                     type="number"
                     className="form-control"
-                    value={totalPrice}
-                    onChange={(e) => setTotalPrice(parseFloat(e.target.value))}
+                    value={price}
+                    onChange={(e) => setPrice(parseFloat(e.target.value))}
                   />
                 </div>
 
