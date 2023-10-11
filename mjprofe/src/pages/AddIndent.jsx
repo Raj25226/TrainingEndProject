@@ -91,7 +91,9 @@ const AddIndent = () => {
                       type="number"
                       className="form-control"
                       value={quantity}
-                      onChange={(e) => setQuantity(parseInt(e.target.value, 10))}
+                      onChange={(e) =>
+                        setQuantity(parseInt(e.target.value, 10))
+                      }
                     />
                   </div>
                   <div className="col">
