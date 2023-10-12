@@ -1,53 +1,44 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const ViewIndents = () => {
-  // Assume you have an array of indents
-  const [indents, setIndents] = useState([]);
+const ViewIndents = (props) => {
+  const [indents, setIndents] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
-  // Fetch indents from your data source
   useEffect(() => {
-    // Replace with your actual API call or data fetching logic
-    // For example, you might use a library like axios to make an API call
-    // const response = await axios.get("/api/indents");
-    // const fetchedIndents = response.data;
-    // For demonstration purposes, setting some dummy data
-    const fetchedIndents = [
-      {
-        id: 1,
-        unitPrice: 10.0,
-        totalPrice: 50.0,
-        quantity: 5,
-        selectedProduct: "Product2",
-        selectedCategory: "Category1",
-        unitMeasurement: "kg",
-        selectedManufacturer: "Manufacturer2",
-      },
-      // Add more indents as needed
-    ];
+    const fetchData = async () => {
+      try {
+        const apiEndpoint = `http://localhost:8080/mj/indent1/${props.headerId}`;
+        const response = await axios.get(apiEndpoint);
+        const fetchedIndents = response.data;
+        setIndents(fetchedIndents);
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching indents:", error);
+      }
+    };
 
-    setIndents(fetchedIndents);
-  }, []);
+    fetchData();
+  }, [props.headerId]);
 
   return (
-    <div className="container col-md-5" style={{marginTop:'10%'}}>
-      {indents.map((indent) => (
-        <div
-          key={indent.id}
-          className="card mb-3"
-          style={{ background: "#176B87", color: "#EEEEEE" }}
-        >
+    <div className="container col-md-5" style={{ marginTop: '10%' }}>
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="card mb-3" style={{ background: "#176B87", color: "#EEEEEE" }}>
           <div className="card-body">
-            <h5 className="card-title">Indent ID: {indent.id}</h5>
-            <p>Category: {indent.selectedCategory}</p>
-            <p>Product: {indent.selectedProduct}</p>
-            <p>Manufacturer: {indent.selectedManufacturer}</p>
-            <p>Quantity: {indent.quantity}</p>
-            <p>Unit Measurement: {indent.unitMeasurement}</p>
-            <p>Unit Price: {indent.unitPrice}</p>
-            <p>Total Price: {indent.totalPrice}</p>
+            <h5 className="card-title">Indent:</h5>
+            {indents.indentId && <p>IndentId: {indents.indentId}</p>}
+            {indents.indentCode && <p>IndentCode: {indents.indentCode}</p>}
+            {indents.unitPrice && <p>UnitPrice: {indents.unitPrice}</p>}
+            {indents.totalPrice && <p>Totalprice: {indents.totalPrice}</p>}
+            {indents.quantity && <p>Quantity: {indents.quantity}</p>}
+            {/* {indents.indentcategory && <p>Category: {indents.indentcategory}</p>} */}
+            {/* Check for the existence of 'indentcategory' */}
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 };
