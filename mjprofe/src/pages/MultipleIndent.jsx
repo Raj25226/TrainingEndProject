@@ -1,16 +1,24 @@
 import React, { useState } from "react";
 import AddProduct from "./AddIndentProduct";
+import { useNavigate } from "react-router-dom";
 
 const MultipleIndent = () => {
     const [addedProducts, setAddedProducts] = useState([]);
+    const [firstButtonClick, setFirstButtonClick] = useState(false);
+    const navigate = useNavigate();
 
-    const handleButtonClick = () => {
-        // Create a new array by copying the existing array and adding a new AddProduct component
+
+    const handleFirstButtonClick = () => {
         const updatedProducts = [
             ...addedProducts,
             <AddProduct key={addedProducts.length} />,
         ];
         setAddedProducts(updatedProducts);
+        setFirstButtonClick(true);
+    };
+
+    const handleSecondButtonClick = () => {
+        navigate('/indentlist');
     };
 
     return (
@@ -19,15 +27,20 @@ const MultipleIndent = () => {
                 {addedProducts.map((product, index) => (
                     <div key={index}>{product}</div>
                 ))}
-                <button className="btn m-5" onClick={handleButtonClick}>
-                    Add Indent
+                <button className="btn m-5" onClick={handleFirstButtonClick}>
+                    Add Product
                 </button>
             </div>
-            <div>
-                <button className="btn m-5" onClick={handleButtonClick}>
-                    Add Indent
-                </button>
-            </div>
+            {firstButtonClick && (
+                <div>
+                    <button
+                        className="btn m-5 float-right"
+                        onClick={handleSecondButtonClick}
+                    >
+                        Submit Indent
+                    </button>
+                </div>
+            )}
         </>
     );
 };

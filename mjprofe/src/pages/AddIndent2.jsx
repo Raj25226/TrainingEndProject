@@ -2,76 +2,16 @@ import React, { useEffect, useState } from "react";
 import Date from "../util/Date";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import MultipleIndent from "./MultipleIndent";
 
 const AddIndent2 = () => {
-    const [price, setPrice] = useState(0);
-    const [unitPrice, setUnitPrice] = useState(0);
-    const [totalPrice,setTotalPrice] =useState(0);
-    const [quantity, setQuantity] = useState(0);
-    const [selectedProduct, setSelectedProduct] = useState("");
-    const [selectedCategory, setSelectedCategory] = useState("");
-    const [unitMeasurement, setUnitMeasurement] = useState("");
-    const navigate=useNavigate();
-
-
-    const PQR = ["unit price", "total price"];
-    const [category, setCategory] = useState([]);
-    const [product, setProduct] = useState([]);
-    const [uom,setUom] = useState([]);
+    const navigate = useNavigate();
+    const [hid, sethid] = useState("");
     const [description, setDescription] = useState("");
-    const [pt,setPt]=useState("");
+    let indentHeaderId=-1;
 
-    const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
-
-    const handlePrice = () =>{
-        console.log(pt=="unit price");
-        if(pt=="unit price"){
-            setUnitPrice(price);
-            setTotalPrice(price*quantity);
-        }else{
-            setUnitPrice(price/quantity);
-            setTotalPrice(price);
-        }
-
-    }
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:8080/mj/category"
-                );
-                setCategory(response.data);
-                console.log(response.data);
-                const result = response.data;
-                setCategory(result);
-            } catch (error) {
-                console.error("Error fetching categories:", error);
-            } finally {
-            }
-        };
-
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get(
-                    "http://localhost:8080/mj/product"
-                );
-                const result = await response.data;
-                console.log(result);
-                setProduct(result);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-            }
-        };
-
-        fetchCategories();
-        fetchProducts();
-    }, []);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        handlePrice();
-
+    const handleSubmit = async () => {
+        navigate("/multipleindent");
         const response = await fetch("http://localhost:8080/mj/indentheader", {
             method: "POST",
             headers: {
@@ -79,7 +19,6 @@ const AddIndent2 = () => {
             },
             body: JSON.stringify({
                 description: description,
-                netprice: totalPrice,
                 isActive: 1,
                 createdBy: "Raj",
                 createdAt: Date(),
@@ -93,8 +32,10 @@ const AddIndent2 = () => {
                 },
             }),
         });
+        handleNext();
+    };
 
-        let indentHeaderId=-1;
+    const handleNext = async() => {
         const response1 = await fetch( "http://localhost:8080/mj/indentheader/desc", {
                     method: "POST",
                     headers: {
@@ -104,68 +45,15 @@ const AddIndent2 = () => {
                 }
             );
 
-            if (response1.ok) {
-                const result = await response1.json();
-                console.log(result);
-                indentHeaderId=result.indentHeaderId;
-              }
+        if (response1.ok) {
+            const result = await response1.json();
+            console.log(result);
+            indentHeaderId=result.indentHeaderId;
+            localStorage.setItem("hid", indentHeaderId);
+            console.log(localStorage.getItem("hid"));
+        }
         
-
-        const response2 = await fetch("http://localhost:8080/mj/indent", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                unitPrice: unitPrice,
-                totalPrice: totalPrice,
-                quantity: quantity,
-                isActive: 1,
-                createdBy: "Raj",
-                createdAt: Date(),
-                modifiedBy: "Raj",
-                modifiedAt: Date(),
-                product: {
-                    productId: selectedProduct,
-                    category: {
-                        categoryId: selectedCategory,
-                    },
-                },
-                indentHeaderVO: {
-                    indentHeaderId: indentHeaderId,
-                    user: {
-                        userId: 1,
-                        role: {
-                            roleId: 1,
-                        },
-                    },
-                },
-            }),
-        });
-        navigate('/indentlist');
     };
-
-    const changeProductList = (id) =>{
-
-        const fetchProducts = async () => {
-            try {
-                const response = await axios.get(
-                    `http://localhost:8080/mj/products/${id}`
-                );
-                const result = await response.data;
-                console.log(result);
-                setProduct(result);
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            } finally {
-            }
-        };
-        fetchProducts();
-    }
-
-    const handleNext=()=>{
-        navigate('/multipleIndent');
-    }
 
     return (
         <div className="container mb-5">
@@ -194,12 +82,9 @@ const AddIndent2 = () => {
                                     />
                                 </div>
 
-                                <button 
+                                <button
                                     type="submit"
                                     className="btn btn-primary"
-                                    onClick={()=>
-                                        handleNext()
-                                    }
                                 >
                                     next
                                 </button>
