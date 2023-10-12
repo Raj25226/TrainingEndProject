@@ -15,4 +15,6 @@ public interface ProductService {
 	Boolean updateProduct (ProductVO productVO);
 	
 	Boolean deleteProduct(Integer id);
+	
+	List<ProductVO> getProductBycategory(Integer id);
 }

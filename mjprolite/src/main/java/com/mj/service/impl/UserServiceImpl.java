@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean saveUser(UserVO userVO) {
+    public UserVO saveUser(UserVO userVO) {
         UserEntity userEntity = new UserEntity();
         userEntity.setUserName(userVO.getUserName());
         userEntity.setPassword(userVO.getPassword()); 
@@ -124,11 +124,38 @@ public class UserServiceImpl implements UserService {
         
 
         UserEntity savedEntity = userRepo.save(userEntity);
+        
+       
+        UserVO userVO1 = new UserVO();
+   	 
+        userVO1.setUserId(savedEntity.getUserId());
+        userVO1.setUserName(savedEntity.getUserName());
+        userVO1.setPassword(savedEntity.getPassword()); 
+        userVO1.setIsActive(savedEntity.getIsActive());
+        userVO1.setCreatedBy(savedEntity.getCreatedBy());
+        userVO1.setCreatedAt(savedEntity.getCreatedAt());
+        userVO1.setModifiedBy(savedEntity.getModifiedBy());
+        userVO1.setModifiedAt(savedEntity.getModifiedAt());
+        
+        RoleEntity roleEntity1 = userEntity.getRole();
+        
+        RoleVO roleVO1 = new RoleVO();
+        roleVO1.setRoleId(roleEntity1.getRoleId());
+        roleVO1.setRoleName(roleEntity1.getRoleName());
+        roleVO1.setIsActive(roleEntity1.getIsActive());
+        roleVO1.setCreatedBy(roleEntity1.getCreatedBy());
+        roleVO1.setCreatedAt(roleEntity1.getCreatedAt());
+        roleVO1.setModifiedBy(roleEntity1.getModifiedBy());
+        roleVO1.setModifiedAt(roleEntity1.getModifiedAt());
+        
+        userVO1.setRole(roleVO1);
+        
+        
 
         if (savedEntity != null) {
-            return true;
+            return userVO1;
         } else {
-            return false;
+            return userVO1;
         }
     }
 

@@ -50,21 +50,37 @@ public class UserController {
 	}
 	
 	@PostMapping("/user")
-	ResponseEntity<String> saveUser(@RequestBody UserVO userVO) {
-		userVO.setPassword(Authorizer.getMd5(userVO.getPassword()));
-	    boolean saved = userService.saveUser(userVO);
+    public ResponseEntity<UserVO> saveUser(@RequestBody UserVO userVO) {
+       
+            if (userVO != null ) {
+                // Hash the user's password (you might want to check this method)
+                userVO.setPassword(Authorizer.getMd5(userVO.getPassword()));
 
-	    if (saved) {
-	        return ResponseEntity.ok("User Saved Successfully");
-	    } else {
-	    	return ResponseEntity.noContent().build();
-	    }
-	}
+                UserVO userVO1 = userService.saveUser(userVO);
+
+                if (userVO1 != null) {
+                    // Use a logger instead of System.out.println for better control
+                   
+                    return ResponseEntity.ok(userVO1);
+                } else {
+                    // Handle the case where saving the user failed
+                    return ResponseEntity.noContent().build();
+                }
+            } else {
+                // Handle the case where userVO or userVO.getUserId() is null
+                return ResponseEntity.noContent().build();
+            }
+            
+    }
 	
 	@PutMapping("/user")
     ResponseEntity<String> updateUser(@RequestBody UserVO userVO) {
 		
+		userVO.setPassword(Authorizer.getMd5(userVO.getPassword()));
+		
 		UserVO userVO1=userService.getUserById(userVO.getUserId());
+		
+		
 		if(userVO1==null) {
 			return ResponseEntity.noContent().build();
 		}
