@@ -67,6 +67,10 @@ const IndentList = () => {
     }
 
   };  
+  const handleViewItemClick = (headerId) => {
+    setSelectedHeaderId(headerId); // Set the selected headerId
+    setviewAddModal(true);
+  };
 
   return (
     <div className="container mt-4">
@@ -104,7 +108,7 @@ const IndentList = () => {
                       </button>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => setviewAddModal(true)}
+                        onClick={() => handleViewItemClick(item.indentHeaderId)}
                       >
                         <i className="bi bi-eye"></i>
                       </button>
@@ -143,7 +147,7 @@ const IndentList = () => {
               <div className="modal-body">
                 <div className="form-group">
                  
-                  <ViewIndents></ViewIndents>
+                <ViewIndents headerId={selectedHeaderId} />
                 </div>
               </div>
             </div>

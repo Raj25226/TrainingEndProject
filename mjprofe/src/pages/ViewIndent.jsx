@@ -1,35 +1,29 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const ViewIndents = () => {
-  // Assume you have an array of indents
+const ViewIndents = ({ category }) => {
   const [indents, setIndents] = useState([]);
 
-  // Fetch indents from your data source
   useEffect(() => {
-    // Replace with your actual API call or data fetching logic
-    // For example, you might use a library like axios to make an API call
-    // const response = await axios.get("/api/indents");
-    // const fetchedIndents = response.data;
-    // For demonstration purposes, setting some dummy data
-    const fetchedIndents = [
-      {
-        id: 1,
-        unitPrice: 10.0,
-        totalPrice: 50.0,
-        quantity: 5,
-        selectedProduct: "Product2",
-        selectedCategory: "Category1",
-        unitMeasurement: "kg",
-        selectedManufacturer: "Manufacturer2",
-      },
-      // Add more indents as needed
-    ];
+    const fetchData = async () => {
+      try {
+        // Construct the API endpoint URL using the props
+        const apiEndpoint = `/api/indents?category${category}`;
 
-    setIndents(fetchedIndents);
-  }, []);
+        // Make the API call with the constructed URL
+        const response = await axios.get(apiEndpoint);
+        const fetchedIndents = response.data;
+        setIndents(fetchedIndents);
+      } catch (error) {
+        console.error("Error fetching indents:", error);
+      }
+    };
+
+    fetchData();
+  }, [category, product]);
 
   return (
-    <div className="container col-md-5" style={{marginTop:'10%'}}>
+    <div className="container col-md-5" style={{ marginTop: '10%' }}>
       {indents.map((indent) => (
         <div
           key={indent.id}
