@@ -89,5 +89,17 @@ public class IndentController {
 		
 		return ResponseEntity.ok("Data deleted Successfully");
 	}
+	@DeleteMapping("/indent1/{id}")
+	public ResponseEntity<String> deleteallIndent(@PathVariable Integer id) {
+		
+		IndentVO indentVO=indentService.getIndentById(id);
+		
+		if(indentVO==null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Does not exist");
+		
+		indentService.deleteallIndentById(id);
+		
+		return ResponseEntity.ok("Data deleted Successfully");
+	}
 	
 }

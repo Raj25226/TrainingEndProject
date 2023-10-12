@@ -431,4 +431,15 @@ public class IndentServiceImpl implements IndentService {
 		return true;
 	}
 
+	@Override
+	public Boolean deleteallIndentById(Integer id) {
+		if(indentRepo.findById(id).isEmpty()) {
+			return false;
+		}
+		
+		indentRepo.deleteByIndentHeaderEntity_IndentHeaderId(id);
+		
+		return true;
+	}
+
 }
