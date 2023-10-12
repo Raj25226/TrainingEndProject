@@ -433,9 +433,7 @@ public class IndentServiceImpl implements IndentService {
 
 	@Override
 	public Boolean deleteallIndentById(Integer id) {
-		
-		System.out.println("hello"+id);
-		
+				
 		if(indentRepo.findById(id).isEmpty()) {
 			return false;
 		}
