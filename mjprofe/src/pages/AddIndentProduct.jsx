@@ -9,15 +9,13 @@ const AddProduct = () => {
     const [quantity, setQuantity] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
-    const [pt, setPt] = useState("");
+    // const [pt, setPt] = useState("");
 
-    const handlePrice = () => {
-        // console.log(pt == "total price");
-        // console.log(pt);
-        if (pt == "total price") {
+    const handlePrice = (e) => {
+        console.log(e.target.value);
+        if (e.target.value == "1") {
             setUnitPrice(price);
             setTotalPrice(price * quantity);
         } else {
@@ -77,10 +75,35 @@ const AddProduct = () => {
         fetchProducts();
     };
 
+    const handleUpdate = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8080/mj/indentheader/${totalPrice}/${localStorage.getItem(
+                    "hid"
+                )}`,
+                {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "text/plain",
+                    },
+                    body: "Nothing",
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to update data");
+            }
+
+            const updatedData = await response.json();
+            setData(updatedData);
+        } catch (error) {}
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        handleUpdate();
         console.log(e);
-        e.target.disabled =true;
+        e.target.disabled = true;
         const response2 = await fetch("http://localhost:8080/mj/indent", {
             method: "POST",
             headers: {
@@ -228,23 +251,19 @@ const AddProduct = () => {
                                             </label>
                                             <select
                                                 className="form-select"
-                                                value={pt}
                                                 onChange={(e) => {
-                                                    setPt(e.target.value);
-                                                    handlePrice();
+                                                    handlePrice(e);
                                                 }}
                                             >
                                                 <option value="">
                                                     Select Price Type
                                                 </option>
-                                                {PQR.map((unit) => (
-                                                    <option
-                                                        key={unit}
-                                                        value={unit}
-                                                    >
-                                                        {unit}
-                                                    </option>
-                                                ))}
+                                                <option key="1" value="1">
+                                                    unit price
+                                                </option>
+                                                <option key="2" value="2">
+                                                    total price
+                                                </option>
                                             </select>
                                         </div>
                                     </div>
@@ -253,7 +272,7 @@ const AddProduct = () => {
                                         id="disab"
                                         type="submit"
                                         className="btn btn-primary"
-                                        onClick={(e)=>{
+                                        onClick={(e) => {
                                             handleSubmit(e);
                                         }}
                                     >

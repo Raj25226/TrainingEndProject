@@ -1,22 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
-import AddIndent from './AddIndent';
 import ViewIndents from './ViewIndent';
 import EditIndent from './EditIndent';
 import { Link } from "react-router-dom";
 const IndentList = () => {
   const [items, setItems] = useState([]);
-  // const [showAddModal, setShowAddModal] = useState(false);
   const [showviewModal, setviewAddModal] = useState(false); 
   const [showeditModal, seteditAddModal] = useState(false); 
   const [selectedHeaderId, setSelectedHeaderId] = useState(0); 
-  const [newItem, setNewItem] = useState({
-    field1: '',
-    field2: '',
-    field3: '',
-    field4: '',
-  });
 
   const fetchApiData = async () => {
     try {
@@ -144,7 +136,7 @@ const IndentList = () => {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Item</h5>
+                <h5 className="modal-title">Edit Indent</h5>
                 <button
                   type="button"
                   className="close"
@@ -158,7 +150,7 @@ const IndentList = () => {
               <div className="modal-body">
                 <div className="form-group">
                  
-                  <EditIndent></EditIndent>
+                  <EditIndent headerId={selectedHeaderId}></EditIndent>
                 </div>
               </div>
             </div>

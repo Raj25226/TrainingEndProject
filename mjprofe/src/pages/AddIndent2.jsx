@@ -19,6 +19,7 @@ const AddIndent2 = () => {
             },
             body: JSON.stringify({
                 description: description,
+                netprice:0,
                 isActive: 1,
                 createdBy: "Raj",
                 createdAt: Date(),
