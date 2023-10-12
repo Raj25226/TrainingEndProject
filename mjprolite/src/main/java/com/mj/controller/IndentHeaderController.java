@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mj.service.IndentHeaderService;
+import com.mj.service.IndentService;
 import com.mj.vo.IndentHeaderVO;
 
 @RestController
@@ -27,6 +28,9 @@ public class IndentHeaderController {
 	
 	@Autowired
 	IndentHeaderService indentHeaderService;
+	
+	@Autowired
+	IndentService indentService;
 	
 	@GetMapping("/indentheader")
 	public ResponseEntity<List<IndentHeaderVO>> getIndentHeaderList(){
@@ -99,6 +103,8 @@ public class IndentHeaderController {
 	
 	@DeleteMapping("/indentheader/{id}")
 	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
+		
+		indentService.deleteallIndentById(id);
 		
 		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
 		
