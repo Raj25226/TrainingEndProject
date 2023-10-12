@@ -34,25 +34,8 @@ const IndentList = () => {
   useEffect(() => {
     fetchApiData();
   }, []);
-  // const handleDeleteindent = async (id) => {
-  //   console.log(id);
-  //   fetch(`http://localhost:8080/mj/indent1/${id}`, {
-  //     method: 'DELETE',
-  //   })
-  //     .then((response) => {
-  //       if (response.ok) {
-  //         const updatedItems = items.filter((item) => item.indentId !== id);
-  //         setItems(updatedItems);
-  //       } else {
-  //         console.error('Error deleting item:', response);
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error deleting item:', error);
-  //     });
-  // };
+
   const handleDeleteItem = async (id) => {
-    // await handleDeleteindent(id);
     try {
       const response = await fetch(`http://localhost:8080/mj/indentheader/${id}`, {
         method: 'DELETE',
@@ -135,7 +118,7 @@ const IndentList = () => {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Add Item</h5>
+                <h5 className="modal-title">Indent View</h5>
                 <button
                   type="button"
                   className="close"
