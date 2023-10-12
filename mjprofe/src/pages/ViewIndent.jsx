@@ -1,47 +1,44 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ViewIndents = ({ category }) => {
-  const [indents, setIndents] = useState([]);
+const ViewIndents = (props) => {
+  const [indents, setIndents] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Construct the API endpoint URL using the props
-        const apiEndpoint = `/api/indents?category${category}`;
-
-        // Make the API call with the constructed URL
+        const apiEndpoint = `http://localhost:8080/mj/indent1/${props.headerId}`;
         const response = await axios.get(apiEndpoint);
         const fetchedIndents = response.data;
         setIndents(fetchedIndents);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error fetching indents:", error);
       }
     };
 
     fetchData();
-  }, [category, product]);
+  }, [props.headerId]);
 
   return (
     <div className="container col-md-5" style={{ marginTop: '10%' }}>
-      {indents.map((indent) => (
-        <div
-          key={indent.id}
-          className="card mb-3"
-          style={{ background: "#176B87", color: "#EEEEEE" }}
-        >
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="card mb-3" style={{ background: "#176B87", color: "#EEEEEE" }}>
           <div className="card-body">
-            <h5 className="card-title">Indent ID: {indent.id}</h5>
-            <p>Category: {indent.selectedCategory}</p>
-            <p>Product: {indent.selectedProduct}</p>
-            <p>Manufacturer: {indent.selectedManufacturer}</p>
-            <p>Quantity: {indent.quantity}</p>
-            <p>Unit Measurement: {indent.unitMeasurement}</p>
-            <p>Unit Price: {indent.unitPrice}</p>
-            <p>Total Price: {indent.totalPrice}</p>
+            <h5 className="card-title">Indent:</h5>
+            {indents.indentId && <p>IndentId: {indents.indentId}</p>}
+            {indents.indentCode && <p>IndentCode: {indents.indentCode}</p>}
+            {indents.unitPrice && <p>UnitPrice: {indents.unitPrice}</p>}
+            {indents.totalPrice && <p>Totalprice: {indents.totalPrice}</p>}
+            {indents.quantity && <p>Quantity: {indents.quantity}</p>}
+            {/* {indents.indentcategory && <p>Category: {indents.indentcategory}</p>} */}
+            {/* Check for the existence of 'indentcategory' */}
           </div>
         </div>
-      ))}
+      )}
     </div>
   );
 };

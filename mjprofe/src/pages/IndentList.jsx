@@ -10,6 +10,7 @@ const IndentList = () => {
   // const [showAddModal, setShowAddModal] = useState(false);
   const [showviewModal, setviewAddModal] = useState(false); 
   const [showeditModal, seteditAddModal] = useState(false); 
+  const [selectedHeaderId, setSelectedHeaderId] = useState(0); 
   const [newItem, setNewItem] = useState({
     field1: '',
     field2: '',
@@ -68,6 +69,7 @@ const IndentList = () => {
 
   };  
   const handleViewItemClick = (headerId) => {
+    console.log(headerId);
     setSelectedHeaderId(headerId); // Set the selected headerId
     setviewAddModal(true);
   };
