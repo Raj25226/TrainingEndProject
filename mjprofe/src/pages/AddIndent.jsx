@@ -1,22 +1,39 @@
 import React, { useEffect, useState } from "react";
 import Date from "../util/Date";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const AddIndent = () => {
     const [price, setPrice] = useState(0);
+    const [unitPrice, setUnitPrice] = useState(0);
+    const [totalPrice,setTotalPrice] =useState(0);
     const [quantity, setQuantity] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
     const [unitMeasurement, setUnitMeasurement] = useState("");
+    const navigate=useNavigate();
+
 
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
     const [uom,setUom] = useState([]);
     const [description, setDescription] = useState("");
+    const [pt,setPt]=useState("");
 
     const unitMeasurements = ["kg", "lbs", "pieces"]; // Replace with your actual unit measurement data
 
+    const handlePrice = () =>{
+        console.log(pt=="unit price");
+        if(pt=="unit price"){
+            setUnitPrice(price);
+            setTotalPrice(price*quantity);
+        }else{
+            setUnitPrice(price/quantity);
+            setTotalPrice(price);
+        }
+
+    }
     useEffect(() => {
         const fetchCategories = async () => {
             try {
@@ -53,6 +70,7 @@ const AddIndent = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        handlePrice();
 
         const response = await fetch("http://localhost:8080/mj/indentheader", {
             method: "POST",
@@ -61,7 +79,7 @@ const AddIndent = () => {
             },
             body: JSON.stringify({
                 description: description,
-                netprice: price * quantity,
+                netprice: totalPrice,
                 isActive: 1,
                 createdBy: "Raj",
                 createdAt: Date(),
@@ -99,8 +117,8 @@ const AddIndent = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                unitPrice: price,
-                totalPrice: price * quantity,
+                unitPrice: unitPrice,
+                totalPrice: totalPrice,
                 quantity: quantity,
                 isActive: 1,
                 createdBy: "Raj",
@@ -124,7 +142,7 @@ const AddIndent = () => {
                 },
             }),
         });
-        console.log(indentHeaderId);
+        navigate('/indentlist');
     };
 
     const changeProductList = (id) =>{
@@ -283,9 +301,11 @@ const AddIndent = () => {
                                         </label>
                                         <select
                                             className="form-select"
-                                            value={unitMeasurement}
-                                            onChange={(e) =>
-                                                setPQR(e.target.value)
+                                            value={pt}
+                                            onChange={(e) =>{
+                                                setPt(e.target.value);
+                                                handlePrice();
+                                            }
                                             }
                                         >
                                             <option value="">
