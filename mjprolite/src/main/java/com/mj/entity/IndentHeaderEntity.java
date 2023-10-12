@@ -40,7 +40,7 @@ public class IndentHeaderEntity {
 	private String modifiedBy;
 	@Column(name="modified_at")
 	private LocalDate modifiedAt;
-	@ManyToOne(cascade=CascadeType.MERGE)
+	@ManyToOne
 	@JoinColumn(name="user_id")
 	private UserEntity user;
 	

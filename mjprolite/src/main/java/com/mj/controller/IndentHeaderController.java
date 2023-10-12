@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mj.service.IndentHeaderService;
+import com.mj.service.IndentService;
 import com.mj.vo.IndentHeaderVO;
 
 @RestController
@@ -27,6 +28,9 @@ public class IndentHeaderController {
 	
 	@Autowired
 	IndentHeaderService indentHeaderService;
+	
+	@Autowired
+	IndentService indentService;
 	
 	@GetMapping("/indentheader")
 	public ResponseEntity<List<IndentHeaderVO>> getIndentHeaderList(){
@@ -100,13 +104,21 @@ public class IndentHeaderController {
 	@DeleteMapping("/indentheader/{id}")
 	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
 		
-		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
+		boolean flag=indentService.deleteallIndentById(id);
 		
-		if(indentHeaderVO==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
+		if(flag==true) {
+			System.out.println(id);
+			
+			IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
+			
+			if(indentHeaderVO==null)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
+			
+			indentHeaderService.deleteIndentHeaderById(id);
+			
+			return ResponseEntity.ok("Data deleted Successfully");
+		}
 		
-		indentHeaderService.deleteIndentHeaderById(id);
-		
-		return ResponseEntity.ok("Data deleted Successfully");
+		return ResponseEntity.ok("Data not deleted Successfully");
 	}
 }

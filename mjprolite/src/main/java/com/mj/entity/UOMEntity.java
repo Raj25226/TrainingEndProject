@@ -43,7 +43,7 @@ public class UOMEntity {
 	private LocalDate modifiedAt;
 	
 	
-	@ManyToMany(cascade = CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(
 			  name = "category_uom",
 			  joinColumns = @JoinColumn(name = "uom_id"),

@@ -431,4 +431,118 @@ public class IndentServiceImpl implements IndentService {
 		return true;
 	}
 
+	@Override
+	public Boolean deleteallIndentById(Integer id) {
+				
+		if(indentRepo.findById(id).isEmpty()) {
+			return false;
+		}
+		
+		indentRepo.deleteByIndentHeaderEntity_IndentHeaderId(id);	
+		
+		return true;
+	}
+
+	@Override
+	public IndentVO getIndentByheaderId(Integer id) {
+		// TODO Auto-generated method stub		
+			Optional<IndentEntity> indentEntity=indentRepo.getindent(id);
+			
+			System.out.println(id);
+			
+			if(indentEntity.isEmpty()) {
+				return null;
+			}
+			
+			RoleVO roleVO=new RoleVO(
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getRoleId(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getRoleName(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getIsActive(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getCreatedBy(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getCreatedAt(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getModifiedBy(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getRole().getModifiedAt());
+			
+			UserVO userVO=new UserVO(
+					indentEntity.get().getIndentHeaderEntity().getUser().getUserId(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getUserName(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getPassword(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getIsActive(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getCreatedBy(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getCreatedAt(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getModifiedBy(),
+					indentEntity.get().getIndentHeaderEntity().getUser().getModifiedAt(),
+					roleVO
+					);
+			
+			IndentHeaderVO indentHeaderVO=new IndentHeaderVO(
+					indentEntity.get().getIndentHeaderEntity().getIndentHeaderId(),
+					indentEntity.get().getIndentHeaderEntity().getDescription(),
+					indentEntity.get().getIndentHeaderEntity().getNetprice(),
+					indentEntity.get().getIndentHeaderEntity().getIsActive(),
+					indentEntity.get().getIndentHeaderEntity().getCreatedBy(),
+					indentEntity.get().getIndentHeaderEntity().getCreatedAt(),
+					indentEntity.get().getIndentHeaderEntity().getModifiedBy(),
+					indentEntity.get().getIndentHeaderEntity().getModifiedAt(),
+					userVO);
+			
+			CategoryVO categoryVO =new CategoryVO(
+					indentEntity.get().getProduct().getCategory().getCategoryId(),				
+					indentEntity.get().getProduct().getCategory().getCategoryName(),
+					indentEntity.get().getProduct().getCategory().getCategoryCode(),
+					indentEntity.get().getProduct().getCategory().getIsActive(),
+					indentEntity.get().getProduct().getCategory().getCreatedBy(),
+					indentEntity.get().getProduct().getCategory().getCreatedAt(),
+					indentEntity.get().getProduct().getCategory().getModifiedBy(),
+					indentEntity.get().getProduct().getCategory().getModifiedAt());
+			
+//			List<ManufacturerVO> manufacturerVOList=new ArrayList<>();
+//			
+//			for(ManufacturerEntity manufacturerEntity:indentEntity.get().getProduct().getManufacturer()) {
+//				
+//				ManufacturerVO manufacturerVO= new ManufacturerVO(
+//						manufacturerEntity.getManufacturerId(),
+//						manufacturerEntity.getManufacturerName(),
+//						manufacturerEntity.getIsActive(),
+//						manufacturerEntity.getCreatedBy(),
+//						manufacturerEntity.getCreatedAt(),
+//						manufacturerEntity.getModifiedBy(),
+//						manufacturerEntity.getModifiedAt());
+//				
+//				manufacturerVOList.add(manufacturerVO);
+//				
+//			}
+			
+			ProductVO productVO=new ProductVO(
+					indentEntity.get().getProduct().getProductId(),
+					indentEntity.get().getProduct().getProductName(),
+					indentEntity.get().getProduct().getProductCode(),
+					indentEntity.get().getProduct().getDescription(),
+					indentEntity.get().getProduct().getSpecification(),
+					indentEntity.get().getProduct().getIsActive(),
+					indentEntity.get().getProduct().getCreatedBy(),
+					indentEntity.get().getProduct().getCreatedAt(),
+					indentEntity.get().getProduct().getModifiedBy(),
+					indentEntity.get().getProduct().getModifiedAt(),
+					categoryVO);
+			
+			
+			IndentVO indentVO=new IndentVO(
+					indentEntity.get().getIndentId(),
+					indentEntity.get().getIndentCode(),
+					indentEntity.get().getUnitPrice(),
+					indentEntity.get().getTotalPrice(),
+					indentEntity.get().getQuantity(),
+					indentEntity.get().getIsActive(),
+					indentEntity.get().getCreatedBy(),
+					indentEntity.get().getCreatedAt(),
+					indentEntity.get().getModifiedBy(),
+					indentEntity.get().getModifiedAt(),
+					productVO,
+					indentHeaderVO);
+			
+			return indentVO;
+		}
+		
+
 }
