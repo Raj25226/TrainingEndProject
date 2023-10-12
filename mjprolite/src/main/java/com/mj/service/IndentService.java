@@ -12,7 +12,7 @@ public interface IndentService {
 	void saveIndent(IndentVO indentVO);
 	Boolean updateIndent(IndentVO indentVO);
 	Boolean deleteIndentById(Integer id);
-	Boolean deleteallIndentById(Integer id);
+	Integer deleteallIndentById(Integer id);
 //	IndentVO getIndentByheaderId(Integer id);
 	List<IndentVO> getIndentByheaderIdAll(Integer id);
 
