@@ -104,15 +104,21 @@ public class IndentHeaderController {
 	@DeleteMapping("/indentheader/{id}")
 	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
 		
-		indentService.deleteallIndentById(id);
+		boolean flag=indentService.deleteallIndentById(id);
 		
-		IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
+		if(flag==true) {
+			System.out.println(id);
+			
+			IndentHeaderVO indentHeaderVO=indentHeaderService.getIndentHeaderById(id);
+			
+			if(indentHeaderVO==null)
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
+			
+			indentHeaderService.deleteIndentHeaderById(id);
+			
+			return ResponseEntity.ok("Data deleted Successfully");
+		}
 		
-		if(indentHeaderVO==null)
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
-		
-		indentHeaderService.deleteIndentHeaderById(id);
-		
-		return ResponseEntity.ok("Data deleted Successfully");
+		return ResponseEntity.ok("Data not deleted Successfully");
 	}
 }
