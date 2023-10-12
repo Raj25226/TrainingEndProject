@@ -4,9 +4,10 @@ import '../../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 import AddIndent from './AddIndent';
 import ViewIndents from './ViewIndent';
 import EditIndent from './EditIndent';
+import { Link } from "react-router-dom";
 const IndentList = () => {
   const [items, setItems] = useState([]);
-  const [showAddModal, setShowAddModal] = useState(false);
+  // const [showAddModal, setShowAddModal] = useState(false);
   const [showviewModal, setviewAddModal] = useState(false); 
   const [showeditModal, seteditAddModal] = useState(false); 
   const [newItem, setNewItem] = useState({
@@ -72,9 +73,7 @@ const IndentList = () => {
   };
 
   // Replace handleEditItem with handleViewItem
-  const handleViewItem = (index) => {
-    // Implement view item logic here
-  };
+  
 
   return (
     <div className="container mt-4">
@@ -82,10 +81,9 @@ const IndentList = () => {
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
           <button
-            className="btn btn-success"
-            onClick={() => setShowAddModal(true)}
+            className="btn btn-success"          
           >
-            Add
+            <Link to="/addindent">Add</Link>
           </button>
         </div>
         <div className="card-body">
@@ -134,31 +132,7 @@ const IndentList = () => {
         </div>
       </div>
       
-      {showAddModal && (
-        <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
-          <div className="modal-dialog" role="document">
-            <div className="modal-content">
-              <div className="modal-header">
-                <h5 className="modal-title">Add Item</h5>
-                <button
-                  type="button"
-                  className="close"
-                  data-dismiss="modal"
-                  aria-label="Close"
-                  onClick={() => setShowAddModal(false)}
-                >
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div className="modal-body">
-                <div className="form-group">
-                <AddIndent></AddIndent>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+     
       {showviewModal && (
         <div className="modal" tabIndex="-1" role="dialog" style={{ display: 'block' }}>
           <div className="modal-dialog" role="document">
