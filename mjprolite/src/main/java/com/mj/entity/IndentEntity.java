@@ -48,7 +48,7 @@ public class IndentEntity {
 	@OneToOne
 	@JoinColumn(name="product_id")
 	private ProductEntity product;
-	@ManyToOne(cascade=CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="indent_header_id")
 	private IndentHeaderEntity indentHeaderEntity;
 }
