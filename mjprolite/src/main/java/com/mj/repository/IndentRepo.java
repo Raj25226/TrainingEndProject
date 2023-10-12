@@ -1,5 +1,6 @@
 package com.mj.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,8 @@ public interface IndentRepo extends JpaRepository<IndentEntity, Integer> {
 	
 	@Query(value = "DELETE FROM INDENT WHERE INDENT_HEADER_ID=?", nativeQuery = true)
 	void deleteByIndentHeaderEntity_IndentHeaderId(Integer id);
+//	@Query(value = "SELECT * FROM INDENT WHERE INDENT_HEADER_ID=?", nativeQuery = true)
+//	Optional<IndentEntity> getindent(Integer id);
 	@Query(value = "SELECT * FROM INDENT WHERE INDENT_HEADER_ID=?", nativeQuery = true)
-	Optional<IndentEntity> getindent(Integer id);
+	List<IndentEntity> getindentall(Integer id);
 }

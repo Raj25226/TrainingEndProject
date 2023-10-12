@@ -57,10 +57,10 @@ public class IndentController {
 		}
 	}
 	@GetMapping("/indent1/{id}")
-	public ResponseEntity<IndentVO> getIndentByheaderId(@PathVariable Integer id) {
+	public ResponseEntity<List<IndentVO>> getIndentByheaderId(@PathVariable Integer id) {
 		
-		if(indentService.getIndentByheaderId(id)!=null) {
-			return ResponseEntity.ok(indentService.getIndentByheaderId(id));
+		if(indentService.getIndentByheaderIdAll(id)!=null) {
+			return ResponseEntity.ok(indentService.getIndentByheaderIdAll(id));
 		}else {
 			HttpHeaders header = new HttpHeaders();
 			header.add("Data", "No Data Found");
