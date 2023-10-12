@@ -13,6 +13,7 @@ import com.mj.entity.UserEntity;
 import com.mj.repository.IndentHeaderRepo;
 import com.mj.service.IndentHeaderService;
 import com.mj.vo.IndentHeaderVO;
+import com.mj.vo.IndentVO;
 import com.mj.vo.RoleVO;
 import com.mj.vo.UserVO;
 
@@ -253,6 +254,16 @@ public class IndentHeaderServiceImpl implements IndentHeaderService {
 		indentHeaderRepo.deleteById(id);
 		
 		return true;
+	}
+
+	@Override
+	public Integer editIndentHeaderPrice(Long price, Integer id) {
+		
+		IndentHeaderVO indentHeaderVo=getIndentHeaderById(id);
+		
+		indentHeaderRepo.updateNetPrice(Math.round(indentHeaderVo.getNetprice())+price, id);
+		
+		return null;
 	}
 
 	

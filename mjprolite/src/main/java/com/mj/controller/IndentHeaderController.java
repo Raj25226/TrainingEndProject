@@ -101,6 +101,18 @@ public class IndentHeaderController {
 		return ResponseEntity.ok("Data Updated Successfully");
 	}
 	
+	@PutMapping("/indentheader/{price}/{id}")
+	public ResponseEntity<String> updateIndentHeader(@PathVariable Long price, @PathVariable Integer id) {
+		
+		IndentHeaderVO indentHeaderVO1=indentHeaderService.getIndentHeaderById(id);
+		
+		if(indentHeaderVO1==null)
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Given Indent Header Doesnot exist");
+		indentHeaderService.editIndentHeaderPrice(price,id);
+		
+		return ResponseEntity.ok("Data Updated Successfully");
+	}
+	
 	@DeleteMapping("/indentheader/{id}")
 	public ResponseEntity<String> deleteIndentHeader(@PathVariable Integer id) {
 		

@@ -12,4 +12,5 @@ public interface IndentHeaderService {
 	Boolean updateIndentHeader(IndentHeaderVO indentHeaderVO);
 	Boolean deleteIndentHeaderById(Integer id);
 	IndentHeaderVO getIndentHeaderByDescription(String description);
+	Integer editIndentHeaderPrice(Long price,Integer id);
 }
