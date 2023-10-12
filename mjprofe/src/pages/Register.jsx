@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -10,6 +12,8 @@ function Register() {
     turnover: '',
     password: '',
   });
+
+  const navigate=useNavigate();
 
   const [errors, setErrors] = useState({});
 
@@ -39,8 +43,56 @@ function Register() {
     return regex.test(pan);
   };
 
-  const handleSubmit = (e) => {
+  const createUser = async (userData) => {
+    try {
+      userData.isActive = 1;
+      userData.createdBy = "Vishwa";
+      userData.createdAt = new Date(); // Use new Date() to get the current date
+      userData.modifiedBy = "Vishwa";
+      userData.modifiedAt = new Date();
+      const response = await axios.post('http://localhost:8080/mj/user', userData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status === 200) {
+        
+        console.log('Response data:', response.data);
+        return response.data;
+      } else {
+        throw new Error('User registration failed.');
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const createVendor = async (vendorData) => {
+    try {
+      vendorData.isActive = 1;
+      vendorData.createdBy = "Vishwa";
+      vendorData.createdAt = new Date(); // Use new Date() to get the current date
+      vendorData.modifiedBy = "Vishwa";
+      vendorData.modifiedAt = new Date();
+
+      const response = await axios.post('http://localhost:8080/mj/vendor', vendorData, {
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (response.status === 200) {
+        console.log('Vendor and user registration successful');
+        navigate('/');
+      } else {
+        navigate('/register');
+        throw new Error('Vendor registration failed.');
+      }
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     const newErrors = {};
     let formIsValid = true;
 
@@ -94,8 +146,31 @@ function Register() {
     setErrors(newErrors);
 
     if (formIsValid) {
-      // Handle form submission logic here
-      console.log(formData);
+      const userData = {
+        userName: formData.email,
+        password: formData.password,
+       
+        role: {
+          roleId: 1,
+        },
+      };
+
+      createUser(userData)
+        .then((userData) => {
+          const vendorData = {
+            ...formData,
+            user: {
+              userId: userData.userId, // Get the user ID from the user registration response
+              role: {
+                roleId: 1,
+              },
+            },
+          };
+          return createVendor(vendorData);
+        })
+        .catch((error) => {
+          console.error('Error during registration:', error);
+        });
     }
   };
 
