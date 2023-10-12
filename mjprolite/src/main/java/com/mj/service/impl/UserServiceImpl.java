@@ -242,4 +242,44 @@ public class UserServiceImpl implements UserService {
         	return null;
         } 
 	}
+
+	@Override
+	public UserVO getUserByEmail(String userName) {
+		// TODO Auto-generated method stub
+		Optional<UserEntity> userEntityOptional = userRepo.findByUserName(userName);
+		System.out.println(userEntityOptional);
+		if (userEntityOptional.isPresent()) {
+        	
+            UserEntity userEntity = userEntityOptional.get();
+            UserVO userVO = new UserVO();
+       	 
+            userVO.setUserId(userEntity.getUserId());
+            userVO.setUserName(userEntity.getUserName());
+            userVO.setPassword(userEntity.getPassword()); 
+            userVO.setIsActive(userEntity.getIsActive());
+            userVO.setCreatedBy(userEntity.getCreatedBy());
+            userVO.setCreatedAt(userEntity.getCreatedAt());
+            userVO.setModifiedBy(userEntity.getModifiedBy());
+            userVO.setModifiedAt(userEntity.getModifiedAt());
+            
+            RoleEntity roleEntity = userEntity.getRole();
+            
+            RoleVO roleVO = new RoleVO();
+            roleVO.setRoleId(roleEntity.getRoleId());
+            roleVO.setRoleName(roleEntity.getRoleName());
+            roleVO.setIsActive(roleEntity.getIsActive());
+            roleVO.setCreatedBy(roleEntity.getCreatedBy());
+            roleVO.setCreatedAt(roleEntity.getCreatedAt());
+            roleVO.setModifiedBy(roleEntity.getModifiedBy());
+            roleVO.setModifiedAt(roleEntity.getModifiedAt());
+            
+            userVO.setRole(roleVO);
+            
+            return userVO;
+        } else {
+        	return null;
+        } 
+		
+	
+	}
 }

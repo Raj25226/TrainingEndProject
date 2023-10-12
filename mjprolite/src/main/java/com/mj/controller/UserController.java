@@ -38,7 +38,7 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping("/user/{id}")
+	@GetMapping("/user/byId/{id}")
 	ResponseEntity<UserVO> findUserById(@PathVariable int id) {
 	    UserVO userVO = userService.getUserById(id);
 
@@ -47,6 +47,30 @@ public class UserController {
 	    } else {
 	    	return ResponseEntity.noContent().build();
 	    }
+	}
+	
+	@GetMapping("/user/byEmail/{email}")
+	ResponseEntity<UserVO> findUserByEmail(@PathVariable String email) {
+		System.out.println("HII");
+		 try {
+		        UserVO userVO = userService.getUserByEmail(email);
+		        System.out.println(userVO);
+
+		        if (userVO != null) {
+		            return ResponseEntity.ok(userVO);
+		        } else {
+		            return ResponseEntity.noContent().build();
+		        }
+		    } catch (Exception e) {
+		        // Log the exception for debugging
+		    	System.out.println("ERROR");
+		    	return ResponseEntity.noContent().build();
+//		        logger.error("An error occurred while retrieving user by email: " + email, e);
+//		        
+//		        // Return an error response
+//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+//		            .body("An error occurred while processing your request.");
+		    }
 	}
 	
 	@PostMapping("/user")
