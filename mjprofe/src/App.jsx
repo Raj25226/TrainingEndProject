@@ -14,6 +14,7 @@ import ViewIndents from "./pages/ViewIndent";
 import AddIndent2 from "./pages/AddIndent2";
 import AddProduct from "./pages/AddIndentProduct";
 import MultipleIndent from "./pages/MultipleIndent";
+import VendorPage from "./pages/VendorPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="/addindent2" element={<AddIndent2 />} />
           <Route path="/addproduct" element={<AddProduct />} />
           <Route path="/multipleindent" element={<MultipleIndent />} />
+          <Route path="/vendor" element={<VendorPage />} />
         </Routes>
       </div>
       <Footer />

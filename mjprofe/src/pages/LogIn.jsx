@@ -23,6 +23,8 @@ const LogIn = () => {
               console.log('Login successful:', result);
               if(result.role.roleId===1){
                 navigate('/indentlist');
+              }else if(result.role.roleId===3){
+                navigate('/vendor');
               }
             } else {
               console.error('Login failed');
