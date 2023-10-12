@@ -164,7 +164,7 @@ const AddIndent = () => {
     }
 
     return (
-        <div className="container">
+        <div className="container mb-5">
             <div className="row justify-content-center">
                 <div className="col-md-12">
                     <div className="card mt-5">
@@ -176,6 +176,19 @@ const AddIndent = () => {
                                 Add Indent
                             </h2>
                             <form onSubmit={handleSubmit}>
+                                <div className="col">
+                                    <label className="form-label">
+                                        Description:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        value={description}
+                                        onChange={(e) =>
+                                            setDescription(e.target.value)
+                                        }
+                                    />
+                                </div>
                                 <div className="mb-3">
                                     <label className="form-label">
                                         Category:
@@ -225,19 +238,6 @@ const AddIndent = () => {
                                             </option>
                                         ))}
                                     </select>
-                                </div>
-                                <div className="col">
-                                    <label className="form-label">
-                                        Description:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        value={description}
-                                        onChange={(e) =>
-                                            setDescription(e.target.value)
-                                        }
-                                    />
                                 </div>
                                 <div className="row mb-3">
                                     <div className="col">
