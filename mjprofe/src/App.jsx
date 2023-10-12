@@ -11,6 +11,9 @@ import ForgotPassword from "./pages/ForgotPassword";
 import IndentList from "./pages/IndentList";
 import EditIndent from "./pages/EditIndent";
 import ViewIndents from "./pages/ViewIndent";
+import AddIndent2 from "./pages/AddIndent2";
+import AddProduct from "./pages/AddIndentProduct";
+import MultipleIndent from "./pages/MultipleIndent";
 
 function App() {
   return (
@@ -27,6 +30,9 @@ function App() {
           <Route path="/indentlist" element={<IndentList />} />
           <Route path="/editindent" element={<EditIndent />} />
           <Route path="/viewindent" element={<ViewIndents />} />
+          <Route path="/addindent2" element={<AddIndent2 />} />
+          <Route path="/addproduct" element={<AddProduct />} />
+          <Route path="/multipleindent" element={<MultipleIndent />} />
         </Routes>
       </div>
       <Footer />

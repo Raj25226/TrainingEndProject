@@ -33,35 +33,30 @@ const IndentList = () => {
   useEffect(() => {
     fetchApiData();
   }, []);
-  const handleDeleteindent = async (id) => {
-    // Send a DELETE request to the backend API with the item's ID.
-    console.log(id);
-    fetch(`http://localhost:8080/mj/indent1/${id}`, {
-      method: 'DELETE',
-    })
-      .then((response) => {
-        if (response.ok) {
-          // Item deleted successfully, update the items list in the state.
-          const updatedItems = items.filter((item) => item.indentId !== id);
-          setItems(updatedItems);
-        } else {
-          console.error('Error deleting item:', response);
-        }
-      })
-      .catch((error) => {
-        console.error('Error deleting item:', error);
-      });
-  };
+  // const handleDeleteindent = async (id) => {
+  //   console.log(id);
+  //   fetch(`http://localhost:8080/mj/indent1/${id}`, {
+  //     method: 'DELETE',
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         const updatedItems = items.filter((item) => item.indentId !== id);
+  //         setItems(updatedItems);
+  //       } else {
+  //         console.error('Error deleting item:', response);
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error('Error deleting item:', error);
+  //     });
+  // };
   const handleDeleteItem = async (id) => {
-    // Send a DELETE request to the backend API with the item's ID.
-
-    await handleDeleteindent(id);
+    // await handleDeleteindent(id);
     try {
       const response = await fetch(`http://localhost:8080/mj/indentheader/${id}`, {
         method: 'DELETE',
       });
       if (response.ok) {
-        // Item deleted successfully, update the items list in the state.
         const updatedItems = items.filter((item) => item.indentHeaderId !== id);
         setItems(updatedItems);
       } else {
@@ -70,10 +65,8 @@ const IndentList = () => {
     } catch (error) {
       console.error('Error deleting item:', error);
     }
-  };
 
-  // Replace handleEditItem with handleViewItem
-  
+  };  
 
   return (
     <div className="container mt-4">
