@@ -30,7 +30,7 @@ const ViewIndents = (props) => {
   }, [props.headerId]);
 
   return (
-    <div className="container col-md-5" style={{ marginTop: '10%' }}>
+    <div className="container" style={{ marginTop: '10%' }}>
       {isLoading ? (
         <p>Loading...</p>
       ) : (
