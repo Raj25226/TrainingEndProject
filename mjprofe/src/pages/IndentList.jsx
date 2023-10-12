@@ -80,11 +80,9 @@ const IndentList = () => {
       <div className="card" style={{ marginTop: '15%' }}>
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
-          <button
-            className="btn btn-success"          
-          >
-            <Link to="/addindent">Add</Link>
-          </button>
+          <Link style={{width:"150px", color:"white"}} className="btn" to="/addindent">
+            Add
+          </Link>
         </div>
         <div className="card-body">
           {items.length === 0 ? (
