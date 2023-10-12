@@ -27,20 +27,21 @@ const MultipleIndent = () => {
                 {addedProducts.map((product, index) => (
                     <div key={index}>{product}</div>
                 ))}
+                <div style={{marginLeft:"50%"}}>
                 <button className="btn m-5" onClick={handleFirstButtonClick}>
-                    Add Product
+                    Add More
                 </button>
-            </div>
-            {firstButtonClick && (
-                <div>
+                {firstButtonClick && (
                     <button
                         className="btn m-5 float-right"
                         onClick={handleSecondButtonClick}
                     >
                         Submit Indent
                     </button>
-                </div>
             )}
+            </div>
+            </div>
+            
         </>
     );
 };

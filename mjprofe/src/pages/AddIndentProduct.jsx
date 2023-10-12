@@ -1,33 +1,30 @@
 import React, { useEffect, useState } from "react";
 import Date from "../util/Date";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 const AddProduct = () => {
     const [price, setPrice] = useState(0);
     const [unitPrice, setUnitPrice] = useState(0);
-    const [totalPrice,setTotalPrice] =useState(0);
+    const [totalPrice, setTotalPrice] = useState(0);
     const [quantity, setQuantity] = useState(0);
     const [selectedProduct, setSelectedProduct] = useState("");
     const [selectedCategory, setSelectedCategory] = useState("");
-    const [unitMeasurement, setUnitMeasurement] = useState("");
-
     const PQR = ["unit price", "total price"];
     const [category, setCategory] = useState([]);
     const [product, setProduct] = useState([]);
-    const [pt,setPt]=useState("");
+    const [pt, setPt] = useState("");
 
-    const handlePrice = () =>{
-        console.log(pt=="unit price");
-        if(pt=="unit price"){
+    const handlePrice = () => {
+        // console.log(pt == "total price");
+        // console.log(pt);
+        if (pt == "total price") {
             setUnitPrice(price);
-            setTotalPrice(price*quantity);
-        }else{
-            setUnitPrice(price/quantity);
+            setTotalPrice(price * quantity);
+        } else {
+            setUnitPrice(price / quantity);
             setTotalPrice(price);
         }
-
-    }
+    };
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -63,8 +60,7 @@ const AddProduct = () => {
         fetchProducts();
     }, []);
 
-    const changeProductList = (id) =>{
-
+    const changeProductList = (id) => {
         const fetchProducts = async () => {
             try {
                 const response = await axios.get(
@@ -79,11 +75,12 @@ const AddProduct = () => {
             }
         };
         fetchProducts();
-    }
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        console.log(e);
+        e.target.disabled =true;
         const response2 = await fetch("http://localhost:8080/mj/indent", {
             method: "POST",
             headers: {
@@ -115,10 +112,7 @@ const AddProduct = () => {
                 },
             }),
         });
-        
     };
-
-    
 
     return (
         <div className="container mb-5">
@@ -130,124 +124,142 @@ const AddProduct = () => {
                                 className="card-title mb-4"
                                 style={{ textAlign: "center" }}
                             >
-                                Add Indent
+                                Add Product
                             </h2>
-                            <form onSubmit={handleSubmit}>
-                                <div className="mb-3">
-                                    <label className="form-label">
-                                        Category:
-                                    </label>
-                                    <select
-                                        className="form-select"
-                                        value={selectedCategory}
-                                        onChange={(e) => {
-                                            setSelectedCategory(e.target.value);
-                                            changeProductList(e.target.value);
-                                        }
-                                    }
-                                    >
-                                        <option value="">
-                                            Select a category
-                                        </option>
-                                        {category.map((cat) => (
-                                            <option
-                                                key={cat.categoryId}
-                                                value={cat.categoryId}
-                                            >
-                                                {cat.categoryName}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="mb-3">
-                                    <label className="form-label">
-                                        Product:
-                                    </label>
-                                    <select
-                                        className="form-select"
-                                        value={selectedProduct}
-                                        onChange={(e) =>
-                                            setSelectedProduct(e.target.value)
-                                        }
-                                    >
-                                        <option value="">
-                                            Select a product
-                                        </option>
-                                        {product.map((prod) => (
-                                            <option
-                                                key={prod.productId}
-                                                value={prod.productId}
-                                            >
-                                                {prod.productName}
-                                            </option>
-                                        ))}
-                                    </select>
-                                </div>
-                                <div className="row mb-3">
-                                    <div className="col">
+                            <form>
+                                <fieldset>
+                                    <div className="mb-3">
                                         <label className="form-label">
-                                            Quantity:
-                                        </label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={quantity}
-                                            onChange={(e) =>
-                                                setQuantity(
-                                                    parseInt(e.target.value, 10)
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                    
-                                </div>
-                                <div className="row mb-3">
-                                    <div className="col">
-                                        <label className="form-label">
-                                            Price:
-                                        </label>
-                                        <input
-                                            type="number"
-                                            className="form-control"
-                                            value={price}
-                                            onChange={(e) =>
-                                                setPrice(
-                                                    parseFloat(e.target.value)
-                                                )
-                                            }
-                                        />
-                                    </div>
-                                    <div className="col">
-                                        <label className="form-label">
-                                            Price Type:
+                                            Category:
                                         </label>
                                         <select
                                             className="form-select"
-                                            value={pt}
-                                            onChange={(e) =>{
-                                                setPt(e.target.value);
-                                                handlePrice();
-                                            }
-                                            }
+                                            value={selectedCategory}
+                                            onChange={(e) => {
+                                                setSelectedCategory(
+                                                    e.target.value
+                                                );
+                                                changeProductList(
+                                                    e.target.value
+                                                );
+                                            }}
                                         >
                                             <option value="">
-                                                Select Price Type
+                                                Select a category
                                             </option>
-                                            {PQR.map((unit) => (
-                                                <option key={unit} value={unit}>
-                                                    {unit}
+                                            {category.map((cat) => (
+                                                <option
+                                                    key={cat.categoryId}
+                                                    value={cat.categoryId}
+                                                >
+                                                    {cat.categoryName}
                                                 </option>
                                             ))}
                                         </select>
                                     </div>
-                                </div>
+                                    <div className="mb-3">
+                                        <label className="form-label">
+                                            Product:
+                                        </label>
+                                        <select
+                                            className="form-select"
+                                            value={selectedProduct}
+                                            onChange={(e) =>
+                                                setSelectedProduct(
+                                                    e.target.value
+                                                )
+                                            }
+                                        >
+                                            <option value="">
+                                                Select a product
+                                            </option>
+                                            {product.map((prod) => (
+                                                <option
+                                                    key={prod.productId}
+                                                    value={prod.productId}
+                                                >
+                                                    {prod.productName}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                    <div className="row mb-3">
+                                        <div className="col">
+                                            <label className="form-label">
+                                                Quantity:
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={quantity}
+                                                onChange={(e) =>
+                                                    setQuantity(
+                                                        parseInt(
+                                                            e.target.value,
+                                                            10
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="row mb-3">
+                                        <div className="col">
+                                            <label className="form-label">
+                                                Price:
+                                            </label>
+                                            <input
+                                                type="number"
+                                                className="form-control"
+                                                value={price}
+                                                onChange={(e) =>
+                                                    setPrice(
+                                                        parseFloat(
+                                                            e.target.value,
+                                                            0
+                                                        )
+                                                    )
+                                                }
+                                            />
+                                        </div>
+                                        <div className="col">
+                                            <label className="form-label">
+                                                Price Type:
+                                            </label>
+                                            <select
+                                                className="form-select"
+                                                value={pt}
+                                                onChange={(e) => {
+                                                    setPt(e.target.value);
+                                                    handlePrice();
+                                                }}
+                                            >
+                                                <option value="">
+                                                    Select Price Type
+                                                </option>
+                                                {PQR.map((unit) => (
+                                                    <option
+                                                        key={unit}
+                                                        value={unit}
+                                                    >
+                                                        {unit}
+                                                    </option>
+                                                ))}
+                                            </select>
+                                        </div>
+                                    </div>
 
-                                <button
-                                    type="submit"
-                                    className="btn btn-primary"
-                                >
-                                    Submit
-                                </button>
+                                    <button
+                                        id="disab"
+                                        type="submit"
+                                        className="btn btn-primary"
+                                        onClick={(e)=>{
+                                            handleSubmit(e);
+                                        }}
+                                    >
+                                        ADD
+                                    </button>
+                                </fieldset>
                             </form>
                         </div>
                     </div>
