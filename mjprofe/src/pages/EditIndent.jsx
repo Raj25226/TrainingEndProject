@@ -111,7 +111,7 @@ const EditIndent = (props) => {
                             />
                         </div>
                         <button type="submit" className="btn btn-primary">
-                            Submit
+                            Save
                         </button>
                     </form>
                 </div>

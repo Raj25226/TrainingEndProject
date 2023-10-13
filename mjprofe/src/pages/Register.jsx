@@ -151,7 +151,7 @@ function Register() {
         password: formData.password,
        
         role: {
-          roleId: 1,
+          roleId: 3,
         },
       };
 
@@ -177,7 +177,7 @@ function Register() {
   return (
     <div className="container" style={{ maxWidth: '43%' }}>
       <div className="card p-4 mb-5" style={{ marginTop: '25%' }}>
-        <h2 className="card-title text-center">Registration</h2>
+        <h2 className="card-title text-center">Vendor Registration</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label htmlFor="vendorName" className="form-label">
@@ -266,7 +266,7 @@ function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="turnover" className="form-label">
-              Turnover <span className="text-danger">*</span>
+              Yearly Turnover (Rs) <span className="text-danger">*</span>
             </label>
             <input
               type="text"

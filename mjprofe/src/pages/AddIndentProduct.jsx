@@ -147,7 +147,7 @@ const AddProduct = () => {
                                 className="card-title mb-4"
                                 style={{ textAlign: "center" }}
                             >
-                                Add Product
+                                Add Item
                             </h2>
                             <form>
                                 <fieldset>
@@ -215,6 +215,7 @@ const AddProduct = () => {
                                                 type="number"
                                                 className="form-control"
                                                 value={quantity}
+                                                min={0}
                                                 onChange={(e) =>
                                                     setQuantity(
                                                         parseInt(
@@ -235,6 +236,7 @@ const AddProduct = () => {
                                                 type="number"
                                                 className="form-control"
                                                 value={price}
+                                                min={0}
                                                 onChange={(e) =>
                                                     setPrice(
                                                         parseFloat(

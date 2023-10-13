@@ -29,7 +29,7 @@ const MultipleIndent = () => {
                 ))}
                 <div style={{marginLeft:"50%"}}>
                 <button className="btn m-5" onClick={handleFirstButtonClick}>
-                    Add More
+                    Add Item
                 </button>
                 {firstButtonClick && (
                     <button
