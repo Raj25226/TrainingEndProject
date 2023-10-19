@@ -56,7 +56,7 @@ public class IndentController {
 					body(null);
 		}
 	}
-	@GetMapping("/indent1/{id}")
+	@GetMapping("/indentall/{id}")
 	public ResponseEntity<List<IndentVO>> getIndentByheaderId(@PathVariable Integer id) {
 		
 		if(indentService.getIndentByheaderIdAll(id)!=null) {

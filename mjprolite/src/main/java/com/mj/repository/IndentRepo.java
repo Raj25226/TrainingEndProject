@@ -24,4 +24,5 @@ public interface IndentRepo extends JpaRepository<IndentEntity, Integer> {
 //	Optional<IndentEntity> getindent(Integer id);
 	@Query(value = "SELECT * FROM INDENT WHERE INDENT_HEADER_ID=?", nativeQuery = true)
 	List<IndentEntity> getindentall(Integer id);
+	
 }
