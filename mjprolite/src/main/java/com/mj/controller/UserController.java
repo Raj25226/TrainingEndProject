@@ -1,11 +1,12 @@
 package com.mj.controller;
-
+import java.security.SecureRandom;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.mj.service.MailSenderService;
 import com.mj.service.UserService;
 import com.mj.utility.Authorizer;
 import com.mj.vo.UserVO;
@@ -26,6 +29,12 @@ public class UserController {
 	
 	@Autowired
 	UserService userService;
+	
+	@Autowired 
+	MailSenderService mailService;
+	
+	@Autowired
+    JavaMailSender javaMailSender;
 	
 	@GetMapping("/user")
 	ResponseEntity<List<UserVO>> findAllUsers()
@@ -51,7 +60,7 @@ public class UserController {
 	
 	@GetMapping("/user/byEmail/{email}")
 	ResponseEntity<UserVO> findUserByEmail(@PathVariable String email) {
-		System.out.println("HII");
+		
 		 try {
 		        UserVO userVO = userService.getUserByEmail(email);
 		        System.out.println(userVO);
@@ -62,16 +71,40 @@ public class UserController {
 		            return ResponseEntity.noContent().build();
 		        }
 		    } catch (Exception e) {
-		        // Log the exception for debugging
 		    	System.out.println("ERROR");
 		    	return ResponseEntity.noContent().build();
-//		        logger.error("An error occurred while retrieving user by email: " + email, e);
-//		        
-//		        // Return an error response
-//		        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-//		            .body("An error occurred while processing your request.");
 		    }
 	}
+
+	@GetMapping("/api/email/send/{email}") // Added leading slash
+	public ResponseEntity<String> sendEmail(@PathVariable String email) {
+	    try {
+	    	String ALLOWED_CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+	    	SecureRandom random = new SecureRandom();
+	    	 
+	    	Integer length=7;
+	    	 StringBuilder sb = new StringBuilder(length);
+	         for (int i = 0; i < length; i++) {
+	             int randomIndex = random.nextInt(ALLOWED_CHARACTERS.length());
+	             char randomChar = ALLOWED_CHARACTERS.charAt(randomIndex);
+	             sb.append(randomChar);
+	         }
+	        
+	        String otp = sb.toString();
+	        String msg= "Kindly note that the One Time Password (OTP) for your request is  \n \n  \t"+otp;
+	         System.out.println(msg);
+	    	
+	        mailService.sendNewMail(email, "OTP for Eprocurement Verification", msg);
+	        
+	        return ResponseEntity.ok(otp);
+	        
+	    } catch (Exception e) {
+	        // Return an error response if email sending fails
+	    	System.out.println(e);
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Email sending failed.");
+	    }
+	}
+
 	
 	@PostMapping("/user")
     public ResponseEntity<UserVO> saveUser(@RequestBody UserVO userVO) {
@@ -83,8 +116,6 @@ public class UserController {
                 UserVO userVO1 = userService.saveUser(userVO);
 
                 if (userVO1 != null) {
-                    // Use a logger instead of System.out.println for better control
-                   
                     return ResponseEntity.ok(userVO1);
                 } else {
                     // Handle the case where saving the user failed

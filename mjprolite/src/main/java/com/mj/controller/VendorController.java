@@ -48,7 +48,7 @@ public class VendorController {
 	    }
 	}
 	
-	 @CrossOrigin
+	
 	@PostMapping("/vendor")
 	ResponseEntity<String> saveVendor(@RequestBody VendorVO vendorVO) {
 	    boolean saved = vendorService.saveVendor(vendorVO);
