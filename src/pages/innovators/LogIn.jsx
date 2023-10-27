@@ -27,7 +27,7 @@ const LogIn = () => {
             if (response.ok) {
               const result = await response.json();
               if(result.role.roleId===1){
-                dispatch(updateUser(userName));
+                dispatch(updateUser("indenter"));
                 navigate('/indentlist');
               }else if(result.role.roleId===3){
                 dispatch(updateUser(userName));
@@ -46,11 +46,6 @@ const LogIn = () => {
         setUserName("");
         setPassword("");
     };
-
-    // console.log(user.user)
-    if(user.user !== "none"){
-       return  <button className="btn btn-danger"onClick={() => dispatch(deleteUser("none"))}>Logout</button>
-    }
 
     return (
         <div className="container mt-5">

@@ -7,6 +7,7 @@ import { deleteUser, userLoggedin } from "../slices/loginSlice";
 export default function NavBar2() {
   const user = useSelector(userLoggedin);
   const dispatch = useDispatch();
+
   return (
     <nav className="navbar navbar-expand-lg bg-body-tertiary p-0">
       <div
@@ -64,15 +65,6 @@ export default function NavBar2() {
               <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li class="nav-item">
                   <Link
-                    to="/suppliers"
-                    className="nav-link active text-light"
-                    aria-current="page"
-                  >
-                    Suppliers
-                  </Link>
-                </li>
-                <li class="nav-item">
-                  <Link
                     to="/tenders"
                     className="nav-link active text-light"
                     aria-current="page"
@@ -109,39 +101,49 @@ export default function NavBar2() {
                         Login
                       </Link>
                     </li>
-                    <li>
+                  </>
+                ) : user.user === "indenter" ? (
+                  <>
+                    <li class="nav-item">
                       <Link
-                        to="/register"
+                        to="/suppliers"
                         className="nav-link active text-light"
                         aria-current="page"
                       >
-                        Register
+                        Suppliers
                       </Link>
+                    </li>
+                    <li className="nav-item">
+                      <Link
+                        to="/indentlist"
+                        className="nav-link active text-light"
+                        aria-current="page"
+                      >
+                        Indent List
+                      </Link>
+                    </li>
+                    <li className="nav-item">
+                      <button
+                        className="nav-link active text-light btn btn-danger"
+                        onClick={() => dispatch(deleteUser("none"))}
+                      >
+                        Logout
+                      </button>
                     </li>
                   </>
                 ) : (
-                  <li>
-                   <button className="nav-link active text-light btn btn-danger"onClick={() => dispatch(deleteUser("none"))}>Logout</button>
-                  </li>
+                  <>
+                    <li className="nav-item">
+                      <Link
+                        to="/login"
+                        className="nav-link active text-light"
+                        aria-current="page"
+                      >
+                        Login
+                      </Link>
+                    </li>
+                  </>
                 )}
-                {/* <li>
-                  <Link
-                    to="/login"
-                    className="nav-link active text-light"
-                    aria-current="page"
-                  >
-                    Login
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/register"
-                    className="nav-link active text-light"
-                    aria-current="page"
-                  >
-                    Register
-                  </Link>
-                </li> */}
               </ul>
             </div>
           </div>
