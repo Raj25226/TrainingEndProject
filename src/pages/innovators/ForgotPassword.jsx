@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./styling/styles.css";
 import { useNavigate } from "react-router-dom";
 
 function ForgotPassword() {

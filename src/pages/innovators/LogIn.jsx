@@ -3,6 +3,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from 'react-router-dom';
 import {updateUser, userLoggedin} from '../../slices/loginSlice';
 import { useDispatch, useSelector } from "react-redux";
+import "./styling/styles.css";
+
 
 const LogIn = () => {
     const [userName, setUserName] = useState("");

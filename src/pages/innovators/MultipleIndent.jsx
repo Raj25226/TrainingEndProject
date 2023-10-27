@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import AddProduct from "./AddIndentProduct";
 import { useNavigate } from "react-router-dom";
+import "./styling/styles.css";
+
 
 const MultipleIndent = () => {
     const [addedProducts, setAddedProducts] = useState([]);

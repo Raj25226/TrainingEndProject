@@ -3,6 +3,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import ViewIndents from './ViewIndent';
 import EditIndent from './EditIndent';
+import "./styling/styles.css";
 import { Link } from "react-router-dom";
 const IndentList = () => {
   const [items, setItems] = useState([]);

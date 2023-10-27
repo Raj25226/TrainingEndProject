@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Date from "../../util/Date";
+import "./styling/styles.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import MultipleIndent from "./MultipleIndent";

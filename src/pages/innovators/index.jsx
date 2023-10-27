@@ -9,6 +9,7 @@ import AddIndent2 from "./AddIndent2";
 import AddProduct from "./AddIndentProduct";
 import MultipleIndent from "./MultipleIndent";
 import VendorPage from "./VendorPage";
+import "./styling/styles.css";
 
 export {
   LogIn,

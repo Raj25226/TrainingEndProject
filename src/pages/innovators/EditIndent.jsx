@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Date from "../../util/Date";
+import "./styling/styles.css";
 import axios from "axios";
 import { redirect, useNavigate } from "react-router-dom";
 

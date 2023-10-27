@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./styling/styles.css";
+
 
 const ViewIndents = (props) => {
   const [indents, setIndents] = useState([]);
