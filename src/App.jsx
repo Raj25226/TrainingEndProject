@@ -1,5 +1,5 @@
 import "../styles.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { ListOfRfp, Suppliers, SplitScreen, Tenders } from "./pages/vanguards";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -31,8 +31,23 @@ import {
   ViewIndents,
   MultipleIndent,
 } from "./pages/innovators";
+import { useDispatch, useSelector } from "react-redux";
+import { authorization, login, logout } from "./slices/authSlice";
 
 export default function App() {
+  const state = useSelector(authorization)
+  const dispatch = useDispatch()
+  console.log("USER",state,localStorage.getItem('token'))
+  let token = localStorage.getItem('token')
+  useEffect(()=>{
+    console.log("kk")
+    if(token){
+      dispatch(login({user:token,isLoggedIn:true,token}))
+    } else{
+      dispatch(logout())
+    }
+  },[dispatch,state])
+  
   return (
     <>
       <NavBar />
@@ -48,7 +63,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         {/* <Route path="/login" element={<Login />} /> */}
 
-        <Route path="/login" element={<LogIn />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/addindent" element={<AddIndent />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />

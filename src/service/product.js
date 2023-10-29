@@ -27,9 +27,13 @@ export const productApi = createApi({
       query: (i) => `reftable/vendor/${i}`,
     }),
 
+    getProductWithVendors: builder.query({
+      query: (i) => `reftable/v/${i}`,
+    }),
+
     downloadCs: builder.query({
       query:() => `csv/`
-    })
+    }),
   }),
 });
 
@@ -40,5 +44,6 @@ export const {
   useGetVendorByRfpQuery,
   useGetVendorByRfpIdQuery,
   useGetProductByVendorQuery,
+  useGetProductWithVendorsQuery,
   useDownloadCsQuery,
 } = productApi;
