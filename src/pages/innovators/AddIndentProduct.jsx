@@ -215,6 +215,7 @@ const AddProduct = () => {
                                             <input
                                                 type="number"
                                                 className="form-control"
+                                                min={0}
                                                 value={quantity}
                                                 onChange={(e) =>
                                                     setQuantity(
@@ -235,6 +236,7 @@ const AddProduct = () => {
                                             <input
                                                 type="number"
                                                 className="form-control"
+                                                min={0}
                                                 value={price}
                                                 onChange={(e) =>
                                                     setPrice(

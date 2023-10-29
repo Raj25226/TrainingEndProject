@@ -29,6 +29,13 @@ const IndentList = () => {
   }, []);
 
   const handleDeleteItem = async (id) => {
+    let x=window.confirm("Are You Sure? You want to delete.");
+    if(x===true){
+      handleDeleteItem2(id);
+    }
+  }
+
+  const handleDeleteItem2 = async (id) => {
     try {
       const response = await fetch(`http://localhost:8080/mj/indentheader/${id}`, {
         method: 'DELETE',
@@ -129,7 +136,7 @@ const IndentList = () => {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Indent View</h5>
+                <h3 className="modal-title"><u><b>Indent Detail</b></u></h3>
                 <button
                   type="button"
                   className="close"
@@ -155,7 +162,7 @@ const IndentList = () => {
           <div className="modal-dialog" role="document">
             <div className="modal-content">
               <div className="modal-header">
-                <h5 className="modal-title">Edit Indent</h5>
+                <h3 className="modal-title"><b><u>Edit Indent Header</u></b></h3>
                 <button
                   type="button"
                   className="close"

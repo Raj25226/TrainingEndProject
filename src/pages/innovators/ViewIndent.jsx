@@ -32,7 +32,7 @@ const ViewIndents = (props) => {
   }, [props.headerId]);
 
   return (
-    <div className="container" style={{ marginTop: '10%' }}>
+    <div className="container">
       {isLoading ? (
         <p>Loading...</p>
       ) : (
@@ -41,7 +41,7 @@ const ViewIndents = (props) => {
             {Array.isArray(indents) ? (
               indents.map((indent, index) => (
                 <div key={index}>
-                  <h5 className="card-title"><u style={{color:"black"}}>Product:</u></h5>
+                  <h5 className="card-title"><u style={{color:"black"}}>Item {index+1}:</u></h5>
                   {indent.indentId && <p>IndentId: {indent.indentId}</p>}
                   {indent.indentCode && <p>IndentCode: {indent.indentCode}</p>}
                   {indent.unitPrice && <p>UnitPrice: {indent.unitPrice}</p>}

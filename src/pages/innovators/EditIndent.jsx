@@ -71,14 +71,14 @@ const EditIndent = (props) => {
 
     return (
         <>
-            <div className="card mt-5">
+            <div className="card">
                 <div className="card-body">
-                    <h2
+                    {/* <h2
                         className="card-title mb-4"
                         style={{ textAlign: "center" }}
                     >
                         Edit Indent
-                    </h2>
+                    </h2> */}
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label className="form-label">
