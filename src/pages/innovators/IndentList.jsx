@@ -66,7 +66,7 @@ const IndentList = () => {
             <table className="table">
               <thead>
                 <tr>
-                  <th>Indentheader</th>
+                  <th>ID</th>
                   <th>Description</th>
                   <th>Netprice</th>
                 </tr>

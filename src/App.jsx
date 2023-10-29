@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { ListOfRfp, Suppliers, SplitScreen, Tenders } from "./pages/vanguards";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Login from "./pages/Login";
+import Login from "./pages/innovators/LogIn";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
