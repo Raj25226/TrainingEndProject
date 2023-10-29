@@ -56,9 +56,15 @@ const IndentList = () => {
   }
 
   const handleViewItemClick = (headerId) => {
-    console.log(headerId);
+    // console.log(headerId);
     setSelectedHeaderId(headerId); // Set the selected headerId
     setviewAddModal(true);
+  };
+
+  const handleEditItemClick = (headerId) => {
+    // console.log(headerId);
+    setSelectedHeaderId(headerId); // Set the selected headerId
+    seteditAddModal(true);
   };
 
   return (
@@ -104,7 +110,7 @@ const IndentList = () => {
                       </button>
                       <button
                         style={{ marginLeft: '5px' }}
-                        onClick={() => seteditAddModal(true)}
+                        onClick={() => handleEditItemClick(item.indentHeaderId)}
                       >
                         <i className="bi bi-pen"></i>
                       </button>
