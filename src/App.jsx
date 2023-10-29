@@ -5,8 +5,18 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
 import { Route, Routes } from "react-router-dom";
-import NavBar2 from "./components/NavBar";
+import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
+import RFPEdit from "./pages/indispensable/RFPEdit";
+import RFPList from "./pages/indispensable/RFPList";
+import RFPDraft from "./pages/indispensable/RFPDraft";
+import Draftlist from "./pages/indispensable/Draftlist";
+import RFPDetailView from "./pages/indispensable/RFPDetailView";
+import BidSubmit from "./pages/indispensable/BidSubmission";
+import ItemList from './pages/indispensable/VendorHome';
+import BidDetailView from './pages/indispensable/BidDetailView';
+import BidView from './pages/indispensable/BidView';
+import RPFForm from './pages/indispensable/RPFForm';
 
 import {
   LogIn,
@@ -25,7 +35,7 @@ import {
 export default function App() {
   return (
     <>
-      <NavBar2 />
+      <NavBar />
       <Routes>
         <Route path="/" element={<ListOfRfp />} />
         {/* <Route element={<RouteProtect />}> */}
@@ -49,6 +59,17 @@ export default function App() {
         <Route path="/addproduct" element={<AddProduct />} />
         <Route path="/multipleindent" element={<MultipleIndent />} />
         <Route path="/vendor" element={<VendorPage />} />
+
+        <Route path="/rfpform" element={<RPFForm />} />
+        <Route path="/rfpedit" element={<RFPEdit />} />
+        <Route path="/rfplist" element={<RFPList />} />
+        <Route path="/draftlist" element={<Draftlist />} />
+        <Route path="/rfpdraft" element={<RFPDraft />} />
+        <Route path="/rfpdetailview" element={<RFPDetailView />} />
+        <Route path="/bidsubmission/:id" element={<BidSubmit />} />
+        <Route path="/vendorhome" element={<ItemList />} />
+        <Route path="/biddetailview/:id" element={<BidDetailView />} />
+        <Route path="/viewbids/:id" element={<BidView />} />
       </Routes>
       <Footer />
     </>
