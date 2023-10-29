@@ -53,7 +53,7 @@ const LogIn = () => {
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-md-6" style={{marginBottom:"5%"}}>
-                    <div className="card mt-5">
+                    <div className="card mt-4">
                         <div className="card-body">
                             <h2 className="card-title mb-4" style={{textAlign:"center"}}>Log In</h2>
                             <form>
@@ -91,20 +91,23 @@ const LogIn = () => {
                                         }
                                     />
                                 </div>
+                                <div className="mt-3" style={{textAlign:"center"}}>
                                 <button
                                     type="button"
                                     className="btn btn-primary"
                                     onClick={handleLogin}
+                                    style={{paddingLeft:"25px",paddingRight:"25px"}}
                                 >
                                     Login
                                 </button>
-                                <div className="mt-3">
+                                </div>
+                                <div className="mt-3" style={{textAlign:"center"}}>
                                 <a href="/forgotpassword">
                                         Forgot Password?
                                     </a>
                                 </div>
-                                <div className="mt-3">
-                                New Vendor?   
+                                <div className="mt-3" style={{textAlign:"center"}}>
+                                New Vendor?&nbsp;&nbsp;
                                 <a href="/register">
                                         Register
                                     </a>
