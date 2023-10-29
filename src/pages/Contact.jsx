@@ -20,7 +20,7 @@ function Contact() {
 
   return (
     <div className="container d-flex justify-content-center align-items-center mb-5">
-      <div className="card p-2 mt-5" style={{ width: '35%' }}>
+      <div className="card p-2 mt-5" style={{ width: '35%', marginBottom: '5%' }}>
         <div className="card-body p-2 ">
           <h2 className="card-title text-center">Contact Us</h2>
           <p className="text-center mb-1 small">Phone: +1 (123) 456-7890</p>

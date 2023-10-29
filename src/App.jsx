@@ -1,9 +1,8 @@
-import "../styles.css";
 import React, { useEffect } from "react";
 import { ListOfRfp, Suppliers, SplitScreen, Tenders } from "./pages/vanguards";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Login from "./pages/innovators/LogIn";
+import Login from "./pages/LogIn";
 import { Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar";
 import Footer from "./components/Footer";
@@ -63,7 +62,7 @@ export default function App() {
         <Route path="/about" element={<About />} />
         {/* <Route path="/login" element={<Login />} /> */}
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<LogIn />} />
         <Route path="/register" element={<Register />} />
         <Route path="/addindent" element={<AddIndent />} />
         <Route path="/forgotpassword" element={<ForgotPassword />} />

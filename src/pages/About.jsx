@@ -19,7 +19,7 @@ const About = () => {
         <h2 className="mt-4 mb-4">About E-Procurement</h2>
       </div>
       <div className="container mb-5">
-        <p className="lead fw-normal" >
+        <p className="lead fw-normal"  style={{ paddingBottom: '5%' }}>
           e-Procurement, short for electronic procurement, refers to the use of
           digital technologies and online platforms to automate and streamline
           the procurement process within organizations. It involves the

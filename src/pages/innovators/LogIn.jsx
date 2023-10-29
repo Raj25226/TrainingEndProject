@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from 'react-router-dom';
 import {updateUser, userLoggedin} from '../../slices/loginSlice';
 import { useDispatch, useSelector } from "react-redux";
-import "./styling/styles.css";
-
+import './styling/styles.css';
 
 const LogIn = () => {
     const [userName, setUserName] = useState("");
@@ -50,9 +49,9 @@ const LogIn = () => {
     };
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <div className="row justify-content-center">
-                <div className="col-md-6">
+                <div className="col-md-6" style={{marginBottom:"5%"}}>
                     <div className="card mt-5">
                         <div className="card-body">
                             <h2 className="card-title mb-4" style={{textAlign:"center"}}>Log In</h2>
@@ -101,6 +100,12 @@ const LogIn = () => {
                                 <div className="mt-3">
                                 <a href="/forgotpassword">
                                         Forgot Password?
+                                    </a>
+                                </div>
+                                <div className="mt-3">
+                                New Vendor?   
+                                <a href="/register">
+                                        Register
                                     </a>
                                 </div>
                             </form>

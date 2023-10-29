@@ -43,7 +43,18 @@ const IndentList = () => {
       console.error('Error deleting item:', error);
     }
 
-  };  
+  };
+
+  const handleHover = () => {
+    document.getElementById("indadd").style.color="black";
+    document.getElementById("indadd").style.backgroundColor="white";
+  }
+
+  const handleHover2 = () => {
+    document.getElementById("indadd").style.color="white";
+    document.getElementById("indadd").style.backgroundColor="#176b87";
+  }
+
   const handleViewItemClick = (headerId) => {
     console.log(headerId);
     setSelectedHeaderId(headerId); // Set the selected headerId
@@ -51,11 +62,11 @@ const IndentList = () => {
   };
 
   return (
-    <div className="container mt-4">
-      <div className="card" style={{ marginTop: '15%' }}>
+    <div className="container mycontainer">
+      <div className="card" style={{ marginTop: '5%' }}>
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
-          <Link style={{width:"150px", color:"white"}} className="btn" to="/addindent2">
+          <Link style={{width:"150px", color:"white"}} onMouseEnter={handleHover} onMouseLeave={handleHover2} className="btn" id="indadd" to="/addindent2">
             Add
           </Link>
         </div>
@@ -63,15 +74,16 @@ const IndentList = () => {
           {items.length === 0 ? (
             <h6>No Data Found</h6>
           ) : (
-            <table className="table">
+            <table className="table table-dark table-striped">
               <thead>
                 <tr>
                   <th>ID</th>
                   <th>Description</th>
                   <th>Netprice</th>
+                  <th>Actions</th> 
                 </tr>
               </thead>
-              <tbody>
+              <tbody className='justify-content-center text-center'>
                 {items.map((item, index) => (
                   <tr key={index}>
                     <td>{item.indentHeaderId}</td>

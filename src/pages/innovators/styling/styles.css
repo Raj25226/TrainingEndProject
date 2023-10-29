@@ -4,7 +4,7 @@
 
 body {
     margin: 0;
-    background-image: url("./src//assets//bgrfp.jpg");
+    background-image: url("../../../assets/bgrfp.jpg");
     background-size: 100%;
 }
 
@@ -48,8 +48,8 @@ h2 {
 .btn {
     background-color: #176b87;
     border: none;
-    padding-left: 5%;
-    padding-right: 5%;
+    padding-left: 2%;
+    padding-right: 2%;
 }
 
 .btn:hover {
@@ -71,7 +71,6 @@ h2 {
 }
 
 .mycontainer {
-    position: relative;
     margin-bottom: 100px;
 }
 

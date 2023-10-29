@@ -277,7 +277,7 @@ const AddProduct = () => {
                                             handleSubmit(e);
                                         }}
                                     >
-                                        ADD
+                                        SAVE
                                     </button>
                                 </fieldset>
                             </form>

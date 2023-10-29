@@ -11,7 +11,7 @@ export default function NavBar2() {
 
   let AboutContact = (
     <>
-      <li class="nav-item">
+      <li className="nav-item">
         <Link
           to="/contact"
           className="nav-link active text-light"
@@ -51,7 +51,7 @@ export default function NavBar2() {
         </div>
         <div>
           <button
-            class="navbar-toggler"
+            className="navbar-toggler"
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
@@ -59,16 +59,16 @@ export default function NavBar2() {
             aria-label="Toggle navigation"
             style={{ backgroundColor: "white" }}
           >
-            <span class="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon"></span>
           </button>
           <div
-            class="offcanvas offcanvas-top p-3"
+            className="offcanvas offcanvas-top p-3"
             tabIndex="-1"
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
             style={{ backgroundColor: "#053B50", height: "fit-content" }}
           >
-            <div class="offcanvas-header">
+            <div className="offcanvas-header">
               <div>
                 <img
                   src={mjpro}
@@ -80,14 +80,14 @@ export default function NavBar2() {
               </div>
               <button
                 type="button"
-                class="btn-close btn-close-white"
+                className="btn-close btn-close-white"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"
               ></button>
             </div>
-            <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
+            <div className="offcanvas-body">
+              <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li className="nav-item">
                   <Link
                     to="/tenders"
                     className="nav-link active text-light"
@@ -111,7 +111,7 @@ export default function NavBar2() {
                   </>
                 ) : state.user === "indenter" ? (
                   <>
-                    <li class="nav-item">
+                    <li className="nav-item">
                       <Link
                         to="/suppliers"
                         className="nav-link active text-light"

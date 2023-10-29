@@ -177,10 +177,10 @@ function Register() {
   };
 
   return (
-    <div className="container" style={{ maxWidth: '43%' }}>
-      <div className="card p-4 mb-5" style={{ marginTop: '15%' }}>
+    <div className="container mycontainer" style={{ maxWidth: '43%'}}>
+      <div className="card p-4" style={{ marginTop: '5%'}}>
         <h2 className="card-title text-center">Vendor Registration</h2>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} style={{ marginBottom: '5%'}}>
           <div className="mb-3">
             <label htmlFor="vendorName" className="form-label">
               Vendor Name <span className="text-danger">*</span>
