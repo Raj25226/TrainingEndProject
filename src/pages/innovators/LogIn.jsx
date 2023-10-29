@@ -36,7 +36,8 @@ const LogIn = () => {
               }
             } else {
               console.error('Login failed');
-              navigate('/');
+              window.alert('Wrong credentials')
+              navigate('/login');
             }
           } catch (error) {
             console.error('Error during login:', error);
