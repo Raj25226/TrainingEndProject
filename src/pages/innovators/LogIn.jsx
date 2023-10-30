@@ -32,7 +32,7 @@ const LogIn = () => {
                 navigate('/indentlist');
               }else if(result.role.roleId===3){
                 dispatch(updateUser(userName));
-                navigate('/vendor');
+                navigate('/vendorhome');
               }
             } else {
               console.error('Login failed');
