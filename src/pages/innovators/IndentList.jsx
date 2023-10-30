@@ -4,12 +4,13 @@ import 'bootstrap-icons/font/bootstrap-icons.css';
 import ViewIndents from './ViewIndent';
 import EditIndent from './EditIndent';
 import "./styling/styles.css";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 const IndentList = () => {
   const [items, setItems] = useState([]);
   const [showviewModal, setviewAddModal] = useState(false); 
   const [showeditModal, seteditAddModal] = useState(false); 
-  const [selectedHeaderId, setSelectedHeaderId] = useState(0); 
+  const [selectedHeaderId, setSelectedHeaderId] = useState(0);
+  const navigate=useNavigate();
 
   const fetchApiData = async () => {
     try {
@@ -74,6 +75,12 @@ const IndentList = () => {
     seteditAddModal(true);
   };
 
+  const handleCreateIndentClick = (headerId) => {
+    // console.log(headerId);
+    setSelectedHeaderId(headerId); // Set the selected headerId
+    navigate('/rfpform');
+  };
+
   return (
     <div className="container mycontainer">
       <div className="card" style={{ marginTop: '5%' }}>
@@ -120,6 +127,13 @@ const IndentList = () => {
                         onClick={() => handleEditItemClick(item.indentHeaderId)}
                       >
                         <i className="bi bi-pen"></i>
+                      </button>
+                      <button
+                        className='btn btn-success'
+                        style={{ marginLeft: '5px' }}
+                        onClick={() => handleCreateIndentClick(item.indentHeaderId)}
+                      >
+                        Create RFQ
                       </button>
                     </td>
                   </tr>
