@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import {updateUser, userLoggedin} from '../../slices/loginSlice';
 import { useDispatch, useSelector } from "react-redux";
 import './styling/styles.css';
+import { login } from "../../slices/authSlice";
 
 const LogIn = () => {
     const [userName, setUserName] = useState("");
@@ -28,10 +29,10 @@ const LogIn = () => {
             if (response.ok) {
               const result = await response.json();
               if(result.role.roleId===1){
-                dispatch(updateUser("indenter"));
+                dispatch(login({user:"indentor",isLoggedIn:true,token:"indenter"}));
                 navigate('/indentlist');
               }else if(result.role.roleId===3){
-                dispatch(updateUser(userName));
+                dispatch(login({user:userName,isLoggedIn:true,token:"vendor"}));
                 navigate('/vendorhome');
               }
             } else {
