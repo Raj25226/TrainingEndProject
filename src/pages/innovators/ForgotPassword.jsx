@@ -145,7 +145,7 @@ function ForgotPassword() {
                                 <div className="invalid-feedback">{error}</div>
                             )}
                         </div>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btnn btn-primary">
                             Next
                         </button>
                     </form>
@@ -173,7 +173,7 @@ function ForgotPassword() {
                                 <div className="invalid-feedback">{error}</div>
                             )}
                         </div>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btnn btn-primary">
                             Next
                         </button>
                     </form>
@@ -201,7 +201,7 @@ function ForgotPassword() {
                                 <div className="invalid-feedback">{error}</div>
                             )}
                         </div>
-                        <button type="submit" className="btn btn-primary">
+                        <button type="submit" className="btn btnn btn-primary">
                             Reset Password
                         </button>
                     </form>

@@ -300,7 +300,7 @@ function Register() {
               <div className="invalid-feedback">{errors.password}</div>
             )}
           </div>
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btnn btn-primary">
             Submit
           </button>
         </form>

@@ -86,7 +86,7 @@ const AddIndent2 = () => {
 
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btnn btn-primary"
                                 >
                                     Next
                                 </button>

@@ -274,7 +274,7 @@ const AddProduct = () => {
                                     <button
                                         id="disab"
                                         type="submit"
-                                        className="btn btn-primary"
+                                        className="btn btnn btn-primary"
                                         onClick={(e) => {
                                             handleSubmit(e);
                                         }}

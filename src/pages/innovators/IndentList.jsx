@@ -79,7 +79,7 @@ const IndentList = () => {
       <div className="card" style={{ marginTop: '5%' }}>
         <div className="card-header d-flex justify-content-between align-items-center">
           <h1>Indent List</h1>
-          <Link style={{width:"150px", color:"white"}} onMouseEnter={handleHover} onMouseLeave={handleHover2} className="btn" id="indadd" to="/addindent2">
+          <Link style={{width:"150px", color:"white"}} onMouseEnter={handleHover} onMouseLeave={handleHover2} className="btn btnn" id="indadd" to="/addindent2">
             Add
           </Link>
         </div>

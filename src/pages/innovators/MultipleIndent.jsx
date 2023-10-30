@@ -30,13 +30,13 @@ const MultipleIndent = () => {
                     <div key={index}>{product}</div>
                 ))}
                 <div>
-                <button className="btn m-5 mb-0 mt-1" onClick={handleFirstButtonClick}>
+                <button className="btn btnn m-5 mb-0 mt-1" onClick={handleFirstButtonClick}>
                     Add Product
                 </button>
                 {firstButtonClick && (
                     <div style={{marginLeft:'80%'}}>
                     <button
-                    className="btn m-5 mt-0 ps-3 pe-3"
+                    className="btn btnn m-5 mt-0 ps-3 pe-3"
                     onClick={handleSecondButtonClick}
                     style={{background:"green"}}
                 >

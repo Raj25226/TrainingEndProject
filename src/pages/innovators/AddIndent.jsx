@@ -323,7 +323,7 @@ const AddIndent = () => {
 
                                 <button
                                     type="submit"
-                                    className="btn btn-primary"
+                                    className="btn btnn btn-primary"
                                 >
                                     Submit
                                 </button>

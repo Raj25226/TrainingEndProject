@@ -94,7 +94,7 @@ const LogIn = () => {
                                 <div className="mt-3" style={{textAlign:"center"}}>
                                 <button
                                     type="button"
-                                    className="btn btn-primary"
+                                    className="btn btnn btn-primary"
                                     onClick={handleLogin}
                                     style={{paddingLeft:"25px",paddingRight:"25px"}}
                                 >
